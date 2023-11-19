@@ -13,7 +13,7 @@ const router = createRouter({
       path: '/register',
       name: 'about',
       // which is lazy-loaded when the route is visited.
-      component: () => import('../pages/Register.vue')
+      component: () => import('../components/RegisterComponent.vue')
     },
     {
       path: '/dashboard',

@@ -26,4 +26,14 @@
   .title-page{
     @apply bg-gradient-to-br from-persian-green-700 to-persian-green-300 
   }
+  .containerImageLeft {
+    @apply absolute blur md:blur-none md:z-50 z-0 right-0
+  }
+
+  .containerFormShow{
+    @apply w-full z-50 grid place-items-center grid-cols-1
+  }
+  .containerFormHidden{
+    @apply hidden w-full z-50
+  }
 }
