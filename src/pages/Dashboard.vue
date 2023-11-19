@@ -1,16 +1,16 @@
 <script>
-import Navbar from '../components/Navbar.vue';
-import Sidebar from '../components/Sidebar.vue';
-import Todos from '../views/Todos.vue';
-import Footer from '../components/Footer.vue';
+  import Navbar from '../components/Navbar.vue';
+  import Sidebar from '../components/Sidebar.vue';
+  import Todos from '../views/Todos.vue';
+  import Footer from '../components/Footer.vue';
 
-export default {
-  components: {
-    Navbar,
-    Sidebar,
-    Todos,
-    Footer,
-  }
+  export default {
+    components: {
+      Navbar,
+      Sidebar,
+      Todos,
+      Footer,
+    }
 }
 </script>
 
