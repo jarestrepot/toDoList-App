@@ -1,3 +1,29 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* FORMULARIOS */
+@layer components {
+  
+  .button-main {
+    @apply bg-gradient-to-r from-fun-blue-400 to-fun-blue-600 w-full rounded-md text-white text-lg p-1 shadow-md shadow-fun-blue-300 transition-all duration-150 ease-in my-4;
+  }
+  
+  .button-main:hover {
+    @apply hover:scale-105 hover:from-fun-blue-600 hover:to-fun-blue-400 hover:bg-white;
+  }
+  .outline-black {
+    @apply bg-transparent p-2 hover:bg-slate-500 hover:text-white border-2 rounded border-black text-black ring-slate-700 focus:ring
+  }
+
+  .outline-fun-blur {
+    @apply bg-transparent p-2 hover:bg-fun-blue-400 hover:text-white border-2 rounded border-fun-blue-600 text-fun-blue-600 ring-fun-blue-600 focus:ring
+  }
+
+  .textDegrant {
+    @apply text-transparent bg-clip-text bg-gradient-to-br from-persian-green-700 to-persian-green-300
+  }
+  .title-page{
+    @apply bg-gradient-to-br from-persian-green-700 to-persian-green-300 
+  }
+}
