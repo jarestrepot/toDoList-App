@@ -7,7 +7,7 @@ export default {
 }
 </script>
 <template>
-  <footer class="p-5 fixed bottom-0 w-full">
+  <footer class="p-5 bottom-0 w-full">
     <p class="block antialiased font-sans text-sm leading-normal font-normal text-inherit text-end">
       © 2023, made with 
       <HeartIcon />

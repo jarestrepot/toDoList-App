@@ -14,7 +14,7 @@ export default {
   }
 </script>
 <template>
-    <aside class="bg-gradient-to-br from-gray-800 to-gray-900 -translate-x-80 fixed inset-0 z-50 my-4 ml-4 h-[calc(100vh-32px)] w-72 rounded-xl transition-transform duration-300 xl:translate-x-0">
+    <aside class="bg-gradient-to-br from-fun-blue-900 to-fun-blue-950 -translate-x-80 fixed inset-0 z-50 my-4 ml-4 h-[calc(100vh-32px)] w-72 rounded-xl transition-transform duration-300 xl:translate-x-0">
       <div class="relative border-b border-white/20">
         <a class="flex items-center gap-4 py-6 px-8" href="#/">
           <h6 class="block antialiased tracking-normal font-sans text-base font-semibold leading-relaxed text-white">Todo List App</h6>
@@ -38,7 +38,7 @@ export default {
           <li>
             <a href="#hola">
               <button class="middle none font-sans font-bold center transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 rounded-lg text-white hover:bg-white/10 [&.active]:bg-white/30 w-full flex items-center gap-4 px-4 capitalize" type="button">
-                <ProfileIcon />
+                <ProfileIcon className="w-5 h-5"/>
                 <p class="block antialiased font-sans text-base leading-relaxed text-inherit font-medium capitalize">profile</p>
               </button>
             </a>
