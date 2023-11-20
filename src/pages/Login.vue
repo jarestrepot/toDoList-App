@@ -1,7 +1,6 @@
 <script>
   import ImageComponent from '../components/ImageComponent.vue';
   import LoginComponent from '../components/LoginComponent.vue';
-  import ButtonMain from '../components/ButtonMain.vue';
   import RegisterComponent from '../components/RegisterComponent.vue';
   export default {
     data(){
@@ -14,7 +13,6 @@
     components: {
       ImageComponent,
       LoginComponent,
-      ButtonMain,
       RegisterComponent
     },
     methods: {
@@ -57,19 +55,16 @@
       class="containerFormShow">
       <LoginComponent
       >
-        <div class="text-center lg:text-left flex flex-col w-full justify-between items-center">
-          <ButtonMain :textButton="'Login'" />
-          <p class="mb-0 mt-2 pt-1 text-sm font-semibold">
-          Don't have an account?
-            <button
-              @click="showRegister()"
-              class="textDegrant text-lg transition duration-200 ease-in-out  active:text-fun-blue-600 hover:underline
-              hover:underline-offset-4 hover:decoration-fun-blue-400"
-            >
-              Register
-            </button>
-          </p>
-        </div>
+        <p class="mb-0 mt-2 pt-1 text-sm font-semibold">
+        Don't have an account?
+          <button
+            @click="showRegister()"
+            class="textDegrant text-lg transition duration-200 ease-in-out  active:text-fun-blue-600 hover:underline
+            hover:underline-offset-4 hover:decoration-fun-blue-400"
+          >
+            Register
+          </button>
+        </p>
       </LoginComponent>
     </div>
     <picture 
@@ -123,7 +118,7 @@
       transform: translateX(-100%);
     }
     to {
-      transform: translateX(-20%);
+      transform: translateX(0%);
     }
   }
 
