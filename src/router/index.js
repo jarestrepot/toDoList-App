@@ -1,26 +1,25 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import  Login  from '../pages/Login.vue'
+import AuthRoute from '../modules/auth/routes/AuthRoute'
+import TodoRoute from '../modules/todos/routes/TodosRoute'
+
+const routes = [
+  {
+    path: '/auth',
+    ...AuthRoute
+  },
+  {
+    path: '/dashboard',
+    ...TodoRoute
+  },
+  {
+    path: '/:pathMatch(.*)*',
+    component: () => import('../modules/todos/layouts/TodosLayout.vue')
+  }
+]
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
-  routes: [
-    {
-      path: '/',
-      name: 'home',
-      component: Login
-    },
-    {
-      path: '/register',
-      name: 'about',
-      // which is lazy-loaded when the route is visited.
-      component: () => import('../components/RegisterComponent.vue')
-    },
-    {
-      path: '/dashboard',
-      name: 'dashboard',
-      component: () => import('../pages/Dashboard.vue')
-    }
-  ]
+  history: createWebHistory(),
+  routes,
 })
 
 export default router
