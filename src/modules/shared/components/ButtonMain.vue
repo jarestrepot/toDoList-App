@@ -15,7 +15,7 @@
 <template>
   <button
     @click="emitValue()"
-    :disabled="disabledButton"
+    :disabled="disabledButton ?? false"
     type="button" class="button-main">
     {{ textButton ?? 'Login' }}
   </button>

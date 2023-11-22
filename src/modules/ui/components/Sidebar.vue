@@ -1,15 +1,32 @@
 <script>
-import HomeIcon from '../components/icons/HomeIcon.vue'
-import ProfileIcon from '../components/icons/ProfileIcon.vue'
-import LogoutIcon from '../components/icons/LogoutIcon.vue'
+  import HomeIcon from '../components/icons/HomeIcon.vue'
+  import ProfileIcon from '../components/icons/ProfileIcon.vue'
+  import LogoutIcon from '../components/icons/LogoutIcon.vue'
+  import { userAuthStore } from '../../../store/auth/authUser'
 
-export default {
-  components: {
-    HomeIcon,
-    ProfileIcon,
-    LogoutIcon,
-  },
-}
+
+  export default {
+    data(){
+      return {
+        store: userAuthStore()
+      }
+    },
+    components: {
+      HomeIcon,
+      ProfileIcon,
+      LogoutIcon,
+    },
+    methods: {
+      logoutUser(){
+        this.store.logoutUser()
+        const { status } = this.store;
+        if(status === 'not-authenticated'){
+          localStorage.removeItem('tokenUser')
+          this.$router.push('/')
+        }
+      }
+    }
+  }
 </script>
 <template>
   <aside
@@ -50,16 +67,13 @@ export default {
           <p class="block antialiased font-sans text-sm leading-normal text-white font-black uppercase opacity-75">auth pages</p>
         </li>
         <li>
-          <!-- !!Petición de logout -->
-          <a>
-            <button
-              class="middle none font-sans font-bold center transition-all text-xs py-3 rounded-lg text-white hover:bg-white/10 [&.active]:bg-white/30 w-full flex items-center gap-4 px-4 capitalize"
-              type="button">
-            <LogoutIcon />
-            <p class="block antialiased font-sans text-base leading-relaxed text-inherit font-medium capitalize">Log out
-            </p>
-          </button>
-        </a>
+        <button
+          @click="logoutUser()"
+          class="middle none font-sans font-bold center transition-all text-xs py-3 rounded-lg text-white hover:bg-white/10 [&.active]:bg-white/30 w-full flex items-center gap-4 px-4 capitalize"
+          type="button">
+          <LogoutIcon />
+          <p class="block antialiased font-sans text-base leading-relaxed text-inherit font-medium capitalize">Log out</p>
+        </button>
       </li>
     </ul>
   </div>

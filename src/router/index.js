@@ -4,7 +4,7 @@ import TodoRoute from '../modules/todos/routes/TodosRoute'
 
 const routes = [
   {
-    path: '/auth',
+    path: '/',
     ...AuthRoute
   },
   {

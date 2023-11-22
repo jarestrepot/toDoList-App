@@ -1,9 +1,14 @@
 <script>
   import HelpBar from '../../shared/components/HelpBar.vue';
-  import ButtonMain from '../../shared/components/ButtonMain.vue';
   import TodoIcon from '../../todos/components/icons/TodoIcon.vue';
-
+  import ButtonMain from '../../shared/components/ButtonMain.vue';
+  import { userAuthStore } from '../../../store/auth/authUser';
   export default {
+    beforeCreate() {
+      if(localStorage.getItem('tokenUser')){
+        this.$router.push('dashboard');
+      }
+    },
     components: {
       HelpBar,
       TodoIcon,
@@ -13,7 +18,12 @@
       return {
         email: '', 
         password: '',
-        startValidation: false
+        startValidation: false,
+        messageServerError: {
+          status:false,
+          message: ''
+        },
+        userLoginStore: userAuthStore()
       }
     },
     computed:{
@@ -24,35 +34,39 @@
         return /^(?=.*\d)(?=.*[A-Za-z]).{8,}$/.test(this.password);
       },
       validFields(){
-        if(this.isValidEmail && this.isValidPassword ){
-          return false;
-        } 
-        return true;
+        return this.isValidEmail && this.isValidPassword
       }
-    },
+    }, 
     methods: {
       async loginUser(){
         try {
           this.startValidation = true
-          const getTest = await fetch('https://server-todo-list-app.cleverapps.io/user/login', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({email: this.email, password: this.password})
-          });
-          const response = await getTest.json();
-          console.log(response)
+          // Dispatch
+          await this.userLoginStore.fetchLoginUser(this.email, this.password);
+          if(this.userLoginStore.getToken){
+            localStorage.setItem('tokenUser', this.userLoginStore.getToken)
+            this.$router.push('dashboard')
+          }else{
+            this.errorMessage(this.userLoginStore.getErrorServer);
+            // ?? TODO: Clear form
+            this.email = this.password = ''
+          }
         } catch (error) {
-          console.error(error)
+          this.errorMessage(error);
         }
+      },
+      errorMessage(message){
+        this.messageServerError.status = true;
+        this.messageServerError.message = message;
       }
     }
   }
 </script>
 
 <template>
-  <form  @submit.prevent="loginUser()" class="w-8/12 p-2 2xl:w-2/5  md:p-3 grid gap-4 z-10 bg-white rounded-md md:bg-transparent">
+  <form 
+    ref="formLogin"
+    @submit.prevent="showRegister" class="w-8/12 p-2 2xl:w-2/5  md:p-3 grid gap-4 z-10 bg-white rounded-md md:bg-transparent">
     <!--Sign in section-->
     <div class="flex flex-row items-center justify-center">
       <h1 class="text-center text-4xl p-3 md:text-6xl font-bold textDegrant my-2">Welcome</h1>
@@ -61,7 +75,6 @@
     <HelpBar>
       <TodoIcon :color="'#000'" />
     </HelpBar>
-
     <!-- Email input -->
     <div class="relative mb-6" data-te-input-wrapper-init>
       <input type="text"
@@ -96,11 +109,17 @@
     </div>
     <div class="text-center lg:text-left flex flex-col w-full justify-between items-center">
       <ButtonMain
+        :class="!validFields ? 'opacity-60 cursor-not-allowed' : 'opacity-100 cursor-pointer'"
         @submitEmit="loginUser()"
         :textButton="'Login'" 
-        :disabledButton="validFields"
+        :disabledButton="!validFields"
       />
       <slot />
     </div>
   </form>
+  <div
+    v-if="messageServerError.status"
+    class="text-lg p-2 text-red-700">
+    <span>{{ messageServerError.message }}</span>
+  </div>
 </template>

@@ -3,12 +3,14 @@ import InputSearch from '../../shared/components/InputSearch.vue';
 import ProfileIcon from '../components/icons/ProfileIcon.vue'
 import LogoutIcon from '../components/icons/LogoutIcon.vue';
 import HomeIcon from '../components/icons/HomeIcon.vue';
+import { userAuthStore } from '../../../store/auth/authUser';
 
 export default {
   data() {
     return {
       nameNavigate: '',
       showInput: false,
+      store: userAuthStore()
     };
   },
   beforeCreate() {
@@ -28,6 +30,16 @@ export default {
     LogoutIcon,
     HomeIcon
   },
+  methods: {
+    logoutUser(){
+      this.store.logoutUser()
+      const { status } = this.store;
+      if (status === 'not-authenticated') {
+        localStorage.removeItem('tokenUser')
+        this.$router.push('/')
+      }
+    }
+  }
 }
 </script>
 
@@ -58,9 +70,8 @@ export default {
             <ProfileIcon className="w-7 h-7" />
           </span>
         </router-link>
-
-        <!-- !!Ojo logout -->
         <button
+          @click="logoutUser()"
           class="relative middle none font-sans font-medium text-center uppercase transition-all w-10 max-w-[40px] h-10 max-h-[40px] rounded-lg text-xs text-gray-500 hover:bg-blue-gray-500/10 active:bg-blue-gray-500/30 grid xl:hidden"
           type="button" title="Logout">
           <span class="absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2">
