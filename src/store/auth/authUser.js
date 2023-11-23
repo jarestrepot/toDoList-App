@@ -10,16 +10,13 @@ export const userAuthStore = defineStore("auth", {
     tasks: [],
     hasError: null
   }),
-  getters: {
-    getUserLogin: ({ user }) => user,
-    getToken: ({ token }) => token,
-    getErrorServer: ({ hasError }) => hasError,
-  },
   actions: {
     async fetchLoginUser(email, password) {
       const response = await startLogin(email, password);
       if(response.Error){
-        this.hasError = response.Error;
+        this.$patch({
+          hasError: response.Error
+        });
       }else{
         const { dataUser, tasks, token } = await response;
         this.$patch({
@@ -27,11 +24,11 @@ export const userAuthStore = defineStore("auth", {
           user: dataUser,
           tasks,
           token,
+          hasError:null,
         });
       }
     },
     logoutUser(){
-      console.log('Store Logout')
       this.$patch({
         status: 'not-authenticated',
         user: null, 
@@ -39,7 +36,9 @@ export const userAuthStore = defineStore("auth", {
         token: null,
         hasError: null
       });
+      localStorage.removeItem('tokenUser')
     },
-  }
+  },
+  persist: true,
 })
 

@@ -5,8 +5,24 @@ import UserInfoIcon from '../components/icons/UserInfoIcon.vue';
 import PasswordIcon from '../components/icons/PasswordIcon.vue';
 import RefreshIcon from '../components/icons/RefreshIcon.vue';
 import TrashIcon from '../components/icons/TrashIcon.vue';
+import { userAuthStore } from '../../../store/auth/authUser';
 
 export default {
+  data () {
+    return {
+      name:'',
+      lastName: '',
+      email: '',
+      store: userAuthStore(),
+    }
+  },
+  mounted() {
+    const { user } = this.store
+    this.name = user.name;
+    this.lastName = user.lastName;
+    this.email = user.email;
+
+  },
   components: {
     ProfileIcon,
     EmailIcon,
@@ -29,7 +45,7 @@ export default {
         <div class="max-w-sm mx-auto md:w-full md:mx-0">
           <div class="inline-flex items-center space-x-4">
             <ProfileIcon className="w-12 h-12" />
-            <h1 class="text-gray-600">Valentina Alzate</h1>
+            <h1 class="text-gray-600 uppercase font-semibold">{{ `${name} ${lastName}` }}</h1>
           </div>
         </div>
       </div>
@@ -44,8 +60,11 @@ export default {
               <div class="pt-2 w-1/12 bg-gray-100 bg-opacity-50 rounded-s-md">
                 <EmailIcon />
               </div>
-              <input name="email" type="email" class="rounded-e-md border-slate-300 w-11/12 focus:outline-none focus:text-gray-600 p-2"
-                placeholder="email@example.com" />
+              <input 
+                v-model="email"
+                type="email" 
+                class="rounded-e-md border-slate-300 w-11/12 focus:outline-none focus:text-gray-600 p-2"
+                placeholder="Your email" />
             </div>
           </div>
         </div>
@@ -63,7 +82,10 @@ export default {
                 <div class="w-1/12 pt-2 bg-gray-100 rounded-s-md">
                   <UserInfoIcon />
                 </div>
-                <input name="name" type="text" class="rounded-e-md border-slate-300 w-11/12 focus:outline-none focus:text-gray-600 p-2"
+                <input 
+                  v-model="name" 
+                  type="text" 
+                  class="rounded-e-md border-slate-300 w-11/12 focus:outline-none focus:text-gray-600 p-2"
                   placeholder="Your name" />
               </div>
             </div>
@@ -74,7 +96,10 @@ export default {
                 <div class="pt-2 w-1/12 bg-gray-100 rounded-s-md">
                   <UserInfoIcon />
                 </div>
-                <input name="lastName" type="text" class="rounded-e-md border-slate-300 w-11/12 focus:outline-none focus:text-gray-600 p-2"
+                <input 
+                  v-model="lastName" 
+                  type="text" 
+                  class="rounded-e-md border-slate-300 w-11/12 focus:outline-none focus:text-gray-600 p-2"
                   placeholder="Your last name" />
               </div>
             </div>
@@ -95,7 +120,10 @@ export default {
                 <div class="w-1/12 pt-2 bg-gray-100 rounded-s-md">
                   <PasswordIcon />
                 </div>
-                <input name="password" type="password" class="rounded-e-md border-slate-300 w-11/12 focus:outline-none focus:text-gray-600 p-2"
+                <input 
+                  v-model="password" 
+                  type="password" 
+                  class="rounded-e-md border-slate-300 w-11/12 focus:outline-none focus:text-gray-600 p-2"
                   placeholder="Your current password" />
               </div>
             </div>
@@ -106,7 +134,10 @@ export default {
                 <div class="pt-2 w-1/12 bg-gray-100 rounded-s-md">
                   <PasswordIcon />
                 </div>
-                <input name="newPassword" type="password" class="rounded-e-md border-slate-300 w-11/12 focus:outline-none focus:text-gray-600 p-2"
+                <input 
+                  v-model="newPassword" 
+                  type="password" 
+                  class="rounded-e-md border-slate-300 w-11/12 focus:outline-none focus:text-gray-600 p-2"
                   placeholder="Your new password" />
               </div>
             </div>

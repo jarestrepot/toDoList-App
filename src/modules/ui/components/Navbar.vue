@@ -8,20 +8,21 @@ import { userAuthStore } from '../../../store/auth/authUser';
 export default {
   data() {
     return {
-      nameNavigate: '',
-      showInput: false,
-      store: userAuthStore()
+      showItemsNav: true,
+      store: userAuthStore(),
+      fullNameUser: null,
     };
   },
+  mounted() {
+    const { user } = this.store
+    this.fullNameUser = `${user.name}  ${user.lastName}`;
+  },
   beforeCreate() {
-      this.$watch('$route', to => {
-      if (to.name !== 'profile') {
-        this.nameNavigate = 'Dashboard';
-        this.showInput = true;
-      } else {
-        this.nameNavigate = 'Profile';
-        this.showInput = false;
-      }
+    this.$watch('$route', to => {
+    if (to.name === 'profile') {
+      return this.showItemsNav = false;
+    } 
+      return this.showItemsNav = true;
     });
   },
   components: {
@@ -31,29 +32,26 @@ export default {
     HomeIcon
   },
   methods: {
-    logoutUser(){
+    logoutUser() {
       this.store.logoutUser()
-      const { status } = this.store;
-      if (status === 'not-authenticated') {
-        localStorage.removeItem('tokenUser')
-        this.$router.push('/')
-      }
+      this.$router.push('/')
     }
   }
 }
+
 </script>
 
 <template>
   <nav class="block w-full max-w-full bg-transparent text-white shadow-none rounded-xl transition-all px-0 py-1">
     <div class="flex flex-col-reverse justify-between gap-6 md:flex-row md:items-center">
 
-      <div class="capitalize">
-        <h6 class="block antialiased tracking-normal font-sans text-base font-semibold leading-relaxed text-gray-900">{{ nameNavigate }}</h6>
+      <div  class="capitalize">
+        <h6 v-if="showItemsNav" class="block antialiased tracking-normal font-sans text-base font-semibold leading-relaxed text-gray-900">Dashboard</h6>
       </div>
 
       <div class="flex items-center justify-end">
 
-        <InputSearch v-if="showInput" />
+        <InputSearch v-if="showItemsNav" />
 
         <router-link :to="{ name: 'no-entry' }"
           class="relative middle none font-sans font-medium text-center uppercase transition-all w-10 max-w-[40px] h-10 max-h-[40px] rounded-lg text-xs text-gray-500 hover:bg-blue-gray-500/10 active:bg-blue-gray-500/30 grid xl:hidden"
@@ -83,7 +81,7 @@ export default {
           class="middle none font-sans font-bold center uppercase transition-all text-xs py-3 rounded-lg text-gray-500 hover:bg-blue-gray-500/10 active:bg-blue-gray-500/30 hidden items-center gap-1 px-4 xl:flex"
           type="button" title="Profile">
           <ProfileIcon className="w-5 h-5" />
-          Valentina Alzate
+          {{ fullNameUser }}
         </router-link>
 
       </div>

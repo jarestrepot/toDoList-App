@@ -3,6 +3,9 @@
   import TodoIcon from '../../todos/components/icons/TodoIcon.vue';
   import ButtonMain from '../../shared/components/ButtonMain.vue';
   import { userAuthStore } from '../../../store/auth/authUser';
+  import LabelForms from '../../shared/components/LabelForms.vue';
+
+
   export default {
     beforeCreate() {
       if(localStorage.getItem('tokenUser')){
@@ -10,10 +13,11 @@
       }
     },
     components: {
-      HelpBar,
-      TodoIcon,
-      ButtonMain
-    },
+    HelpBar,
+    TodoIcon,
+    ButtonMain,
+    LabelForms,
+},
     data(){
       return {
         email: '', 
@@ -23,7 +27,8 @@
           status:false,
           message: ''
         },
-        userLoginStore: userAuthStore()
+        store: userAuthStore(),
+        clase: 'focus:ring-0 peer h-11 w-full rounded-[7px] border border-slate-500 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-slate-500 placeholder-shown:border-t-slate-500 focus:border-2 focus:border-blue-500 focus:border-t-transparent focus:outline-0'
       }
     },
     computed:{
@@ -40,15 +45,15 @@
     methods: {
       async loginUser(){
         try {
-          this.startValidation = true
-          // Dispatch
-          await this.userLoginStore.fetchLoginUser(this.email, this.password);
-          if(this.userLoginStore.getToken){
-            localStorage.setItem('tokenUser', this.userLoginStore.getToken)
+          this.startValidation = true;
+          
+          await this.store.fetchLoginUser(this.email, this.password)
+
+          if(this.store.token){
+            localStorage.setItem('tokenUser', this.store.token)
             this.$router.push('dashboard')
           }else{
-            this.errorMessage(this.userLoginStore.getErrorServer);
-            // ?? TODO: Clear form
+            this.errorMessage(this.store.hasError);
             this.email = this.password = ''
           }
         } catch (error) {
@@ -64,62 +69,63 @@
 </script>
 
 <template>
-  <form 
-    ref="formLogin"
-    @submit.prevent="showRegister" class="w-8/12 p-2 2xl:w-2/5  md:p-3 grid gap-4 z-10 bg-white rounded-md md:bg-transparent">
-    <!--Sign in section-->
+  <div class="w-8/12 p-2 2xl:w-3/5 md:p-3 grid gap-4 z-10 bg-white rounded-md md:bg-transparent">
+    
     <div class="flex flex-row items-center justify-center">
-      <h1 class="text-center text-4xl p-3 md:text-6xl font-bold textDegrant my-2">Welcome</h1>
+      <h1 class="text-center text-3xl p-3 md:text-6xl font-bold textDegrant">Welcome</h1>
     </div>
 
     <HelpBar>
       <TodoIcon :color="'#000'" />
     </HelpBar>
-    <!-- Email input -->
-    <div class="relative mb-6" data-te-input-wrapper-init>
-      <input type="text"
-        v-model="email"
-        class="peer block min-h-[auto] w-full rounded border bg-transparent px-3 py-[0.32rem] leading-[2.15] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
-        placeholder="Email address" />
-      <label for=""
-        class="pointer-events-none absolute text-lg left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[2.15] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[1.7rem] peer-focus:scale-[1] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[1.15rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary peer-focus:bg-transparent peer-focus:bg-white ">Email
-        address
-      </label>
-      <div 
-        v-if="!isValidEmail && email.length > 0"
-        class="mt-2 text-red-600 text-lg">
-        <span>Email incorrect!</span>
-      </div>
-    </div>
 
-    <!-- Password input -->
-    <div class="relative mb-6" data-te-input-wrapper-init>
-      <input type="password"
-        v-model="password"
-        class="peer block min-h-[auto] w-full rounded border bg-transparent px-3 py-[0.32rem] leading-[2.15] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0 "
-        placeholder="Password" />
-      <label for=""
-        class="pointer-events-none absolute text-lg left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[2.15] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[1.7rem] peer-focus:scale-[1] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[1.15rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary peer-focus:bg-white">Password
-      </label>
-      <div
-        v-if="!isValidPassword && password.length > 0"
-        class="mt-2 text-red-600 text-lg">
-        <span>Password incorrect!</span>
+    <form 
+      ref="formLogin"
+      @submit.prevent="showRegister">
+
+      <div class="relative w-full min-w-[200px] mb-8">
+        <input 
+          type="text"
+          v-model="email"
+          :class="clase"
+          placeholder=" " />
+        <LabelForms textDisplay="Email address"/>
+        <div 
+          v-if="!isValidEmail && email.length > 0"
+          class="mt-2 text-red-600 text-sm 2xl:text-lg">
+          <span>Email incorrect!</span>
+        </div>
       </div>
+
+      <!-- Password input -->
+      <div class="relative w-full min-w-[200px] mb-4">
+        <input
+          type="password"
+          v-model="password"
+          :class="clase"
+          placeholder=" " />
+        <LabelForms textDisplay="Password"/>
+        <div
+          v-if="!isValidPassword && password.length > 0"
+          class="mt-2 text-red-600 text-sm 2xl:text-lg">
+          <span>Password incorrect!</span>
+        </div>
+      </div>
+      <div class="text-center lg:text-left flex flex-col w-full justify-between items-center">
+        <ButtonMain
+          :class="!validFields ? 'opacity-60 cursor-not-allowed' : 'opacity-100 cursor-pointer'"
+          @submitEmit="loginUser()"
+          :textButton="'Login'" 
+          :disabledButton="!validFields"
+        />
+        <slot />
+      </div>
+    </form>
+    <div
+      v-if="messageServerError.status"
+      class="text-lg p-2 text-red-700 text-center">
+      <span>{{ messageServerError.message }}</span>
     </div>
-    <div class="text-center lg:text-left flex flex-col w-full justify-between items-center">
-      <ButtonMain
-        :class="!validFields ? 'opacity-60 cursor-not-allowed' : 'opacity-100 cursor-pointer'"
-        @submitEmit="loginUser()"
-        :textButton="'Login'" 
-        :disabledButton="!validFields"
-      />
-      <slot />
-    </div>
-  </form>
-  <div
-    v-if="messageServerError.status"
-    class="text-lg p-2 text-red-700">
-    <span>{{ messageServerError.message }}</span>
   </div>
+  
 </template>

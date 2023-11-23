@@ -1,171 +1,153 @@
 <script>
-  import HelpBar from '../../shared/components/HelpBar.vue';
-  import TodoIcon from '../../todos/components/icons/TodoIcon.vue';
-  import ButtonMain from '../../shared/components/ButtonMain.vue';
-  import { startRegister } from '../../../helpers/authFetch';
-  export default {
-    components: {
-      HelpBar,
-      TodoIcon,
-      ButtonMain
-    },
-    data(){
-      return {
-        messageServerError: {
-          status: false,
-          message: ''
-        },
-        name:'',
-        lastName:'',
-        email: '',
-        password: '',
-        confirmPassword:'',
-        regexNameAndLastName: /^[a-zA-ZáéíóúüÁÉÍÓÚÜñÑ]{3,}( [a-zA-ZáéíóúüÁÉÍÓÚÜñÑ]{3,})?$/
-      }
-    },
-    computed: {
-      isValidEmail() {
-        return /^\w+([\\.-]?\w+)*@\w+([\\.-]?\w+)*(\.\w{2,3})+$/.test(this.email);
-      },
-      isValidPassword() {
-        return /^(?=.*\d)(?=.*[A-Za-z]).{8,}$/.test(this.password);
-      },
-      isValidName(){
-        return this.regexNameAndLastName.test(this.name);
-      },
-      isValidLastname(){
-        return this.regexNameAndLastName.test(this.lastName);
-      },
-      isValidConfirmPassword(){
-        return this.password === this.confirmPassword;
-      },
-      validFields() {
-        return this.isValidEmail && this.isValidPassword && this.isValidName && this.isValidLastname && this.isValidConfirmPassword;
-      }
-    },
-    methods: {
-      async registerUser(){ 
-        const paramsForm = {
-          name: this.name,
-          lastName: this.lastName,
-          email: this.email,
-          password: this.password,
-          location: null
-        }
-        const response = startRegister(paramsForm);
-        if(response){
-          this.$emit('emitLogin', true)
-        }else{
-          // !! TODO: Clear form
-          this.messageServerError.status = true;
-          this.messageServerError.message = response.Error
-        }
+import HelpBar from '../../shared/components/HelpBar.vue';
+import TodoIcon from '../../todos/components/icons/TodoIcon.vue';
+import ButtonMain from '../../shared/components/ButtonMain.vue';
+import { startRegister } from '../../../helpers/authFetch';
+import LabelForms from '../../shared/components/LabelForms.vue';
 
+export default {
+  components: {
+    HelpBar,
+    TodoIcon,
+    ButtonMain,
+    LabelForms
+},
+  data() {
+    return {
+      messageServerError: {
+        status: false,
+        message: ''
+      },
+      name: '',
+      lastName: '',
+      email: '',
+      password: '',
+      confirmPassword: '',
+      regexNameAndLastName: /^[a-zA-ZáéíóúüÁÉÍÓÚÜñÑ]{3,}( [a-zA-ZáéíóúüÁÉÍÓÚÜñÑ]{3,})?$/,
+      clase: 'focus:ring-0 peer h-9 2xl:h-11 w-full rounded-[7px] border border-slate-500 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-slate-500 placeholder-shown:border-t-slate-500 focus:border-2 focus:border-blue-500 focus:border-t-transparent focus:outline-0'
+    }
+  },
+  computed: {
+    isValidEmail() {
+      return /^\w+([\\.-]?\w+)*@\w+([\\.-]?\w+)*(\.\w{2,3})+$/.test(this.email);
+    },
+    isValidPassword() {
+      return /^(?=.*\d)(?=.*[A-Za-z]).{8,}$/.test(this.password);
+    },
+    isValidName() {
+      return this.regexNameAndLastName.test(this.name);
+    },
+    isValidLastname() {
+      return this.regexNameAndLastName.test(this.lastName);
+    },
+    isValidConfirmPassword() {
+      return this.password === this.confirmPassword;
+    },
+    validFields() {
+      return this.isValidEmail && this.isValidPassword && this.isValidName && this.isValidLastname && this.isValidConfirmPassword;
+    }
+  },
+  methods: {
+    async registerUser() {
+      const paramsForm = {
+        name: this.name,
+        lastName: this.lastName,
+        email: this.email,
+        password: this.password,
+        location: null
       }
+      const response = startRegister(paramsForm);
+      if (response) {
+        this.$emit('emitLogin', true)
+        this.name = this.lastName = this.email = this.password = this.confirmPassword = ''
+      } else {
+        this.name  = this.lastName = this.email = this.password = this.confirmPassword = ''
+        this.messageServerError.status = true;
+        this.messageServerError.message = response.Error
+      }
+
     }
   }
+}
 </script>
 
 <template>
-  <form @submit.prevent="showLogin"
-    class="w-8/12 p-2 2xl:w-2/5 overflow-x-auto md:p-3 grid  z-10 bg-white rounded-md md:bg-transparent">
-    <!--Sign in section-->
-    <div class="flex flex-row items-center justify-center ">
-      <h1 class="text-center p-3 text-4xl md:text-6xl font-bold textDegrant my-2">Register</h1>
+  <div class="w-8/12 p-2 2xl:w-3/5 overflow-x-auto md:p-3 grid z-10 bg-white rounded-md md:bg-transparent">
+    <div class="flex flex-row items-center justify-center">
+      <h1 class="text-center p-3 text-3xl md:text-6xl font-bold textDegrant">Register</h1>
     </div>
+
     <HelpBar>
       <TodoIcon :color="'#000'" />
     </HelpBar>
 
-    <!-- Name input -->
-    <div class="relative mb-6" data-te-input-wrapper-init>
-      <input type="text"
-        v-model="name"
-        class="peer block min-h-[auto] w-full rounded border bg-transparent px-3 py-[0.32rem] leading-[2.15] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
-        placeholder="Your Name" />
-      <label for=""
-        class="pointer-events-none absolute text-lg left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[2.15] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[1.7rem] peer-focus:scale-[1] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[1.15rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary peer-focus:bg-transparent peer-focus:bg-white ">
-        Your Name
-      </label>
-      <div
-        v-if="!isValidName && name.length > 0"
-        class="mt-2 text-red-600 text-lg">
-        <span>Name incorrect!</span>
-      </div>
-    </div>
+    <form @submit.prevent="showLogin">
 
-    <!-- LastName input -->
-    <div class="relative mb-6" data-te-input-wrapper-init>
-      <input type="text"
-        v-model="lastName"
-        class="peer block min-h-[auto] w-full rounded border bg-transparent px-3 py-[0.32rem] leading-[2.15] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
-        placeholder="Last Name" />
-      <label for=""
-        class="pointer-events-none absolute text-lg left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[2.15] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[1.7rem] peer-focus:scale-[1] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[1.15rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary peer-focus:bg-transparent peer-focus:bg-white ">
-        Last Name
-      </label>
-      <div
-        v-if="!isValidLastname && lastName.length > 0"
-        class="mt-2 text-red-600 text-lg">
-        <span>Last Name incorrect!</span>
+      <div class="relative w-full min-w-[200px] mb-4">
+        <input 
+          type="text" 
+          v-model="name"
+          :class="clase"
+          placeholder=" " />
+        <LabelForms textDisplay="Your name" />
+        <div v-if="!isValidName && name.length > 0" class="mt-1 text-red-600 text-sm 2xl:text-lg">
+          <span>Name incorrect!</span>
+        </div>
       </div>
-    </div>
 
-    <!-- Email input -->
-    <div class="relative mb-6" data-te-input-wrapper-init>
-      <input type="text"
-        v-model="email"
-        class="peer block min-h-[auto] w-full rounded border bg-transparent px-3 py-[0.32rem] leading-[2.15] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
-        placeholder="Email address" />
-      <label for=""
-        class="pointer-events-none absolute text-lg left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[2.15] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[1.7rem] peer-focus:scale-[1] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[1.15rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary peer-focus:bg-transparent peer-focus:bg-white ">Email
-        address
-      </label>
-      <div
-        v-if="!isValidEmail && email.length > 0"
-        class="mt-2 text-red-600 text-lg">
-        <span>Email incorrect!</span>
+      <div class="relative w-full min-w-[200px] mb-4">
+        <input 
+          type="text" 
+          v-model="lastName"
+          :class="clase"
+          placeholder=" " />
+        <LabelForms textDisplay="Last name" />
+        <div v-if="!isValidLastname && lastName.length > 0" class="mt-1 text-red-600 text-sm 2xl:text-lg">
+          <span>Last name incorrect!</span>
+        </div>
       </div>
-    </div>
 
-    <!-- Password input -->
-    <div class="relative mb-6" data-te-input-wrapper-init>
-      <input type="password"
-        v-model="password"
-        class="peer block min-h-[auto] w-full rounded border bg-transparent px-3 py-[0.32rem] leading-[2.15] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0 "
-        placeholder="Password" />
-      <label for=""
-        class="pointer-events-none absolute text-lg left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[2.15] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[1.7rem] peer-focus:scale-[1] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[1.15rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary peer-focus:bg-white">Password
-      </label>
-      <div
-        v-if="!isValidPassword && password.length > 0"
-        class="mt-2 text-red-600 text-lg">
-        <span>Password incorrect!</span>
+      <div class="relative w-full min-w-[200px] mb-4">
+        <input 
+          type="email" 
+          v-model="email"
+          :class="clase"
+          placeholder=" " />
+        <LabelForms textDisplay="Email address" />
+        <div v-if="!isValidEmail && email.length > 0" class="mt-1 text-red-600 text-sm 2xl:text-lg">
+          <span>Email address incorrect!</span>
+        </div>
       </div>
-    </div>
 
-    <div class="relative mb-6" data-te-input-wrapper-init>
-      <input type="password"
-        v-model="confirmPassword"
-        class="peer block min-h-[auto] w-full rounded border bg-transparent px-3 py-[0.32rem] leading-[2.15] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0 "
-        placeholder="Confirm password" />
-      <label for=""
-        class="pointer-events-none absolute text-lg left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[2.15] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[1.7rem] peer-focus:scale-[1] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[1.15rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary peer-focus:bg-white">Confirm password
-      </label>
-      <div
-        v-if="!isValidConfirmPassword && confirmPassword.length > 0"
-        class="mt-2 text-red-600 text-lg">
-        <span>Passwords do not match!</span>
+      <div class="relative w-full min-w-[200px] mb-4">
+        <input 
+          type="password" 
+          v-model="password"
+          :class="clase"
+          placeholder=" " />
+        <LabelForms textDisplay="Password" />
+        <div v-if="!isValidPassword && password.length > 0" class="mt-1 text-red-600 text-sm 2xl:text-lg">
+          <span>Password incorrect!</span>
+        </div>
       </div>
-    </div>
-    <div class="text-center lg:text-left flex flex-col w-full justify-between items-center">
-      <ButtonMain
-        :class="!validFields ? 'opacity-60 cursor-not-allowed' : 'opacity-100 cursor-pointer'" :textButton="'Register'" :disabledButton="!validFields" 
-        @submitEmit="registerUser()"
-      />
-      <slot />
-    </div>
-  </form>
+
+      <div class="relative w-full min-w-[200px] 2xl:mb-4">
+        <input 
+          type="password" 
+          v-model="confirmPassword"
+          :class="clase"
+          placeholder=" " />
+        <LabelForms textDisplay="Confirm password" />
+        <div v-if="!isValidConfirmPassword && confirmPassword.length > 0" class="mt-1 text-red-600 text-sm 2xl:text-lg">
+          <span>Password does not match!</span>
+        </div>
+      </div>
+
+      <div class="text-center lg:text-left flex flex-col w-full justify-between items-center">
+        <ButtonMain :class="!validFields ? 'opacity-60 cursor-not-allowed' : 'opacity-100 cursor-pointer'"
+          :textButton="'Register'" :disabledButton="!validFields" @submitEmit="registerUser()" />
+        <slot />
+      </div>
+    </form>
+  </div>
 </template>
-
-<style></style>

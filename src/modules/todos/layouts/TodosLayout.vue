@@ -32,10 +32,10 @@ export default{
   <Sidebar />
   <header class="bg-gray-50/50 p-4 xl:ml-80">
     <Navbar />
-    <AddTodoIcon v-if="showAddTodo" />
   </header>
   <main class="min-h-screen bg-gray-50/50 p-4 xl:ml-80">
     <router-view />
+    <AddTodoIcon v-if="showAddTodo" />
   </main>
   <Footer />
 </template>

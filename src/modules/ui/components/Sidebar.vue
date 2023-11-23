@@ -19,11 +19,7 @@
     methods: {
       logoutUser(){
         this.store.logoutUser()
-        const { status } = this.store;
-        if(status === 'not-authenticated'){
-          localStorage.removeItem('tokenUser')
-          this.$router.push('/')
-        }
+        this.$router.push('/')
       }
     }
   }
@@ -72,7 +68,7 @@
           class="middle none font-sans font-bold center transition-all text-xs py-3 rounded-lg text-white hover:bg-white/10 [&.active]:bg-white/30 w-full flex items-center gap-4 px-4 capitalize"
           type="button">
           <LogoutIcon />
-          <p class="block antialiased font-sans text-base leading-relaxed text-inherit font-medium capitalize">Log out</p>
+          <p class="block antialiased font-sans text-base leading-relaxed text-inherit font-medium capitalize">Logout</p>
         </button>
       </li>
     </ul>
