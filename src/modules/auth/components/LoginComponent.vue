@@ -9,7 +9,7 @@
   export default {
     beforeCreate() {
       if(localStorage.getItem('tokenUser')){
-        this.$router.push('dashboard');
+        this.$router.push('/dashboard');
       }
     },
     components: {
@@ -46,14 +46,14 @@
       async loginUser(){
         try {
           this.startValidation = true;
-          
           await this.store.fetchLoginUser(this.email, this.password)
+          const { token, hasError } = this.store
 
-          if(this.store.token){
-            localStorage.setItem('tokenUser', this.store.token)
-            this.$router.push('dashboard')
+          if(token){
+            localStorage.setItem('tokenUser', token)
+            this.$router.push('/dashboard')
           }else{
-            this.errorMessage(this.store.hasError);
+            this.errorMessage(hasError);
             this.email = this.password = ''
           }
         } catch (error) {

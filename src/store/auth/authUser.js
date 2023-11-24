@@ -39,12 +39,10 @@ export const userAuthStore = defineStore("auth", {
       localStorage.removeItem('tokenUser')
     },
     updateUser({ user }){
-
       this.$patch({
         user
       });
     },
-
   },
   persist: true,
 })

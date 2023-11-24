@@ -8,22 +8,13 @@ import { userAuthStore } from '../../../store/auth/authUser';
 export default {
   data() {
     return {
-      showItemsNav: true,
-      store: userAuthStore(),
       fullNameUser: null,
+      store: userAuthStore(),
     };
   },
   mounted() {
     const { user } = this.store
     this.fullNameUser = `${user.name}  ${user.lastName}`;
-  },
-  beforeCreate() {
-    this.$watch('$route', to => {
-    if (to.name === 'profile') {
-      return this.showItemsNav = false;
-    } 
-      return this.showItemsNav = true;
-    });
   },
   components: {
     InputSearch,
@@ -46,12 +37,12 @@ export default {
     <div class="flex flex-col-reverse justify-between gap-6 md:flex-row md:items-center">
 
       <div  class="capitalize">
-        <h6 v-if="showItemsNav" class="block antialiased tracking-normal font-sans text-base font-semibold leading-relaxed text-gray-900">Dashboard</h6>
+        <h6 v-if="this.$route.name !== 'profile'" class="block antialiased tracking-normal font-sans text-base font-semibold leading-relaxed text-gray-900">Dashboard</h6>
       </div>
 
       <div class="flex items-center justify-end">
 
-        <InputSearch v-if="showItemsNav" />
+        <InputSearch v-if="this.$route.name !== 'profile'" />
 
         <router-link :to="{ name: 'no-entry' }"
           class="relative middle none font-sans font-medium text-center uppercase transition-all w-10 max-w-[40px] h-10 max-h-[40px] rounded-lg text-xs text-gray-500 hover:bg-blue-gray-500/10 active:bg-blue-gray-500/30 grid xl:hidden"
