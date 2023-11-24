@@ -80,7 +80,7 @@ export default {
 <template>
   <section class="flex flex-col gap-4 justify-around items-center lg:flex-row lg:items-start">
     <div>
-      <h2 class="text-4xl mb-4 xl:my-6 text-center lg:text-start">Profile</h2>
+      <h2 class="textDegrant text-4xl mb-4 xl:my-6 text-center lg:text-start font-semibold">Profile</h2>
       <span>Add information about yourself</span>
     </div>
     <div class="container max-w-2xl md:w-3/4 shadow-md rounded-md overflow-hidden">

@@ -2,6 +2,9 @@
 import TodoIcon from '../components/icons/TodoIcon.vue'
 
 export default {
+  props: {
+    todo: Object
+  },
   components: {
     TodoIcon,
   },
@@ -15,18 +18,20 @@ export default {
 <template>
   <div @click="openModal" class="relative flex flex-col bg-clip-border rounded-xl bg-white text-gray-700 shadow-md">
     <div
-      class="bg-clip-border mx-4 rounded-xl overflow-hidden bg-gradient-to-tr from-green-500 to-green-400 text-white shadow-green-500/40 shadow-lg absolute -mt-4 grid h-16 w-16 place-items-center">
+      class="bg-clip-border mx-4 rounded-xl overflow-hidden shadow-lg absolute -mt-4 grid h-16 w-16 place-items-center"
+      :class= "{ highImportacnce: todo.Importance === 'High', mediumImportacnce: todo.Importance === 'Medium', lowImportacnce: todo.Importance === 'Low'}">
       <TodoIcon />
     </div>
     <div class="p-3 text-right">
-      <p class="block antialiased font-sans text-sm leading-normal font-normal text-gray-400">Category - Date</p>
-      <h4 class="block antialiased tracking-normal font-sans text-2xl font-semibold leading-snug text-blue-gray-900">Title</h4>
+      <p class="block antialiased font-sans text-sm leading-normal font-normal text-gray-400">{{ todo.Category }}</p>
+      <h4 class="block antialiased tracking-normal font-sans text-2xl font-semibold leading-snug text-blue-gray-900">{{ todo.title }}</h4>
     </div>
     <div class="border-t border-blue-gray-50 p-3">
       <p class="block antialiased font-sans text-base leading-relaxed font-normal text-blue-gray-600">
-        Description
+        {{ todo.description }}
       </p>
-      <p class="block antialiased font-sans text-sm leading-normal font-normal text-right text-gray-400">Status</p>
+      <p class="block antialiased font-sans text-sm leading-normal font-normal text-right text-gray-400">{{ todo.Status }}</p>
     </div>
   </div>
 </template>
+
