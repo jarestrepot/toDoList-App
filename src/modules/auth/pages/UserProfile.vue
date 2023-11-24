@@ -6,22 +6,30 @@ import PasswordIcon from '../components/icons/PasswordIcon.vue';
 import RefreshIcon from '../components/icons/RefreshIcon.vue';
 import TrashIcon from '../components/icons/TrashIcon.vue';
 import { userAuthStore } from '../../../store/auth/authUser';
+import { startDeleteUser, startEditUser } from '../../../helpers/authFetch';
 
 export default {
   data () {
     return {
+      store: userAuthStore(),
       name:'',
       lastName: '',
       email: '',
-      store: userAuthStore(),
+      userId: '',
+      password: null ,
+      newPassword: null,
+      errorMessage: {
+        status: false,
+        message:''
+      },
     }
   },
-  mounted() {
+  async mounted() {
     const { user } = this.store
     this.name = user.name;
     this.lastName = user.lastName;
     this.email = user.email;
-
+    this.userId = user.user_id;
   },
   components: {
     ProfileIcon,
@@ -30,6 +38,42 @@ export default {
     PasswordIcon,
     RefreshIcon,
     TrashIcon
+  },
+  methods: {
+    async deleteAccount(){
+      const response = await startDeleteUser(this.userId);
+      if(response.Error){
+        this.errorMessage = {
+          status: true,
+          message: response.Error
+        }
+      }else{
+        const { logoutUser } = this.store;
+        logoutUser();
+        this.$router.push('/');
+      }
+    },
+    async updateAccont(){
+
+      const user = { 
+        name: this.name, 
+        lastName:this.lastName,
+        email: this.email,
+        password: this.password,
+        newPassword: this.newPassword ?? this.password,
+        userId:this.userId
+      }
+      const response = await startEditUser(user);
+      if(response.Error){
+          this.errorMessage = {
+          status: true,
+          message: response.Error.error
+        }
+      }else{
+        const { updateUser } = this.store;
+        updateUser(response);
+      }
+    }
   }
 }
 </script>
@@ -148,14 +192,21 @@ export default {
         <hr />
 
         <div class="w-full p-4 text-gray-500 flex items-center justify-end gap-4">
-          <!-- !! Peticioón de actualizar usuario -->
+          <span
+            class="text-red-600"
+            v-if="errorMessage.status"
+          >
+            {{ errorMessage.message }}
+          </span>
           <button
+            @click="updateAccont()"
             class="text-white w-full max-w-fit rounded-md text-center title-page py-2 px-4 inline-flex items-center focus:outline-none hover:bg-gradient-to-b">
             <RefreshIcon />
             Update
           </button>
-          <!-- !! Petición de eliminar usuario -->
-          <button class="inline-flex items-center focus:outline-none mr-4">
+          <button 
+            @click="deleteAccount()"
+            class="inline-flex items-center focus:outline-none mr-4">
             <TrashIcon />
             Delete account
           </button>

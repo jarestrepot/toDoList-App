@@ -3,15 +3,19 @@ import Navbar from '../../ui/components/Navbar.vue';
 import AddTodoIcon from '../components/icons/AddTodoIcon.vue';
 import Footer from '../../ui/components/Footer.vue';
 import Sidebar from '../../ui/components/Sidebar.vue'
-
+import { startAssetsTodos } from '../../../helpers/todosFetch'
+import { todosStore } from '../../../store/todos/todosUser'
 export default{
   data() {
     return {
       showAddTodo: true,
-
+      store: todosStore()
     };
   },
-  beforeCreate() {
+  async beforeCreate() {
+    const response = await startAssetsTodos()
+    const { assetsTodos } = todosStore();
+    assetsTodos(response);
     this.$watch('$route', to => {
       if (to.name === 'profile') {
         return this.showAddTodo = false;

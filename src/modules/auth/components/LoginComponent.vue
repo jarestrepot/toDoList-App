@@ -61,8 +61,10 @@
         }
       },
       errorMessage(message){
-        this.messageServerError.status = true;
-        this.messageServerError.message = message;
+        this.messageServerError = {
+          status: true,
+          message: message
+        } 
       }
     }
   }

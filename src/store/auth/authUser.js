@@ -8,7 +8,7 @@ export const userAuthStore = defineStore("auth", {
     user: null,
     token: null,
     tasks: [],
-    hasError: null
+    hasError: null,
   }),
   actions: {
     async fetchLoginUser(email, password) {
@@ -38,6 +38,13 @@ export const userAuthStore = defineStore("auth", {
       });
       localStorage.removeItem('tokenUser')
     },
+    updateUser({ user }){
+
+      this.$patch({
+        user
+      });
+    },
+
   },
   persist: true,
 })

@@ -59,15 +59,21 @@ export default {
       const response = startRegister(paramsForm);
       if (response) {
         this.$emit('emitLogin', true)
-        this.name = this.lastName = this.email = this.password = this.confirmPassword = ''
+        this.resetForm();
       } else {
-        this.name  = this.lastName = this.email = this.password = this.confirmPassword = ''
-        this.messageServerError.status = true;
-        this.messageServerError.message = response.Error
+        this.resetForm();
+        this.messageServerError = {
+          status: false,
+          message: response.Error
+        }
       }
-
+    },
+    resetForm() {
+      this.name = this.lastName = this.email = this.password = this.confirmPassword = ''
     }
-  }
+  },
+
+
 }
 </script>
 
