@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
 
 
-export const todosStore = defineStore("todos",{
+export const useTodosStore = defineStore("todos",{
   state: () => ({
     assets: {}
   }),

@@ -1,6 +1,7 @@
 
 import { defineStore } from "pinia";
 import { startLogin } from '../../helpers/authFetch';
+import { startUpdateTodo } from "../../helpers/todosFetch";
 
 export const userAuthStore = defineStore("auth", {
   state: () => ({
@@ -46,6 +47,9 @@ export const userAuthStore = defineStore("auth", {
     getTodoId(id){
       const [todo] = this.tasks.filter(todo => todo.id === id)
       return todo
+    },
+    async updateTodoUser(todo){
+      return await startUpdateTodo(todo);
     }
   },
   persist: true,

@@ -4,6 +4,7 @@ import TodoIcon from '../../todos/components/icons/TodoIcon.vue';
 import ButtonMain from '../../shared/components/ButtonMain.vue';
 import { startRegister } from '../../../helpers/authFetch';
 import LabelForms from '../../shared/components/LabelForms.vue';
+import CONSTANTS from '../../../helpers/constants';
 
 export default {
   components: {
@@ -23,22 +24,21 @@ export default {
       email: '',
       password: '',
       confirmPassword: '',
-      regexNameAndLastName: /^[a-zA-ZáéíóúüÁÉÍÓÚÜñÑ]{3,}( [a-zA-ZáéíóúüÁÉÍÓÚÜñÑ]{3,})?$/,
       clase: 'focus:ring-0 peer h-9 2xl:h-11 w-full rounded-[7px] border border-slate-500 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-slate-500 placeholder-shown:border-t-slate-500 focus:border-2 focus:border-blue-500 focus:border-t-transparent focus:outline-0'
     }
   },
   computed: {
     isValidEmail() {
-      return /^\w+([\\.-]?\w+)*@\w+([\\.-]?\w+)*(\.\w{2,3})+$/.test(this.email);
+      return CONSTANTS.VALIDEMAIL.test(this.email);
     },
     isValidPassword() {
-      return /^(?=.*\d)(?=.*[A-Za-z]).{8,}$/.test(this.password);
+      return CONSTANTS.VALIDPASSWORD.test(this.password);
     },
     isValidName() {
-      return this.regexNameAndLastName.test(this.name);
+      return CONSTANTS.VALIDINPUT.test(this.name);
     },
     isValidLastname() {
-      return this.regexNameAndLastName.test(this.lastName);
+      return CONSTANTS.VALIDINPUT.test(this.lastName);
     },
     isValidConfirmPassword() {
       return this.password === this.confirmPassword;
