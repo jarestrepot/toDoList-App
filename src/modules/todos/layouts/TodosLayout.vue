@@ -1,5 +1,5 @@
 <script>
-import { todosStore } from '../../../store/todos/todosUser'
+import { useTodosStore } from '../../../store/todos/todosUser'
 import Navbar from '../../ui/components/Navbar.vue';
 import Sidebar from '../../ui/components/Sidebar.vue'
 import AddTodoIcon from '../components/icons/AddTodoIcon.vue';
@@ -13,12 +13,12 @@ export default{
     return {
       isVisible: false,
       showAddTodo: true,
-      store: todosStore(),
+      store: useTodosStore(),
     };
   },
   async beforeCreate() {
     const response = await startAssetsTodos();
-    const { assetsTodos } = todosStore();
+    const { assetsTodos } = this.store;
     assetsTodos(response);
   },
   components: { 

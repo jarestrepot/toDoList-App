@@ -1,7 +1,7 @@
-
+import CONSTANTS from "./constants";
 export async function startLogin(email, password){
   try {
-    const postLoginUser = await fetch('https://server-todo-list-app.cleverapps.io/user/login', {
+    const postLoginUser = await fetch(`${CONSTANTS.ENDPOINT}/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -19,7 +19,7 @@ export async function startLogin(email, password){
 
 export async function startRegister({ name, lastName, email, password, location = null }){
   try {
-    const registerUser = await fetch('https://server-todo-list-app.cleverapps.io/user/register', {
+    const registerUser = await fetch(`${CONSTANTS.ENDPOINT}/register`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -47,7 +47,7 @@ export async function startRegister({ name, lastName, email, password, location 
 
 export async function startDeleteUser(userRef){
   try {
-    const deleteUser = await fetch(`https://server-todo-list-app.cleverapps.io/user/delete/${userRef}`,{
+    const deleteUser = await fetch(`${CONSTANTS.ENDPOINT}/delete/${userRef}`,{
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json', 
@@ -66,7 +66,7 @@ export async function startDeleteUser(userRef){
 
 export async function startEditUser({ name, lastName, email, password, newPassword, userId, location = null }){
   try {
-    const updateUser = await fetch(`https://server-todo-list-app.cleverapps.io/user/modify/${userId}`, {
+    const updateUser = await fetch(`${CONSTANTS.ENDPOINT}/modify/${userId}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
