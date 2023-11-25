@@ -16,7 +16,7 @@ export default {
 }
 </script>
 <template>
-  <div @click="openModal" class="relative flex flex-col bg-clip-border rounded-xl bg-white text-gray-700 shadow-md">
+  <div @click="openModal()" class="relative flex flex-col bg-clip-border rounded-xl bg-white text-gray-700 shadow-md">
     <div
       class="bg-clip-border mx-4 rounded-xl overflow-hidden shadow-lg absolute -mt-4 grid h-16 w-16 place-items-center"
       :class= "{ highImportacnce: todo.Importance === 'High', mediumImportacnce: todo.Importance === 'Medium', lowImportacnce: todo.Importance === 'Low'}">

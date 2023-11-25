@@ -43,6 +43,10 @@ export const userAuthStore = defineStore("auth", {
         user
       });
     },
+    getTodoId(id){
+      const [todo] = this.tasks.filter(todo => todo.id === id)
+      return todo
+    }
   },
   persist: true,
 })

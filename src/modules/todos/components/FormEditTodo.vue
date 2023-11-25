@@ -2,16 +2,13 @@
 import StatusIcon from '../components/icons/StatusIcon.vue';
 import CategoryIcon from '../components/icons/CategoryIcon.vue';
 import ImportanceIcon from '../components/icons/ImportanceIcon.vue';
+import { userAuthStore } from '../../../store/auth/authUser';
 
 export default {
   data() {
     return {
-      title: "Mi primera tarea!",
-      description: "Esta es la descripción de mi primera tarea para hacer pruebas de editar cuando hago click y cuando dejo de hacer",
-      category: "Others",
-      status: "In progress",
-      importance: "Medium",
       editing: false,
+      store: userAuthStore()
     };
   },
   methods: {
@@ -26,11 +23,14 @@ export default {
     StatusIcon,
     CategoryIcon,
     ImportanceIcon
+  },
+  props: {
+    todoSelected:Object
   }
 }
 </script>
 <template>
-  <div class="flex flex-col gap-4">
+  <div @click="getId(id)" class="flex flex-col gap-4">
     <div class="flex justify-end items-center">
       <h2 class="textDegrant text-2xl font-bold text-center">Edit your TODO</h2>
     </div>
@@ -40,7 +40,7 @@ export default {
         class="text-xl font-semibold text-gray-800 uppercase"
         @click="startEditing" 
         v-if="!editing">
-        {{ title }}
+        {{ todoSelected.title }}
       </span>
       <div v-else class="w-full inline-flex items-center gap-2">
         <span class="w-5/12">Title:</span>

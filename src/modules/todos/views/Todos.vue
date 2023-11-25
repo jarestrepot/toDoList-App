@@ -10,6 +10,7 @@ export default {
     return {
       store: userAuthStore(),
       openModal: false,
+      todoSelected: ''
     };
   },
   components: {
@@ -21,6 +22,9 @@ export default {
     closeModal() {
       this.openModal = false;
     },
+    getId(id) {
+       this.todoSelected = this.store.getTodoId(id)
+    }
   },
 
 }
@@ -29,10 +33,10 @@ export default {
 <template>
   <div class="my-12 grid gap-y-10 gap-x-6 md:grid-cols-2 xl:grid-cols-4">
     <div v-for="todo of store.tasks" :key="todo.id">
-      <EachTodo :todo="todo" @open-modal="openModal = true" />
+      <EachTodo @click="getId(todo.id)" :todo="todo" @open-modal="openModal = true"/>
+      <ModalTodos :action="openModal" :event="closeModal">
+        <FormEditTodo :todoSelected="todoSelected" />
+      </ModalTodos>
     </div>
-    <ModalTodos :action="openModal" :event="closeModal">
-      <FormEditTodo />
-    </ModalTodos>
   </div>
 </template>

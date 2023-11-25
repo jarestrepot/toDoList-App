@@ -22,14 +22,15 @@ export default {
         status: false,
         message:''
       },
+      successMsg: '',
     }
   },
   async mounted() {
-    const { user } = this.store
-    this.name = user.name;
-    this.lastName = user.lastName;
-    this.email = user.email;
-    this.userId = user.user_id;
+    const { user } = this.store;
+    this.name = user?.name ?? 'name';
+    this.lastName = user?.lastName ?? 'last name';
+    this.email = user?.email ?? 'email';
+    this.userId = user?.user_id;
   },
   components: {
     ProfileIcon,
@@ -72,6 +73,7 @@ export default {
       }else{
         const { updateUser } = this.store;
         updateUser(response);
+        this.successMsg = 'User updated'
       }
     }
   }
@@ -85,11 +87,14 @@ export default {
     </div>
     <div class="container max-w-2xl md:w-3/4 shadow-md rounded-md overflow-hidden">
 
-      <div class="bg-gray-100 p-4 border-t-2 bg-opacity-5 border-persian-green-400 rounded-t">
-        <div class="max-w-sm mx-auto md:w-full md:mx-0">
-          <div class="inline-flex items-center space-x-4">
+      <div class="bg-gray-100 p-4 border-t-2 bg-opacity-5 border-persian-green-400 rounded-t w-full">
+        <div class="mx-auto md:w-full md:mx-0 flex flex-col md:flex-row justify-center items-center">
+          <div class="inline-flex items-center space-x-4 w-full text-center">
             <ProfileIcon className="w-12 h-12" />
             <h1 class="text-gray-600 uppercase font-semibold">{{ `${name} ${lastName}` }}</h1>
+          </div>
+          <div class="w-full flex justify-end p-1 text-end">
+            <span class="text-green-500">{{ successMsg }}</span>
           </div>
         </div>
       </div>
