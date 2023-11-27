@@ -3,12 +3,14 @@
   import ProfileIcon from '../components/icons/ProfileIcon.vue'
   import LogoutIcon from '../components/icons/LogoutIcon.vue'
   import { userAuthStore } from '../../../store/auth/authUser'
+import { useTodosStore } from '../../../store/todos/todosUser'
 
 
   export default {
     data(){
       return {
-        store: userAuthStore()
+        store: userAuthStore(),
+        storeTodos: useTodosStore()
       }
     },
     components: {
@@ -19,6 +21,7 @@
     methods: {
       logoutUser(){
         this.store.logoutUser()
+        this.storeTodos.clearAssetsTodos()
         this.$router.push('/')
       }
     }

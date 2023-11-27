@@ -29,10 +29,9 @@ export async function startUpdateTodo({id, title, description, status, category,
         status
       })
     });
-    const response = await updateTodo.json();
-    console.log(response)
+    return await updateTodo.json();
   } catch (error) {
-    console.error(error);
+    return { Error: error }
   }
 }
 
