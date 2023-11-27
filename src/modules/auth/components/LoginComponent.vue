@@ -4,6 +4,7 @@
   import ButtonMain from '../../shared/components/ButtonMain.vue';
   import { userAuthStore } from '../../../store/auth/authUser';
   import LabelForms from '../../shared/components/LabelForms.vue';
+  import CONSTANTS from '../../../helpers/constants';
 
 
   export default {
@@ -33,10 +34,10 @@
     },
     computed:{
       isValidEmail(){
-        return /^\w+([\\.-]?\w+)*@\w+([\\.-]?\w+)*(\.\w{2,3})+$/.test(this.email);
+        return CONSTANTS.VALIDEMAIL.test(this.email);
       },
       isValidPassword(){
-        return /^(?=.*\d)(?=.*[A-Za-z]).{8,}$/.test(this.password);
+        return CONSTANTS.VALIDPASSWORD.test(this.password);
       },
       validFields(){
         return this.isValidEmail && this.isValidPassword
@@ -107,11 +108,6 @@
           :class="clase"
           placeholder=" " />
         <LabelForms textDisplay="Password"/>
-        <div
-          v-if="!isValidPassword && password.length > 0"
-          class="mt-2 text-red-600 text-sm 2xl:text-lg">
-          <span>Password incorrect!</span>
-        </div>
       </div>
       <div class="text-center lg:text-left flex flex-col w-full justify-between items-center">
         <ButtonMain

@@ -23,7 +23,7 @@ export default {
       this.openModal = false;
     },
     getId(id) {
-       this.todoSelected = this.store.getTodoId(id)
+      this.todoSelected = this.store.getTodoId(id)
     }
   },
 
@@ -34,9 +34,9 @@ export default {
   <div class="my-12 grid gap-y-10 gap-x-6 md:grid-cols-2 xl:grid-cols-4">
     <div v-for="todo of store.tasks" :key="todo.id">
       <EachTodo @click="getId(todo.id)" :todo="todo" @open-modal="openModal = true"/>
-      <ModalTodos :action="openModal" :event="closeModal">
-        <FormEditTodo :todoSelected="todoSelected" />
-      </ModalTodos>
     </div>
   </div>
+  <ModalTodos @updateTodo="() => updateTodoUser()" :action="openModal" :event="closeModal">
+    <FormEditTodo :todoSelected="todoSelected" @closeModal="openModal = false" />
+  </ModalTodos>
 </template>
