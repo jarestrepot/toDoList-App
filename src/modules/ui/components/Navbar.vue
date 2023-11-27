@@ -4,11 +4,13 @@ import ProfileIcon from '../components/icons/ProfileIcon.vue'
 import LogoutIcon from '../components/icons/LogoutIcon.vue';
 import HomeIcon from '../components/icons/HomeIcon.vue';
 import { userAuthStore } from '../../../store/auth/authUser';
+import { useTodosStore } from '../../../store/todos/todosUser';
 
 export default {
   data() {
     return {
       store: userAuthStore(),
+      storeTodos: useTodosStore()
     };
   },
   components: {
@@ -19,7 +21,8 @@ export default {
   },
   methods: {
     logoutUser() {
-      this.store.logoutUser()
+      this.store.logoutUser();
+      this.storeTodos.clearAssetsTodos()
       this.$router.push('/')
     }
   }

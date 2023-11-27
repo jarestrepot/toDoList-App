@@ -49,8 +49,16 @@ export const userAuthStore = defineStore("auth", {
       return todo
     },
     async updateTodoUser(todo){
-      return await startUpdateTodo(todo);
-    }
+
+      const indexTodo = this.tasks.findIndex(task => task.id === todo.id);
+      const response = await startUpdateTodo(todo);
+      if(response.Error){
+        return response
+      }
+      console.log(response)
+      this.tasks.splice(indexTodo, 1, response.task );
+      return response
+    },
   },
   persist: true,
 })

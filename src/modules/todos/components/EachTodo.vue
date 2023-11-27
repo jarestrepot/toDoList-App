@@ -1,6 +1,5 @@
 <script>
 import TodoIcon from '../components/icons/TodoIcon.vue'
-
 export default {
   props: {
     todo: Object
