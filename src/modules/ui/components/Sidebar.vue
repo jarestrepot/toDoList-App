@@ -32,12 +32,12 @@
         <h6 class="block antialiased tracking-normal font-sans text-2xl font-semibold leading-relaxed text-white">TODO List App</h6>
       </router-link>
     </div>
-    <div class="m-4">
+    <nav class="m-4">
       <ul class="mb-4 flex flex-col gap-1">
         <li>
           <router-link
             :to="{ name: 'entry' }"
-            class="middle none font-sans font-bold center transition-all text-xs py-3 rounded-lg text-white w-full flex items-center gap-4 px-4 capitalize hover:bg-white/10 focus:title-page focus:shadow-md focus:shadow-blue-500/20 focus:hover:shadow-lg focus:hover:shadow-blue-500/40 focus:hover:bg-gradient-to-b">
+            class="middle none font-sans font-bold center transition-all text-xs py-3 rounded-lg text-white w-full flex items-center gap-4 px-4 capitalize hover:bg-white/10">
             <HomeIcon />
             <p class="block antialiased font-sans text-base leading-relaxed text-inherit font-medium capitalize">
               dashboard</p>
@@ -46,7 +46,7 @@
         <li>
           <router-link 
             :to="{name: 'profile'}"
-              class="middle none font-sans font-bold center transition-all text-xs py-3 rounded-lg text-white w-full flex items-center gap-4 px-4 capitalize hover:bg-white/10 focus:title-page focus:shadow-md focus:shadow-blue-500/20 focus:hover:shadow-lg focus:hover:shadow-blue-500/40 focus:hover:bg-gradient-to-b">
+              class="active middle none font-sans font-bold center transition-all text-xs py-3 rounded-lg text-white w-full flex items-center gap-4 px-4 capitalize hover:bg-white/10">
               <ProfileIcon className="w-5 h-5" />
               <p class="block antialiased font-sans text-base leading-relaxed text-inherit font-medium capitalize">profile</p>
           </router-link>
@@ -66,8 +66,6 @@
         </button>
       </li>
     </ul>
-  </div>
+  </nav>
 </aside>
 </template>
-<!-- title-page shadow-md shadow-blue-500/20 hover:shadow-lg hover:shadow-blue-500/40 hover:bg-gradient-to-b -->
-<!-- middle none font-sans font-bold center transition-all text-xs py-3 rounded-lg text-white w-full flex items-center gap-4 px-4 capitalize hover:bg-white/10 focus:title-page focus:shadow-md focus:shadow-blue-500/20 focus:hover:shadow-lg focus:hover:shadow-blue-500/40 focus:hover:bg-gradient-to-b -->

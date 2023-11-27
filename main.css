@@ -46,4 +46,7 @@
   .lowImportacnce {
     @apply bg-gradient-to-tr from-green-500 to-green-400 shadow-green-500/40
   }
+  aside nav a.router-link-exact-active {
+    @apply title-page shadow-md shadow-blue-500/20 shadow-lg shadow-blue-500/40 bg-gradient-to-b
+  }
 }
