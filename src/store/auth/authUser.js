@@ -1,7 +1,7 @@
 
 import { defineStore } from "pinia";
 import { startLogin } from '../../helpers/authFetch';
-import { startUpdateTodo } from "../../helpers/todosFetch";
+import { startNewTodo, startUpdateTodo } from "../../helpers/todosFetch";
 
 export const userAuthStore = defineStore("auth", {
   state: () => ({
@@ -55,10 +55,17 @@ export const userAuthStore = defineStore("auth", {
       if(response.Error){
         return response
       }
-      console.log(response)
       this.tasks.splice(indexTodo, 1, response.task );
       return response
     },
+    async newTodo(todo, userRef){
+      const response = await startNewTodo(todo, userRef);
+      if(response.Error){
+        return response
+      }
+      this.tasks.push(response.task);
+      return response.msg
+    }
   },
   persist: true,
 })

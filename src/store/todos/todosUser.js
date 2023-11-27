@@ -27,15 +27,18 @@ export const useTodosStore = defineStore("todos",{
     },
     getStatusCode(code){
       const { status } = this.assets
-      return status.filter(state => state.codeStatus === code)
+      const [propertiesStatus] = status.filter(state => state.codeStatus === code)
+      return propertiesStatus.Status
     },
     getImportanceCode(code) {
       const { importance } = this.assets
-      return importance.filter(important => important.codeImportance === code)
+      const [propertiesImportance] = importance.filter(important => important.codeImportance === code)
+      return propertiesImportance.Importance
     },
     getCategoryCode(code){
       const { category } = this.assets
-      return category.filter(cate => cate.codeCategory === code)
+      const [ propertiesCategory ] =  category.filter(cate => cate.codeCategory === code)
+      return propertiesCategory.Category
     }
   },
   persist: true,

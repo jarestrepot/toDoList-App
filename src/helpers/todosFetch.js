@@ -35,3 +35,19 @@ export async function startUpdateTodo({id, title, description, status, category,
   }
 }
 
+export async function startNewTodo(todo, userRef){
+  try {
+    const reponseJson = await fetch(`${CONSTANTS.ENDPOINT}/newTask/${userRef}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'authorization': `Bearer ${window.localStorage.getItem('tokenUser')}`,
+      },
+      body: JSON.stringify(todo)
+    })
+    return await reponseJson.json();
+  } catch (error) {
+    return { Error: error }
+  }
+}
+

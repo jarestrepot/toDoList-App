@@ -59,21 +59,6 @@ export default {
         }
       }
       this.editing = false;
-    },
-    getNameStatus() {
-      const { getStatusCode } = this.assetsTodos
-      const [propertiesStatus] = getStatusCode(this.codeStatus);
-      return propertiesStatus.Status
-    },
-    getNameImportance(){
-      const { getImportanceCode } = this.assetsTodos
-      const [propertiesImportance] = getImportanceCode(this.codeImportance)
-      return propertiesImportance.Importance
-    },
-    getNameCategory(){
-      const { getCategoryCode } = this.assetsTodos
-      const [ propertiesCategory ] = getCategoryCode(this.codeCategory)
-      return propertiesCategory.Category
     }
   },
   components: {
@@ -91,9 +76,9 @@ export default {
     this.codeCategory = getCategory.codeCategory;
   },
   updated(){
-    this.nameStatus = this.getNameStatus()
-    this.nameImportance = this.getNameImportance()
-    this.nameCategory = this.getNameCategory()
+    this.nameStatus = this.assetsTodos.getStatusCode(this.codeStatus)
+    this.nameImportance = this.assetsTodos.getImportanceCode(this.codeImportance)
+    this.nameCategory = this.assetsTodos.getCategoryCode(this.codeCategory)
   }
 }
 </script>
