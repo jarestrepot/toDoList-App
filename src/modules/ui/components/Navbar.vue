@@ -35,7 +35,7 @@ export default {
     <div class="flex flex-col-reverse justify-between gap-6 md:flex-row md:items-center">
 
       <div  class="capitalize">
-        <h6 v-if="this.$route.name !== 'profile'" class="block antialiased tracking-normal font-sans text-base font-semibold leading-relaxed text-gray-900">Dashboard</h6>
+        <h6 v-if="this.$route.name !== 'profile'" class=" block antialiased tracking-normal font-sans text-base font-semibold leading-relaxed text-gray-900">Dashboard</h6>
       </div>
 
       <div class="flex items-center justify-end">
