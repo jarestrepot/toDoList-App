@@ -211,7 +211,7 @@ export default {
           </button>
           <button 
             @click="deleteAccount()"
-            class="inline-flex items-center focus:outline-none mr-4">
+            class="inline-flex items-center focus:outline-none mr-4 hover:text-red-500 duration-200">
             <TrashIcon />
             Delete account
           </button>

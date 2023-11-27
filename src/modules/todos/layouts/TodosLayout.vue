@@ -11,8 +11,7 @@ import { startAssetsTodos } from '../../../helpers/todosFetch';
 export default{
   data() {
     return {
-      isVisible: false,
-      showAddTodo: true,
+      openModal: false,
       store: useTodosStore(),
     };
   },
@@ -29,14 +28,6 @@ export default{
     FormAddTodo,
     Footer,
   },
-  methods: {
-    openModal() {
-      this.isVisible = !this.isVisible;
-    },
-    closeModal() {
-      this.isVisible = !this.isVisible;
-    },
-  },
 }
 </script>
 
@@ -47,9 +38,13 @@ export default{
   </header>
   <main class="min-h-screen bg-gray-50/50 p-4 xl:ml-80">
     <router-view />
-    <AddTodoIcon @click="openModal" v-if="this.$route.name !== 'profile'" role="button"/>
-    <ModalTodos :action="isVisible" :event="closeModal">
-      <FormAddTodo />
+    <AddTodoIcon 
+      role="button"
+      @open-modal="openModal = true" 
+      v-if="this.$route.name !== 'profile'" />
+    <ModalTodos :action="openModal">
+      <FormAddTodo 
+        @closeModal = "openModal = false" />
     </ModalTodos>
   </main>
   <Footer />

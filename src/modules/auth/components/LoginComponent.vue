@@ -112,6 +112,7 @@
       <div class="text-center lg:text-left flex flex-col w-full justify-between items-center">
         <ButtonMain
           :class="!validFields ? 'opacity-60 cursor-not-allowed' : 'opacity-100 cursor-pointer'"
+          @keyup.enter="loginUser"
           @submitEmit="loginUser()"
           :textButton="'Login'" 
           :disabledButton="!validFields"
