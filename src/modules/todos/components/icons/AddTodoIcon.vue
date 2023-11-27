@@ -3,7 +3,7 @@
 </script>
 
 <template>
-  <svg  viewBox="0 0 490.00 490.00" class="fixed z-0 bottom-0 right-0 mb-10 me-6 w-14 h-14 lg:w-20 lg:h-20 bg-gray-50 rounded-full">
+  <svg  viewBox="0 0 490.00 490.00" class="fixed z-0 bottom-0 right-0 mb-10 me-6 w-14 h-14 lg:w-20 lg:h-20 bg-gray-50/90 rounded-full">
     <path
       fill="#0fa997"
       d="M227.8,174.1v53.7h-53.7c-9.5,0-17.2,7.7-17.2,17.2s7.7,17.2,17.2,17.2h53.7v53.7c0,9.5,7.7,17.2,17.2,17.2 s17.1-7.7,17.1-17.2v-53.7h53.7c9.5,0,17.2-7.7,17.2-17.2s-7.7-17.2-17.2-17.2h-53.7v-53.7c0-9.5-7.7-17.2-17.1-17.2 S227.8,164.6,227.8,174.1z">

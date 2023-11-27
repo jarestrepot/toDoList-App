@@ -16,9 +16,9 @@ export default {
 }
 </script>
 <template>
-  <div @click="openModal()" class="relative flex flex-col bg-clip-border rounded-xl bg-white text-gray-700 shadow-md">
+  <div @click="openModal()" class="relative flex flex-col bg-clip-border rounded-xl bg-white text-gray-700 shadow-md min-h-full">
     <div
-      class="bg-clip-border mx-4 rounded-xl overflow-hidden shadow-lg absolute -mt-4 grid h-16 w-16 place-items-center"
+      class="bg-clip-border mx-2 rounded-xl overflow-hidden shadow-lg absolute -mt-4 lg:-mt-7 grid h-14 w-14 place-items-center 2xl:mx-4 2xl:h-16 2xl:w-16"
       :class= "{ highImportacnce: todo.Importance === 'High', mediumImportacnce: todo.Importance === 'Medium', lowImportacnce: todo.Importance === 'Low'}">
       <TodoIcon />
     </div>
