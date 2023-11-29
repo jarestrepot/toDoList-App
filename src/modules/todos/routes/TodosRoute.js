@@ -1,11 +1,3 @@
-// const otrasRutas = [
-//   {
-//     path: '/profile',
-//     name: 'profile',
-//     component: () => import('../../auth/pages/UserProfile.vue'),
-//   },
-
-// ];
 
 export default{
 

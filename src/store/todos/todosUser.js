@@ -3,7 +3,8 @@ import { defineStore } from "pinia";
 
 export const useTodosStore = defineStore("todos",{
   state: () => ({
-    assets: {}
+    assets: {},
+    grid: true,
   }),
   actions: {
     assetsTodos(assets){
@@ -39,6 +40,12 @@ export const useTodosStore = defineStore("todos",{
       const { category } = this.assets
       const [ propertiesCategory ] =  category.filter(cate => cate.codeCategory === code)
       return propertiesCategory.Category
+    },
+    selectedListView(){
+      this.grid = false;
+    },
+    selectedGridView() {
+      this.grid = true;
     }
   },
   persist: true,

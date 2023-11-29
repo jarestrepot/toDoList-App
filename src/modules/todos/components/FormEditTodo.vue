@@ -4,6 +4,7 @@ import CategoryIcon from '../components/icons/CategoryIcon.vue';
 import ImportanceIcon from '../components/icons/ImportanceIcon.vue';
 import { useTodosStore } from '../../../store/todos/todosUser';
 import { userAuthStore } from '../../../store/auth/authUser';
+import CONSTANTS from '../../../helpers/constants';
 
 export default {
   data() {
@@ -35,7 +36,8 @@ export default {
       this.editing = false;
     },
     async updateTodoUser() {
-      const { updateTodoUser, user } = this.userStore
+      const { updateTodoUser, user } = this.userStore;
+
       const updateTodoObject = {
         id: this.id,
         title: this.title,
@@ -45,7 +47,9 @@ export default {
         category: this.codeCategory,
         userRef: user.user_id
       }
+
       const response = await updateTodoUser(updateTodoObject);
+
       if(response.Error){
         this.resMessage = {
           stateResponse: true,
@@ -69,6 +73,17 @@ export default {
   props: {
     todoSelected: Object
   },
+  computed: {
+    isValidTitle() {
+      return CONSTANTS.VALIDINPUT.test(this.title)
+    },
+    isValidDescription() {
+      return CONSTANTS.VALIDNUMCHARACTERES.test(this.description)
+    },
+    isValidFields() {
+      return this.isValidTitle && this.isValidDescription
+    }
+  },
   mounted(){
     const { getImportance, getStatus, getCategory  } = this.assetsTodos.getCodeAssets(this.todoSelected)
     this.codeStatus = getStatus.codeStatus;
@@ -87,7 +102,9 @@ export default {
     <div class="flex justify-end items-center">
       <h2 class="textDegrant text-2xl font-bold text-center">Edit your TODO</h2>
     </div>
+
     <form @submit.prevent="updateTodoUser()" class="flex flex-col gap-2">
+
       <div class="inline-flex items-center gap-2 w-full">
         <span 
           v-if="!editing"
@@ -106,6 +123,9 @@ export default {
           />
         </div>
       </div>
+      <span class="text-red-500 text-end pe-2" v-if="!isValidTitle && title.length > 0">
+        Title is required
+      </span>
 
       <div class="inline-flex items-center gap-2 w-full">
         <span 
@@ -127,6 +147,9 @@ export default {
           </textarea>
         </div>
       </div>
+      <span class="text-red-500 text-end pe-2" v-if="!isValidDescription && description.length > 0">
+        Description is required
+      </span>
 
       <div class="inline-flex items-center gap-2 w-full">
         <StatusIcon />
@@ -208,7 +231,7 @@ export default {
         <button
           type="submit"
           :disabled="!editing"
-          :class="editing ? 'opacity-100 cursor-pointer' : 'opacity-50 cursor-not-allowed'"
+          :class="editing && isValidFields ? 'opacity-100 cursor-pointer' : 'opacity-50 cursor-not-allowed'"
           class="w-full inline-flex justify-center rounded-md shadow-sm px-4 py-2 bg-gradient-to-br from-persian-green-700 to-persian-green-300 text-base font-medium text-white hover:bg-gradient-to-b focus:outline-none sm:ml-3 sm:w-auto sm:text-sm">
           Save
         </button>

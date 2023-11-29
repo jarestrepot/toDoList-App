@@ -25,7 +25,7 @@
     @apply text-transparent bg-clip-text bg-gradient-to-br from-persian-green-700 to-persian-green-300
   }
 
-  .title-page{
+  .title-page {
     @apply bg-gradient-to-br from-persian-green-700 to-persian-green-300 
   }
 
@@ -33,11 +33,11 @@
     @apply absolute blur md:blur-none md:z-50 z-0 right-0
   }
 
-  .containerFormShow{
+  .containerFormShow {
     @apply w-full z-50 grid place-items-center grid-cols-1
   }
 
-  .containerFormHidden{
+  .containerFormHidden {
     @apply hidden w-full z-50
   }
 
@@ -55,5 +55,9 @@
 
   .aside .navbar a.router-link-active {
     @apply title-page shadow-md shadow-blue-500/20 hover:shadow-lg hover:shadow-blue-500/40 bg-gradient-to-b
+  }
+  
+  .active {
+    @apply bg-white text-blue-400 rounded-full;
   }
 }

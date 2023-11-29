@@ -24,6 +24,7 @@
   },
   methods: {
     async createTodo(){
+
       const objectTodo = {
         title: this.title,
         description: this.description,
@@ -33,9 +34,12 @@
       }
 
       const { newTodo } = this.authStore;
-      const response = await newTodo(objectTodo, this.authStore.user.user_id)
+
+      const response = await newTodo(objectTodo, this.authStore.user.user_id);
+
       this.title = this.description = '';
       this.codeCategory = this.codeImportance = this.codeStatus = null;
+
       if(response.Error){
         this.resMessage = {
           stateResponse: true,
