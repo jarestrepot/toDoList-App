@@ -6,6 +6,11 @@ export const useTodosStore = defineStore("todos",{
     assets: {},
     grid: true,
   }),
+  getters: {
+    getCategory: (state) => state.assets.category,
+    getStatus: (state) => state.assets.status,
+    getImportance: (state) => state.assets.importance
+  },
   actions: {
     assetsTodos(assets){
       this.$patch({

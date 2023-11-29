@@ -5,11 +5,13 @@ import CloseIcon from '../components/icons/CloseIcon.vue';
 import AddTodoIcon from '../../todos/components/icons/AddTodoIcon.vue';
 import ModalTodos from '../../todos/components/ModalTodos.vue';
 import FormAddTodo from '../../todos/components/FormAddTodo.vue';
+import { useTodosStore } from '../../../store/todos/todosUser';
 
 export default {
   data() {
     return {
       openModal: false,
+      storeTodo: useTodosStore()
     };
   },
   components: {
@@ -19,26 +21,6 @@ export default {
     AddTodoIcon,
     ModalTodos,
     FormAddTodo,
-  },
-  methods: {
-    openDiv(reference) {
-      this.removeClass(this.$refs[reference], ['subfilter'])
-      this.addClass(this.$refs[reference], ['subFilterVisible'])
-    },
-    closeDiv(reference) {
-      this.removeClass(this.$refs[reference], ['subFilterVisible'])
-      this.addClass(this.$refs[reference], ['subfilter'])
-    },
-    removeClass({ classList }, nameClass) {
-      for (let classRemove of nameClass) {
-        classList.remove(classRemove);
-      }
-    },
-    addClass({ classList }, nameClass) {
-      for (let classAdd of nameClass) {
-        classList.add(classAdd);
-      }
-    }
   }
 }
 </script>
@@ -53,28 +35,51 @@ export default {
         </div>
 
         <ul
-          class="filter transition duration-300 md:absolute top-full right-0 md:w-48 bg-white md:shadow-lg md:rounded-b z-10">
-
-          <li class="flex relative filters px-4 py-3 hover:bg-gray-50">
+          class="filter transition duration-300 md:absolute top-full right-0 md:w-48 bg-white md:shadow-lg md:rounded-b z-10"
+        >
+          <li 
+            class="flex submenu px-4 py-3 hover:bg-gray-50">
             Category
             <ul
-              class="filter transition duration-300 relative  right-[24rem] md:w-48 bg-red-500 md:shadow-lg md:rounded p-3">
-              <li class="px-4 py-3 hover:bg-gray-50">Education</li>
-              <li class="px-4 py-3 hover:bg-gray-50">Work</li>
-              <li class="px-4 py-3 hover:bg-gray-50">Health</li>
-              <li class="px-4 py-3 hover:bg-gray-50">Personal</li>
-              <li class="px-4 py-3 hover:bg-gray-50">Others</li>
+              class="second-ul transition duration-300 relative right-[24rem] md:w-48 bg-white md:shadow-lg md:rounded p-3">
+              <li 
+                class="cursor-pointer px-4 py-3 hover:bg-gray-50"
+                v-for="{ codeCategory ,Category } of storeTodo.getCategory" :key="codeCategory"
+              >
+                {{ Category }}
+              </li>
             </ul>
           </li>
 
 
-          <li class="flex px-4 py-3 hover:bg-gray-50" @mouseenter="openDiv('elementStatus')"
-            @mouseleave="closeDiv('elementStatus')">
+          <li class="flex submenu px-4 py-3 hover:bg-gray-50" 
+            
+          >
             Status
+            <ul
+              class="second-ul transition duration-300 md:absolute top-20 right-[-24rem] md:w-48 bg-white md:shadow-lg md:rounded p-3">
+              <li 
+                v-for="{ Status, codeStatus } of storeTodo.getStatus" :key="codeStatus"
+                class="cursor-pointer px-4 py-3 hover:bg-gray-50"
+              >
+                {{ Status }}
+              </li>
+            </ul>
           </li>
-          <li class="flex px-4 py-3 hover:bg-gray-50" @mouseenter="openDiv('elementImportance')"
-            @mouseleave="closeDiv('elementImportance')">
+          <li class="flex submenu px-4 py-3 hover:bg-gray-50" 
+            
+          >
             Importance
+            <ul
+              class="second-ul transition duration-300 md:absolute top-[6.8rem] right-[24rem] md:w-48 bg-white md:shadow-lg md:rounded p-3"
+            >
+              <li 
+                v-for="{ codeImportance, Importance } of storeTodo.getImportance" :key="codeImportance"
+                class="cursor-pointer px-4 py-3 hover:bg-gray-50"
+              >
+                {{ Importance }}
+              </li>
+            </ul>
           </li>
         </ul>
       </li>
@@ -91,30 +96,6 @@ export default {
       </li>
 
     </ul>
-
-
-    <!-- <ul ref="elementCategory"
-      class="subfilter transition duration-300 md:absolute top-full right-[24rem] md:w-48 bg-white md:shadow-lg md:rounded p-3">
-      <li class="px-4 py-3 hover:bg-gray-50 relative">Education</li>
-      <li class="px-4 py-3 hover:bg-gray-50 relative">Work</li>
-      <li class="px-4 py-3 hover:bg-gray-50 relative">Health</li>
-      <li class="px-4 py-3 hover:bg-gray-50 relative">Personal</li>
-      <li class="px-4 py-3 hover:bg-gray-50 relative">Others</li>
-    </ul>
-
-    <ul ref="elementStatus"
-      class="subfilter transition duration-300 md:absolute top-20 right-[-24rem] md:w-48 bg-white md:shadow-lg md:rounded p-3">
-      <li>Pending</li>
-      <li>In progress</li>
-      <li>Completed</li>
-    </ul>
-
-    <ul ref="elementImportance"
-      class="subfilter transition duration-300 md:absolute top-[6.8rem] right-[24rem] md:w-48 bg-white md:shadow-lg md:rounded p-3">
-      <li>High</li>
-      <li>Medium</li>
-      <li>Low</li>
-    </ul> -->
 
     <div class="ml-auto md:hidden text-gray-500 cursor-pointer">
       <CloseIcon />
@@ -140,25 +121,15 @@ export default {
     transform: translateY(-10%);
   }
 
-  .subFilterVisible {
-    display: block;
-    height: auto;
-    overflow: none;
-    transform: translateY(0);
-  }
-
-  .subFilterVisible:hover {
-    display: block;
-    height: auto;
-    overflow: none;
-    transform: translateY(0);
-  }
-
-  .subfilter {
+  .second-ul{
     display: none;
-    height: 0;
-    overflow: hidden;
-    transform: translateX(-10%);
+    position: absolute;
+  }
+
+  .submenu:hover > .second-ul {
+    display: block;
+    position: absolute;
+    right: 12rem;
   }
 }
 </style>
