@@ -9,6 +9,7 @@ export const userAuthStore = defineStore("auth", {
     user: null,
     token: null,
     tasks: [],
+    todoFilter: [],
     hasError: null,
   }),
   actions: {
@@ -65,6 +66,19 @@ export const userAuthStore = defineStore("auth", {
       }
       this.tasks.push(response.task);
       return response.msg
+    },
+
+    getFilterTodos(nameFilter, asset){
+      this.tasks.forEach(todo => {
+        if (todo[asset] === nameFilter){
+          this.todoFilter = [...this.todoFilter, todo]
+        }
+      });
+    },
+    clearTodoFilter(){
+      this.$patch({
+        todoFilter: []
+      })
     }
   },
   persist: true,

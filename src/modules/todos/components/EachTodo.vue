@@ -3,7 +3,9 @@ import TodoIcon from '../components/icons/TodoIcon.vue'
 import CategoryIcon from '../components/icons/CategoryIcon.vue';
 import ImportanceIcon from '../components/icons/ImportanceIcon.vue'
 import StatusIcon from '../components/icons/StatusIcon.vue';
+import TrashIcon from '../../auth/components/icons/TrashIcon.vue';
 import { useTodosStore } from '../../../store/todos/todosUser';
+import ArchiveTodoIcon from './icons/ArchiveTodoIcon.vue';
 
 export default {
   data () {
@@ -19,7 +21,9 @@ export default {
     ImportanceIcon,
     CategoryIcon,
     StatusIcon,
-  },
+    TrashIcon,
+    ArchiveTodoIcon
+},
   methods: {
     getFillCategory(category) {
       const optionsColor = {
@@ -65,9 +69,9 @@ export default {
 </script>
 <template>
   <div v-if="todosStore.grid" @click="openModal()"
-    class="relative flex flex-col bg-clip-border rounded-xl bg-white text-gray-700 shadow-md min-h-full">
+    class="flex flex-col bg-clip-border rounded-xl bg-white text-gray-700 shadow-md min-h-full">
     <div
-      class="bg-clip-border mx-4 rounded-xl overflow-hidden shadow-lg absolute -mt-4 lg:-mt-7 grid h-10 w-10 place-items-center"
+      class="bg-clip-border mx-4 rounded-xl overflow-hidden shadow-lg  -mt-4 lg:-mt-7 grid h-10 w-10 place-items-center"
       :class="{ highImportacnce: todo.Importance === 'High', mediumImportacnce: todo.Importance === 'Medium', lowImportacnce: todo.Importance === 'Low' }">
       <TodoIcon size="h-10 w-10" />
     </div>
@@ -92,7 +96,7 @@ export default {
     </div>
   </div>
 
-  <tr v-else @click="openModal()">
+  <tr v-else @click="openModal()" class="eachtodo">
     <td class="ps-3 py-5 border-b border-gray-200 bg-white text-sm">
       <p class="text-gray-900 whitespace-no-wrap">{{ getNewTitle(todo.title) }}</p>
     </td>
@@ -117,13 +121,23 @@ export default {
     </td>
 
     <td class="ps-3 py-5 border-b border-gray-200 bg-white text-sm">
-      <span class="relative inline-block px-3 py-1 font-semibold leading-tight">
-        <span
-          :class="{ highImportacnce: todo.Importance === 'High', mediumImportacnce: todo.Importance === 'Medium', lowImportacnce: todo.Importance === 'Low' }"
-          class="absolute inset-0 rounded-full"></span>
-        <span class="relative">{{ todo.Importance }}</span>
-      </span>
+      <span
+        :class="{ highImportacnce: todo.Importance === 'High', mediumImportacnce: todo.Importance === 'Medium', lowImportacnce: todo.Importance === 'Low' }"
+        class="px-3 py-1 rounded-full text-black font-semibold uppercase text-center w-10">{{ todo.Importance }}</span>
+    </td>
+    <td class="py-5 border-b border-gray-200 bg-white">
+      <button class="icons opacity-0">
+        <ArchiveTodoIcon />
+      </button>
+      <button class="icons opacity-0">
+        <TrashIcon fill="#999"/>
+      </button>
     </td>
   </tr>
 </template>
+<style>
+  .eachtodo:hover .icons{
+    opacity: 1;
+  }
 
+</style>

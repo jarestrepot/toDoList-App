@@ -6,12 +6,14 @@ import AddTodoIcon from '../../todos/components/icons/AddTodoIcon.vue';
 import ModalTodos from '../../todos/components/ModalTodos.vue';
 import FormAddTodo from '../../todos/components/FormAddTodo.vue';
 import { useTodosStore } from '../../../store/todos/todosUser';
+import { userAuthStore } from '../../../store/auth/authUser';
 
 export default {
   data() {
     return {
       openModal: false,
-      storeTodo: useTodosStore()
+      storeTodo: useTodosStore(),
+      authStore: userAuthStore()
     };
   },
   components: {
@@ -21,62 +23,99 @@ export default {
     AddTodoIcon,
     ModalTodos,
     FormAddTodo,
+  },
+  methods: {
+    toggleVisibility(element) {
+      const elements = {
+        'parentUl': 'parentUl',
+        'firstUl': 'firstUl',
+        'secondUl': 'secondUl',
+        'thirdUl': 'thirdUl'
+      };
+
+      const { classList } = this.$refs[element];
+      for (const key in elements) {
+        if (key !== element && key !== 'parentUl') {
+          const otherElement = this.$refs[elements[key]];
+          otherElement.classList.remove('visible');
+          otherElement.classList.add('hidden');
+        }
+      }
+      
+      if (classList.contains('hidden')) {
+        classList.remove('hidden');
+        classList.add('visible'); return;
+      }
+      classList.remove('visible');
+      classList.add('hidden');
+    },
+
+    handleFilter(nameFilter, nameAsset){
+      const { assets } = this.storeTodo;
+      const { getFilterTodos, clearTodoFilter } = this.authStore
+      const keysAssets = Object.keys(assets);
+      clearTodoFilter()
+      for(let key of keysAssets){
+        if(key === nameAsset){
+          getFilterTodos(nameFilter, `${nameAsset[0].toUpperCase()}${nameAsset.slice(1)}`)
+        }
+      }
+
+    }
   }
 }
 </script>
 <template>
-  <div class="flex items-center relative">
-    <ul class="md:p-3 ml-auto md:flex md:space-x-2 md:relative top-full left-0 right-0 items-center gap-1">
+  <div class="flex items-center justify-end">
+    <ul class="md:p-3 md:ml-auto flex md:space-x-2 md:relative top-full left-0 right-0 md:items-center gap-4 md:gap-1 justify-end">
       <li class="relative filters">
 
-        <div class="flex justify-between md:inline-flex items-center hover:bg-gray-50 space-x-2">
+        <div class="flex justify-between items-center cursor-pointer md:cursor-default hover:bg-gray-50 space-x-2 relative" @click="toggleVisibility('parentUl')">
           <span class="text-slate-500">Filter</span>
           <DownIcon />
         </div>
 
-        <ul
-          class="filter transition duration-300 md:absolute top-full right-0 md:w-48 bg-white md:shadow-lg md:rounded-b z-10"
-        >
-          <li 
-            class="flex submenu px-4 py-3 hover:bg-gray-50">
-            Category
-            <ul
-              class="second-ul transition duration-300 relative right-[24rem] md:w-48 bg-white md:shadow-lg md:rounded p-3">
-              <li 
-                class="cursor-pointer px-4 py-3 hover:bg-gray-50"
-                v-for="{ codeCategory ,Category } of storeTodo.getCategory" :key="codeCategory"
+        <ul ref="parentUl"
+          class="filter hidden md:block transition duration-300 absolute right-0 top-full md:w-48 bg-white md:shadow-lg rounded-b z-10">
+          <li class="flex-col md:flex submenu cursor-pointer md:cursor-auto px-4 py-3 hover:bg-gray-50" @click="toggleVisibility('firstUl')" >
+            <div class="inline-flex items-center gap-2" >
+              Category
+              <DownIcon rotateIcon="md:rotate-90 rotate-[-90deg]" />
+            </div>
+            <ul ref="firstUl"
+              class="second-ul hidden transition duration-300 absolute left-32 md:left-auto top-0 md:top-0 w-full md:w-48 bg-white md:shadow-lg rounded md:p-3">
+              <li class="cursor-pointer p-2 md:px-4 md:py-3 hover:bg-gray-50"
+                v-for="{ codeCategory, Category } of storeTodo.getCategory" :key="codeCategory"
+                @click="handleFilter(Category, 'category')"
               >
                 {{ Category }}
               </li>
             </ul>
           </li>
 
-
-          <li class="flex submenu px-4 py-3 hover:bg-gray-50" 
-            
-          >
-            Status
-            <ul
-              class="second-ul transition duration-300 md:absolute top-20 right-[-24rem] md:w-48 bg-white md:shadow-lg md:rounded p-3">
-              <li 
-                v-for="{ Status, codeStatus } of storeTodo.getStatus" :key="codeStatus"
-                class="cursor-pointer px-4 py-3 hover:bg-gray-50"
-              >
+          <li class="flex-col md:flex submenu cursor-pointer md:cursor-auto px-4 py-3 hover:bg-gray-50" @click="toggleVisibility('secondUl')" >
+            <div class="inline-flex items-center gap-2" >
+              Status
+              <DownIcon rotateIcon="md:rotate-90 rotate-[-90deg]"/>
+            </div>
+            <ul ref="secondUl"
+              class="second-ul hidden transition duration-300 absolute left-32 md:left-auto top-0 md:top-20 w-full md:w-48 bg-white md:shadow-lg rounded md:p-3">
+              <li v-for="{ Status, codeStatus } of storeTodo.getStatus" :key="codeStatus" @click="handleFilter(Status, 'status')"
+                class="cursor-pointer p-2 md:px-4 py-3 hover:bg-gray-50">
                 {{ Status }}
               </li>
             </ul>
           </li>
-          <li class="flex submenu px-4 py-3 hover:bg-gray-50" 
-            
-          >
-            Importance
-            <ul
-              class="second-ul transition duration-300 md:absolute top-[6.8rem] right-[24rem] md:w-48 bg-white md:shadow-lg md:rounded p-3"
-            >
-              <li 
-                v-for="{ codeImportance, Importance } of storeTodo.getImportance" :key="codeImportance"
-                class="cursor-pointer px-4 py-3 hover:bg-gray-50"
-              >
+
+          <li class="flex-col md:flex cursor-pointer md:cursor-auto submenu px-4 py-3 hover:bg-gray-50" @click="toggleVisibility('thirdUl')" >
+            <div class="inline-flex items-center gap-2" >
+              Importance
+              <DownIcon rotateIcon="md:rotate-90 rotate-[-90deg]"/>
+            </div>
+            <ul ref="thirdUl"
+              class="second-ul hidden transition duration-300 absolute left-32 md:left-auto top-0 md:top-[6.8rem] w-full md:w-48 bg-white md:shadow-lg md:rounded md:p-3">
+              <li v-for="{ codeImportance, Importance } of storeTodo.getImportance" :key="codeImportance" @click="handleFilter(Importance, 'importance')"
+                class="cursor-pointer p-2 md:px-4 py-3 hover:bg-gray-50">
                 {{ Importance }}
               </li>
             </ul>
@@ -96,11 +135,6 @@ export default {
       </li>
 
     </ul>
-
-    <div class="ml-auto md:hidden text-gray-500 cursor-pointer">
-      <CloseIcon />
-    </div>
-
   </div>
 </template>
 
@@ -121,15 +155,21 @@ export default {
     transform: translateY(-10%);
   }
 
-  .second-ul{
+  .second-ul {
     display: none;
     position: absolute;
   }
 
-  .submenu:hover > .second-ul {
+  .submenu:hover>.second-ul {
     display: block;
     position: absolute;
     right: 12rem;
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .visible {
+    display: block;
   }
 }
 </style>

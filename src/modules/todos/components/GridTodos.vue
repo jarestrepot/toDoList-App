@@ -23,13 +23,18 @@ export default {
       this.todoSelected = this.store.getTodoId(id)
     }
   },
-
+  computed: {
+    useTodo(){
+      return this.store.todoFilter.length > 0 ? this.store.todoFilter : this.store.tasks;
+    }
+  }
 }
 </script>
 
 <template>
   <div class="my-12 grid gap-y-10 gap-x-6 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
-    <EachTodo v-for="todo of store.tasks" :key="todo.id"
+    <EachTodo 
+      v-for="todo of useTodo" :key="todo.id"
     :todo="todo" 
     @click="getId(todo.id)"  
     @open-modal="openModal = true" />

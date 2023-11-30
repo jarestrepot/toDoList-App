@@ -22,6 +22,11 @@ export default {
       this.todoSelected = this.store.getTodoId(id)
     }
   },
+  computed: {
+    useTodo() {
+      return this.store.todoFilter.length > 0 ? this.store.todoFilter : this.store.tasks;
+    }
+  }
 }
 </script>
 <template>
@@ -53,11 +58,12 @@ export default {
                 class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                 Importance
               </th>
+              <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"></th>
             </tr>
           </thead>
 
           <tbody>
-            <EachTodo v-for="todo of store.tasks" :key="todo.id" 
+            <EachTodo v-for="todo of useTodo" :key="todo.id" 
               :todo="todo" 
               @click="getId(todo.id)"
               @open-modal="openModal = true" />
