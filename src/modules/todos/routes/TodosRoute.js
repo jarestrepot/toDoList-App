@@ -1,28 +1,29 @@
-
 export default{
 
   name: 'dashboard',
-  component: () => import('../layouts/TodosLayout.vue'),
+  component: () => import('../pages/Dashboard.vue'),
   children: [
     {
       path: '',
       name: 'entry',
-      component: () => import('../views/Todos.vue'),
-    },
-    {
-      path: '/no-entry',
-      name: 'no-entry',
-      component: () => import('../views/EmptyTodos.vue'),
+      components: {
+        todos: () => import('../views/Todos.vue'),
+        emptyTodos: () => import('../views/EmptyTodos.vue'),
+      }
     },
     {
       path: '/archive',
       name: 'archive',
-      component: () => import('../views/ArchiveTodos.vue'),
+      components: {
+        archived: () => import('../views/ArchiveTodos.vue'),
+      } 
     },
     {
       path: '/profile',
       name: 'profile',
-      component: () => import('../../auth/pages/UserProfile.vue'),
+      components: {
+        userProfile: () => import('../../auth/pages/UserProfile.vue')
+      }
     },
 
   ],

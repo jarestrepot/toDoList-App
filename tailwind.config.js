@@ -46,9 +46,11 @@ export const theme = {
         '900': '#133967',
         '950': '#0d2444',
       },
-    }
+    },
   },
+  darkMode: 'class',  
 };
+
 export const plugins = [
   require('flowbite/plugin')
 ];

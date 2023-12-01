@@ -7,6 +7,7 @@ import ModalTodos from '../../todos/components/ModalTodos.vue';
 import FormAddTodo from '../../todos/components/FormAddTodo.vue';
 import { useTodosStore } from '../../../store/todos/todosUser';
 import { userAuthStore } from '../../../store/auth/authUser';
+import FilterIcon from './icons/FilterIcon.vue';
 
 export default {
   data() {
@@ -23,7 +24,8 @@ export default {
     AddTodoIcon,
     ModalTodos,
     FormAddTodo,
-  },
+    FilterIcon
+},
   methods: {
     toggleVisibility(element) {
       const elements = {
@@ -71,8 +73,7 @@ export default {
       <li class="relative filters">
 
         <div class="flex justify-between items-center cursor-pointer md:cursor-default hover:bg-gray-50 space-x-2 relative" @click="toggleVisibility('parentUl')">
-          <span class="text-slate-500">Filter</span>
-          <DownIcon />
+          <FilterIcon />
         </div>
 
         <ul ref="parentUl"

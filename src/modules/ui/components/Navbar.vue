@@ -5,12 +5,15 @@ import LogoutIcon from '../components/icons/LogoutIcon.vue';
 import HomeIcon from '../components/icons/HomeIcon.vue';
 import { userAuthStore } from '../../../store/auth/authUser';
 import { useTodosStore } from '../../../store/todos/todosUser';
+import { useThemeMode } from '../../../store/theme/modeTheme';
+import ButtonTheme from './ButtonTheme.vue';
 
 export default {
   data() {
     return {
-      store: userAuthStore(),
-      storeTodos: useTodosStore()
+      storeAuth: userAuthStore(),
+      storeTodos: useTodosStore(),
+      storeTheme: useThemeMode(),
     };
   },
   components: {
@@ -18,14 +21,15 @@ export default {
     ProfileIcon,
     LogoutIcon,
     HomeIcon,
+    ButtonTheme
 },
   methods: {
     logoutUser() {
-      this.store.logoutUser();
+      this.storeAuth.logoutUser();
       this.storeTodos.clearAssetsTodos()
       this.$router.push('/')
     }
-  }
+  },
 }
 
 </script>
@@ -35,7 +39,7 @@ export default {
     <div class="flex flex-col-reverse justify-between gap-6 md:flex-row md:items-center">
 
       <div  class="capitalize">
-        <h6 v-if="this.$route.name !== 'profile'" class=" block antialiased tracking-normal font-sans text-base font-semibold leading-relaxed text-gray-900">Dashboard</h6>
+        <h6 v-if="this.$route.name !== 'profile'" class=" block antialiased tracking-normal font-sans text-base font-semibold leading-relaxed text-gray-900 dark:text-blue-500">Dashboard</h6>
       </div>
 
       <div class="flex items-center justify-end">
@@ -49,6 +53,8 @@ export default {
             <HomeIcon className="w-7 h-7" />
           </span>
         </router-link>
+
+        <ButtonTheme @click="storeTheme.changeTheme()"/>
 
         <router-link :to="{ name: 'profile' }"
           class="relative middle none font-sans font-medium text-center uppercase transition-all w-10 max-w-[40px] h-10 max-h-[40px] rounded-lg text-xs text-gray-500 hover:bg-blue-gray-500/10 active:bg-blue-gray-500/30 grid xl:hidden"
@@ -67,10 +73,10 @@ export default {
         </button>
 
         <router-link :to="{ name: 'profile' }"
-          class="middle none font-sans font-bold center uppercase transition-all text-xs py-3 rounded-lg text-gray-500 hover:bg-blue-gray-500/10 active:bg-blue-gray-500/30 hidden items-center gap-1 px-4 xl:flex"
+          class="middle none font-sans font-bold center uppercase transition-all text-xs p-3 rounded-lg text-gray-500 hover:bg-blue-gray-500/10 active:bg-blue-gray-500/30 hidden items-center gap-1 xl:flex"
           type="button" title="Profile">
           <ProfileIcon className="w-5 h-5" />
-          {{ `${store.user.name} ${store.user.lastName}` }}
+          {{ `${storeAuth.user.name} ${storeAuth.user.lastName}` }}
         </router-link>
 
       </div>

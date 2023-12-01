@@ -254,7 +254,7 @@ export default {
             <button 
               @click="deleteAccount()"
               class="inline-flex items-center focus:outline-none mr-4 hover:text-red-500 duration-200">
-              <TrashIcon />
+              <TrashIcon className="w-4 hover:stroke-red-500 "/>
               Delete account
             </button>
         </div>
