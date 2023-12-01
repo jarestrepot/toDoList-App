@@ -64,12 +64,15 @@ export default {
       }
       return newDescription;
     },
+    archiveTodo(){
+      console.log('archivar')
+    }
   },
 }
 </script>
 <template>
   <div v-if="todosStore.grid" @click="openModal()"
-    class="flex flex-col bg-clip-border rounded-xl bg-white text-gray-700 shadow-md min-h-full">
+    class="flex flex-col bg-clip-border rounded-xl bg-white text-gray-700 shadow-md min-h-full cursor-pointer eachtodo">
     <div
       class="bg-clip-border mx-4 rounded-xl overflow-hidden shadow-lg  -mt-4 lg:-mt-7 grid h-10 w-10 place-items-center"
       :class="{ highImportacnce: todo.Importance === 'High', mediumImportacnce: todo.Importance === 'Medium', lowImportacnce: todo.Importance === 'Low' }">
@@ -87,16 +90,24 @@ export default {
       <p class="block antialiased font-sans text-base leading-relaxed font-normal text-blue-gray-600">
         {{ getNewDescription(todo.description) }}
       </p>
-      <div class="flex justify-end gap-2">
-        <StatusIcon :className="getFillStatus(todo.Status)" />
-        <p class="block antialiased font-sans text-sm leading-normal font-normal text-right text-gray-400">{{ todo.Status
-        }}</p>
+      <div class="flex flex-row-reverse justify-between pt-3">
+        <div class="flex justify-end gap-2">
+          <StatusIcon :className="getFillStatus(todo.Status)" />
+          <p class="block antialiased font-sans text-sm leading-normal font-normal text-right text-gray-400">{{ todo.Status }}</p>
+        </div>
+        <div class="flex gap-1 items-center justify-end">
+          <button @click="archiveTodo" class="icons opacity-0">
+            <ArchiveTodoIcon fill="#999"/>
+          </button>
+          <button class="icons opacity-0">
+            <TrashIcon stroke="#999" className="w-5 hover:stroke-red-500"/>
+          </button>
+        </div>
       </div>
-
     </div>
   </div>
 
-  <tr v-else @click="openModal()" class="eachtodo">
+  <tr v-else @click="openModal()" class="eachtodo cursor-pointer">
     <td class="ps-3 py-5 border-b border-gray-200 bg-white text-sm">
       <p class="text-gray-900 whitespace-no-wrap">{{ getNewTitle(todo.title) }}</p>
     </td>
@@ -108,7 +119,6 @@ export default {
     <td class="ps-3 py-5 border-b border-gray-200 bg-white text-sm">
       <div class="flex gap-2">
         <CategoryIcon :className="getFillCategory(todo.Category)" />
-
         <p class="text-gray-900 whitespace-no-wrap">{{ todo.Category }}</p>
       </div>
     </td>
@@ -125,13 +135,15 @@ export default {
         :class="{ highImportacnce: todo.Importance === 'High', mediumImportacnce: todo.Importance === 'Medium', lowImportacnce: todo.Importance === 'Low' }"
         class="px-3 py-1 rounded-full text-black font-semibold uppercase text-center w-10">{{ todo.Importance }}</span>
     </td>
-    <td class="py-5 border-b border-gray-200 bg-white">
-      <button class="icons opacity-0">
-        <ArchiveTodoIcon />
-      </button>
-      <button class="icons opacity-0">
-        <TrashIcon fill="#999"/>
-      </button>
+    <td class="w-[3rem] py-5 border-b border-gray-200 bg-white">
+      <div class="flex gap-1 items-center justify-end">
+        <button class="icons opacity-0">
+          <ArchiveTodoIcon fill="#999" />
+        </button>
+        <button class="icons opacity-0">
+          <TrashIcon stroke="#999" className="w-5 hover:stroke-red-500"/>
+        </button>
+      </div>
     </td>
   </tr>
 </template>

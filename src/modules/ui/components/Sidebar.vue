@@ -4,6 +4,7 @@
   import LogoutIcon from '../components/icons/LogoutIcon.vue'
   import { userAuthStore } from '../../../store/auth/authUser'
 import { useTodosStore } from '../../../store/todos/todosUser'
+import ArchiveTodoIcon from '../../todos/components/icons/ArchiveTodoIcon.vue'
 
 
   export default {
@@ -14,10 +15,11 @@ import { useTodosStore } from '../../../store/todos/todosUser'
       }
     },
     components: {
-      HomeIcon,
-      ProfileIcon,
-      LogoutIcon,
-    },
+    HomeIcon,
+    ProfileIcon,
+    LogoutIcon,
+    ArchiveTodoIcon
+},
     methods: {
       logoutUser(){
         this.store.logoutUser()
@@ -44,6 +46,15 @@ import { useTodosStore } from '../../../store/todos/todosUser'
             <HomeIcon />
             <p class="block antialiased font-sans text-base leading-relaxed text-inherit font-medium capitalize">
               dashboard</p>
+          </router-link>
+        </li>
+        <li>
+          <router-link
+            :to="{ name: 'archive' }"
+            class="middle none font-sans font-bold center transition-all text-xs py-3 rounded-lg text-white w-full flex items-center gap-4 px-4 capitalize hover:bg-white/10">
+            <ArchiveTodoIcon className="w-5"/>
+            <p class="block antialiased font-sans text-base leading-relaxed text-inherit font-medium capitalize">
+              archived</p>
           </router-link>
         </li>
         <li>

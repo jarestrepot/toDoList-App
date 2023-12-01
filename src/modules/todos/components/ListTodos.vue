@@ -3,13 +3,15 @@ import EachTodo from './EachTodo.vue';
 import ModalTodos from './ModalTodos.vue';
 import FormEditTodo from './FormEditTodo.vue';
 import { userAuthStore } from '../../../store/auth/authUser';
+import { useTodosStore } from '../../../store/todos/todosUser';
 
 export default {
   data() {
     return {
       openModal: false,
       todoSelected: '',
-      store: userAuthStore(),
+      storeAuth: userAuthStore(),
+      storeTodo: useTodosStore(),
     };
   },
   components: {
@@ -19,12 +21,17 @@ export default {
   },
   methods: {
     getId(id) {
-      this.todoSelected = this.store.getTodoId(id)
+      this.todoSelected = this.storeAuth.getTodoId(id)
     }
   },
   computed: {
     useTodo() {
-      return this.store.todoFilter.length > 0 ? this.store.todoFilter : this.store.tasks;
+      return this.storeAuth.todoFilter.length > 0 ? this.storeAuth.todoFilter : this.storeAuth.tasks;
+    },
+    getKeysAssetsTodos() {
+      const { assets } = this.storeTodo;
+      const [Error, ...params ] = Object.keys(assets).reverse();
+      return params.reverse()
     }
   }
 }
@@ -39,24 +46,16 @@ export default {
           <thead>
             <tr>
               <th
-                class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                Name
+                class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left font-semibold text-gray-600 uppercase tracking-wider">
+                Title
               </th>
               <th
-                class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left font-semibold text-gray-600 uppercase tracking-wider">
                 Description
               </th>
-              <th
-                class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                Category
-              </th>
-              <th
-                class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                Status
-              </th>
-              <th
-                class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                Importance
+              <th v-for="key of getKeysAssetsTodos" :key="key"
+                class="w-fit px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text- font-semibold text-gray-600 uppercase tracking-wider">
+                {{ key }}
               </th>
               <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"></th>
             </tr>

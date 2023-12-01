@@ -1,5 +1,13 @@
+<script>
+	export default {
+		props: {
+			className: String,
+			fill: String
+		}
+	}
+</script>
 <template>
-  <svg viewBox="0 0 612.099 612.099" class="w-4">
+  <svg viewBox="0 0 612.099 612.099" :class="className ?? 'w-4 hover:fill-black'" :fill="fill ?? '#fff'">
 
     <path d="M573.794,564.26c0,5.28-4.284,9.563-9.564,9.563c-5.279,0-9.563-4.283-9.563-9.563V248.666H353.88
 				c-2.889,0-5.479-1.295-7.232-3.308l-34.969-34.949H19.178v160.118v222.425H306.06h286.862V277.358

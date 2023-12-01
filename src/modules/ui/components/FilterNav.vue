@@ -77,6 +77,11 @@ export default {
 
         <ul ref="parentUl"
           class="filter hidden md:block transition duration-300 absolute right-0 top-full md:w-48 bg-white md:shadow-lg rounded-b z-10">
+          <li
+            @click="authStore.clearTodoFilter()"
+            class="flex-col md:flex submenu cursor-pointer px-4 py-3 hover:bg-gray-50">
+            All
+          </li>
           <li class="flex-col md:flex submenu cursor-pointer md:cursor-auto px-4 py-3 hover:bg-gray-50" @click="toggleVisibility('firstUl')" >
             <div class="inline-flex items-center gap-2" >
               Category

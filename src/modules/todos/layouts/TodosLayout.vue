@@ -2,7 +2,7 @@
 import { useTodosStore } from '../../../store/todos/todosUser';
 import Navbar from '../../ui/components/Navbar.vue';
 import FilterNav from '../../ui/components/FilterNav.vue';
-import Sidebar from '../../ui/components/Sidebar.vue';
+import Sidebar from '../../ui/components/sidebar.vue';
 import Footer from '../../ui/components/Footer.vue';
 import { startAssetsTodos } from '../../../helpers/todosFetch';
 

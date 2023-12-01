@@ -6,13 +6,18 @@ export default{
   children: [
     {
       path: '',
+      name: 'entry',
+      component: () => import('../views/Todos.vue'),
+    },
+    {
+      path: '/no-entry',
       name: 'no-entry',
       component: () => import('../views/EmptyTodos.vue'),
     },
     {
-      path: '/dashboard/todos',
-      name: 'entry',
-      component: () => import('../views/Todos.vue'),
+      path: '/archive',
+      name: 'archive',
+      component: () => import('../views/ArchiveTodos.vue'),
     },
     {
       path: '/profile',
