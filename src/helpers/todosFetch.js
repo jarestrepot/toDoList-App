@@ -51,3 +51,34 @@ export async function startNewTodo(todo, userRef){
   }
 }
 
+
+export async function startArchivedTodo(id){
+  try {
+    const responseJson = await fetch(`${CONSTANTS.ENDPOINT}/arcivedTask/${id}`, {
+      method: 'PATCH',
+      headers: { 
+        'Content-Type': 'application/json',
+        'authorization': `Bearer ${window.localStorage.getItem('tokenUser')}`,
+      }
+    });
+    return await responseJson.json();
+  } catch (error) {
+    return { Error: error }
+  }
+}
+
+export async function startDeleteTodo(id){
+  try {
+    const responseJson = await fetch(`${CONSTANTS.ENDPOINT}/deleteTask/${id}`,{
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        'authorization': `Bearer ${window.localStorage.getItem('tokenUser')}`,
+      }
+    })
+    return await responseJson.json();
+  } catch (error) {
+    return { Error: error }
+  }
+}
+

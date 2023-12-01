@@ -1,7 +1,7 @@
 
 import { defineStore } from "pinia";
 import { startLogin } from '../../helpers/authFetch';
-import { startNewTodo, startUpdateTodo } from "../../helpers/todosFetch";
+import { startNewTodo, startUpdateTodo, startArchivedTodo, startDeleteTodo } from "../../helpers/todosFetch";
 
 export const userAuthStore = defineStore("auth", {
   state: () => ({
@@ -11,6 +11,7 @@ export const userAuthStore = defineStore("auth", {
     tasks: [],
     todoFilter: [],
     hasError: null,
+    archivedTodos: []
   }),
   actions: {
     async fetchLoginUser(email, password) {
@@ -21,6 +22,7 @@ export const userAuthStore = defineStore("auth", {
         });
       }else{
         const { dataUser, tasks, token } = await response;
+        // TODO: Mañana arreglar para que se vaya a su espacio en memoria correspondiente
         this.$patch({
           status: 'authenticated',
           user: dataUser,
@@ -56,7 +58,7 @@ export const userAuthStore = defineStore("auth", {
       if(response.Error){
         return response
       }
-      this.tasks.splice(indexTodo, 1, response.task );
+      this.tasks.splice( indexTodo, 1, response.task );
       return response
     },
     async newTodo(todo, userRef){
@@ -79,6 +81,34 @@ export const userAuthStore = defineStore("auth", {
       this.$patch({
         todoFilter: []
       })
+    },
+    async archivedTodo(id){
+      const response = await startArchivedTodo(id)
+      if(response.Error){
+        return response
+      }
+      // TODO: SOLUCIONAR ARCHIVADAS
+      const todoFind = this.tasks.find(task => task.id === id)
+
+      if (todoFind.length > 0 || todoFind.archived === 0){
+        this.archivedTodos.push(response.task)
+        const indexTodo = this.tasks.findIndex(task => task.id === id);
+        this.tasks.splice(indexTodo, 1);
+      }else{
+        this.tasks.push(response.task)
+        const indexTodoArchived = this.archivedTodos.findIndex(archived => archived.id === id);
+        this.archivedTodos.splice(indexTodoArchived, 1);
+      }
+    },
+  
+    async deleteTodoStore(id){
+      const response = await startDeleteTodo(id);
+      if(response.Error){
+        return response
+      }
+      const indexTodoArchived = this.archivedTodos.findIndex(archived => archived.id === id);
+      this.tasks.splice(indexTodoArchived, 1);
+      return response
     }
   },
   persist: true,

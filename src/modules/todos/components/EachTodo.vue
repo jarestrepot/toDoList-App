@@ -6,11 +6,14 @@ import StatusIcon from '../components/icons/StatusIcon.vue';
 import TrashIcon from '../../auth/components/icons/TrashIcon.vue';
 import { useTodosStore } from '../../../store/todos/todosUser';
 import ArchiveTodoIcon from './icons/ArchiveTodoIcon.vue';
+import { userAuthStore } from '../../../store/auth/authUser';
 
 export default {
   data () {
     return {
-      todosStore: useTodosStore()
+      todosStore: useTodosStore(),
+      authStore: userAuthStore(),
+      messageDelete: ''
     }
   },
   props: {
@@ -64,14 +67,20 @@ export default {
       }
       return newDescription;
     },
-    archiveTodo(){
-      console.log('archivar')
+    AddArchiveTodo(id){
+      const { archivedTodo } = this.authStore
+      archivedTodo(id)
+    },
+    async deleteTodo(id){
+      const { deleteTodoStore } = this.authStore;
+      this.messageDelete = await deleteTodoStore(id)
+      console.log(this.messageDelete)
     }
   },
 }
 </script>
 <template>
-  <div v-if="todosStore.grid" @click="openModal()"
+  <div v-if="todosStore.grid" 
     class="flex flex-col bg-clip-border rounded-xl bg-white text-gray-700 shadow-md min-h-full cursor-pointer eachtodo">
     <div
       class="bg-clip-border mx-4 rounded-xl overflow-hidden shadow-lg  -mt-4 lg:-mt-7 grid h-10 w-10 place-items-center"
@@ -96,10 +105,10 @@ export default {
           <p class="block antialiased font-sans text-sm leading-normal font-normal text-right text-gray-400">{{ todo.Status }}</p>
         </div>
         <div class="flex gap-1 items-center justify-end">
-          <button @click="archiveTodo" class="icons opacity-0">
+          <button @click="AddArchiveTodo(todo.id)" class="icons opacity-0">
             <ArchiveTodoIcon fill="#999"/>
           </button>
-          <button class="icons opacity-0">
+          <button class="icons opacity-0" @click="deleteTodo(todo.id)">
             <TrashIcon stroke="#999" className="w-5 hover:stroke-red-500"/>
           </button>
         </div>
@@ -141,7 +150,7 @@ export default {
           <ArchiveTodoIcon fill="#999" />
         </button>
         <button class="icons opacity-0">
-          <TrashIcon stroke="#999" className="w-5 hover:stroke-red-500"/>
+          <TrashIcon stroke="#999" className="w-5 hover:stroke-red-500" />
         </button>
       </div>
     </td>
