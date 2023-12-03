@@ -38,7 +38,8 @@ export default{
     <router-view v-if="storeAuth.tasks.length > 0" name="todos"/>
     <router-view v-else name="emptyTodos"/>
     <router-view name="userProfile"/>
-    <router-view name="archived"/>
+    <router-view v-if="storeAuth.archivedTodos.length > 0" name="archived"/>
+    <router-view v-else name="emptyArchived" />
   </main>
   <Footer />
 </template>

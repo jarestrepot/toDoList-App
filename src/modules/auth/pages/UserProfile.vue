@@ -8,6 +8,8 @@ import TrashIcon from '../components/icons/TrashIcon.vue';
 import { userAuthStore } from '../../../store/auth/authUser';
 import { startDeleteUser, startEditUser } from '../../../helpers/authFetch';
 import CONSTANTS from '../../../helpers/constants';
+import ModalTodos from '../../todos/components/ModalTodos.vue';
+import ActionConfirm from '../../todos/components/ActionConfirm.vue';
 
 export default {
   data () {
@@ -24,6 +26,7 @@ export default {
         status: false,
         message:''
       },
+      openModal: false,
     }
   },
   async mounted() {
@@ -39,8 +42,10 @@ export default {
     UserInfoIcon,
     PasswordIcon,
     RefreshIcon,
-    TrashIcon
-  },
+    TrashIcon,
+    ModalTodos,
+    ActionConfirm
+},
     computed: {
     isValidName() {
       return CONSTANTS.VALIDINPUT.test(this.name)
@@ -59,6 +64,9 @@ export default {
     }
   },
   methods: {
+    cancelModal(){
+      this.openModal = this.move = false
+    },
     async deleteAccount(){
       const response = await startDeleteUser(this.userId)
       if(response.Error){
@@ -252,7 +260,7 @@ export default {
               Update
             </button>
             <button 
-              @click="deleteAccount()"
+              @click="openModal = true"
               class="inline-flex items-center focus:outline-none mr-4 hover:text-red-500 duration-200">
               <TrashIcon className="w-4 hover:stroke-red-500 "/>
               Delete account
@@ -260,6 +268,13 @@ export default {
         </div>
       </div>
     </form>
+    <!-- MODAL -->
+    <ModalTodos :action="openModal">
+      <ActionConfirm 
+      @closeModal="cancelModal()" 
+      @deleteAccount="deleteAccount()" 
+      textModal="Are you sure you want to delete your account?" />
+    </ModalTodos>
   </div>
 </section>
 </template>

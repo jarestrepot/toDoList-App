@@ -16,6 +16,7 @@ export default{
       name: 'archive',
       components: {
         archived: () => import('../views/ArchiveTodos.vue'),
+        emptyArchived: () => import('../views/EmptyTodosArchive.vue')
       } 
     },
     {

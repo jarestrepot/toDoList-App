@@ -7,13 +7,18 @@ import TrashIcon from '../../auth/components/icons/TrashIcon.vue';
 import { useTodosStore } from '../../../store/todos/todosUser';
 import ArchiveTodoIcon from './icons/ArchiveTodoIcon.vue';
 import { userAuthStore } from '../../../store/auth/authUser';
+import ModalTodos from './ModalTodos.vue';
+import ActionConfirm from './ActionConfirm.vue';
 
 export default {
+  emits: ['click', 'openModalUpdate'],
   data () {
     return {
       todosStore: useTodosStore(),
       authStore: userAuthStore(),
-      messageDelete: ''
+      messageDelete: '',
+      openModalDelete: false,
+      loading: false,
     }
   },
   props: {
@@ -25,7 +30,9 @@ export default {
     CategoryIcon,
     StatusIcon,
     TrashIcon,
-    ArchiveTodoIcon
+    ArchiveTodoIcon,
+    ModalTodos,
+    ActionConfirm
 },
   methods: {
     getFillCategory(category) {
@@ -48,8 +55,8 @@ export default {
       };
       return optionsColor[statusP]
     },
-    openModal() {
-      this.$emit('open-modal');
+    openModal({ id }) {
+      this.$emit('openModalUpdate', id);
     },
     getNewTitle(title) {
       let newTitle = `${title[0].toUpperCase()}${title.slice(1)}`;
@@ -72,16 +79,22 @@ export default {
       archivedTodo(id)
     },
     async deleteTodo(id){
-      const { deleteTodoStore } = this.authStore;
-      this.messageDelete = await deleteTodoStore(id)
-      console.log(this.messageDelete)
-    }
+      this.loading = true;
+      const { deleteTodo } = this.authStore;
+      this.messageDelete = await deleteTodo(id);
+      this.loading = this.openModalDelete = false;
+    },
+    cancelModal(){
+      this.openModalDelete = false
+    },
   },
 }
 </script>
 <template>
-  <div v-if="todosStore.grid" 
-    class="flex flex-col bg-clip-border rounded-xl bg-white text-gray-700 shadow-md min-h-full cursor-pointer eachtodo">
+  <!-- GRID -->
+  <div v-if="todosStore.grid"  @click="openModal(todo)"
+    :class="$route.name === 'archive' ? 'cursor-default' : 'cursor-pointer'"
+    class="flex flex-col bg-clip-border rounded-xl bg-white text-gray-700 shadow-md min-h-full eachtodo">
     <div
       class="bg-clip-border mx-4 rounded-xl overflow-hidden shadow-lg  -mt-4 lg:-mt-7 grid h-10 w-10 place-items-center"
       :class="{ highImportacnce: todo.Importance === 'High', mediumImportacnce: todo.Importance === 'Medium', lowImportacnce: todo.Importance === 'Low' }">
@@ -95,6 +108,7 @@ export default {
       <h4 class="block antialiased tracking-normal font-sans text-2xl font-semibold leading-snug text-blue-gray-900">{{
         getNewTitle(todo.title) }}</h4>
     </div>
+
     <div class="border-t border-blue-gray-50 p-3 flex flex-col justify-between">
       <p class="block antialiased font-sans text-base leading-relaxed font-normal text-blue-gray-600">
         {{ getNewDescription(todo.description) }}
@@ -105,18 +119,19 @@ export default {
           <p class="block antialiased font-sans text-sm leading-normal font-normal text-right text-gray-400">{{ todo.Status }}</p>
         </div>
         <div class="flex gap-1 items-center justify-end">
-          <button @click="AddArchiveTodo(todo.id)" class="icons opacity-0">
+          <button v-show="todo.Status === 'Completed'" :title="todo.archived === 0 ? 'Archived' : 'Unarchive'" @click.stop="AddArchiveTodo(todo.id)" class="icons opacity-0">
             <ArchiveTodoIcon fill="#999"/>
           </button>
-          <button class="icons opacity-0" @click="deleteTodo(todo.id)">
+          <button class="icons opacity-0"  @click.stop="openModalDelete = true" title="Delete" >
             <TrashIcon stroke="#999" className="w-5 hover:stroke-red-500"/>
           </button>
         </div>
       </div>
     </div>
   </div>
-
-  <tr v-else @click="openModal()" class="eachtodo cursor-pointer">
+  <!-- LIST -->
+  <!-- TODO: ARREGLO EN EL MODAL -->
+  <tr v-else @click="openModal(todo)" class="eachtodo" :class="$route.name === 'archive' ? 'cursor-default' : 'cursor-pointer'">
     <td class="ps-3 py-5 border-b border-gray-200 bg-white text-sm">
       <p class="text-gray-900 whitespace-no-wrap">{{ getNewTitle(todo.title) }}</p>
     </td>
@@ -146,15 +161,24 @@ export default {
     </td>
     <td class="w-[3rem] py-5 border-b border-gray-200 bg-white">
       <div class="flex gap-1 items-center justify-end">
-        <button class="icons opacity-0">
+        <button v-show="todo.Status === 'Completed'" :title="todo.archived === 0 ? 'Archived' : 'Unarchive'"  @click.stop="AddArchiveTodo(todo.id)" class="icons opacity-0" >
           <ArchiveTodoIcon fill="#999" />
         </button>
-        <button class="icons opacity-0">
+        <button class="icons opacity-0" title="Delete" @click.stop="openModalDelete = true" >
           <TrashIcon stroke="#999" className="w-5 hover:stroke-red-500" />
         </button>
       </div>
     </td>
   </tr>
+  <!-- MODAL -->
+  <ModalTodos :action="openModalDelete">
+    <ActionConfirm 
+      @closeModal="cancelModal()" 
+      @deleteAccount="deleteTodo(todo.id)" 
+      textModal="Are you sure you want to delete your todo?" 
+    />
+  </ModalTodos>
+
 </template>
 <style>
   .eachtodo:hover .icons{

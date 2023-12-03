@@ -23,12 +23,22 @@ export const userAuthStore = defineStore("auth", {
       }else{
         const { dataUser, tasks, token } = await response;
         // TODO: Mañana arreglar para que se vaya a su espacio en memoria correspondiente
+        let todosArchived = [];
+        let normalyTodos = [];
+        for ( let todo of tasks ) {
+          if(todo.archived === 0 ){
+            normalyTodos = [...normalyTodos, todo];
+          }else{
+            todosArchived = [...todosArchived, todo]
+          }
+        }
         this.$patch({
           status: 'authenticated',
           user: dataUser,
-          tasks,
+          tasks: normalyTodos ,
           token,
           hasError:null,
+          archivedTodos: todosArchived 
         });
       }
     },
@@ -38,7 +48,9 @@ export const userAuthStore = defineStore("auth", {
         user: null, 
         tasks: [],
         token: null,
-        hasError: null
+        todoFilter: [],
+        hasError: null,
+        archivedTodos: []
       });
       localStorage.removeItem('tokenUser')
     },
@@ -49,7 +61,7 @@ export const userAuthStore = defineStore("auth", {
     },
     getTodoId(id){
       const [todo] = this.tasks.filter(todo => todo.id === id)
-      return todo
+      return todo ?? null
     },
     async updateTodoUser(todo){
 
@@ -82,15 +94,15 @@ export const userAuthStore = defineStore("auth", {
         todoFilter: []
       })
     },
+
     async archivedTodo(id){
       const response = await startArchivedTodo(id)
       if(response.Error){
         return response
       }
-      // TODO: SOLUCIONAR ARCHIVADAS
       const todoFind = this.tasks.find(task => task.id === id)
 
-      if (todoFind.length > 0 || todoFind.archived === 0){
+      if (todoFind && todoFind.archived === 0 ){
         this.archivedTodos.push(response.task)
         const indexTodo = this.tasks.findIndex(task => task.id === id);
         this.tasks.splice(indexTodo, 1);
@@ -101,13 +113,18 @@ export const userAuthStore = defineStore("auth", {
       }
     },
   
-    async deleteTodoStore(id){
+    async deleteTodo(id){
       const response = await startDeleteTodo(id);
       if(response.Error){
         return response
       }
-      const indexTodoArchived = this.archivedTodos.findIndex(archived => archived.id === id);
-      this.tasks.splice(indexTodoArchived, 1);
+      const indexTodo = this.tasks.findIndex(todo => todo.id === id);
+      if(indexTodo !== -1){
+        this.tasks.splice(indexTodo, 1);
+      }else {
+        const indexTodoArcived = this.archivedTodos.findIndex(todo => todo.id === id);
+        this.archivedTodos.splice(indexTodoArcived, 1);
+      }
       return response
     }
   },

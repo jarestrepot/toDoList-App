@@ -9,7 +9,7 @@ export default {
   data() {
     return {
       openModal: false,
-      todoSelected: '',
+      todoSelected: null,
       storeAuth: userAuthStore(),
       storeTodo: useTodosStore(),
     };
@@ -21,16 +21,29 @@ export default {
   },
   methods: {
     getId(id) {
-      this.todoSelected = this.storeAuth.getTodoId(id)
+      if(this.storeAuth.getTodoId(id) && this.$route.name === 'entry'){
+        this.todoSelected = this.storeAuth.getTodoId(id)
+        this.openModal = true
+      }
     }
   },
   computed: {
     useTodo() {
-      return this.storeAuth.todoFilter.length > 0 ? this.storeAuth.todoFilter : this.storeAuth.tasks;
+      if (this.$route.name === 'entry') {
+        return this.storeAuth.todoFilter.length > 0
+          ? this.storeAuth.todoFilter
+          : this.storeAuth.tasks;
+      }
+      if (this.$route.name === 'archive') {
+        return this.storeAuth.todoFilter.length > 0
+          ? this.storeAuth.todoFilter
+          : this.storeAuth.archivedTodos;
+      }
+      return [];
     },
     getKeysAssetsTodos() {
       const { assets } = this.storeTodo;
-      const [Error, ...params ] = Object.keys(assets).reverse();
+      const [ Error, ...params ] = Object.keys(assets).reverse();
       return params.reverse()
     }
   }
@@ -62,10 +75,11 @@ export default {
           </thead>
 
           <tbody>
-            <EachTodo v-for="todo of useTodo" :key="todo.id" 
+            <EachTodo 
+              v-for="todo of useTodo" :key="todo.id" 
               :todo="todo" 
-              @click="getId(todo.id)"
-              @open-modal="openModal = true" />
+              @openModalUpdate="(id) => getId(id)"
+            />
           </tbody>
         </table>
       </div>
@@ -76,6 +90,7 @@ export default {
     @updateTodo="() => updateTodoUser()" 
     :action="openModal">
     <FormEditTodo 
+      v-if="todoSelected"
       :todoSelected="todoSelected" 
       @closeModal="openModal = false" />
   </ModalTodos>

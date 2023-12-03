@@ -9,9 +9,9 @@
     return {
       title:'',
       description:'',
-      codeCategory: null,
+      codeCategory: '',
       codeImportance:null,
-      codeStatus:null,
+      codeStatus:'',
       created: false,
       authStore: userAuthStore(),
       assetsTodos: useTodosStore(),
@@ -38,7 +38,7 @@
       const response = await newTodo(objectTodo, this.authStore.user.user_id);
 
       this.title = this.description = '';
-      this.codeCategory = this.codeImportance = this.codeStatus = null;
+      this.codeCategory = this.codeImportance = this.codeStatus = '';
 
       if(response.Error){
         this.resMessage = {
@@ -110,7 +110,7 @@
         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
         required>
           <option value="" disabled selected>Select an option</option>
-          <option  v-for="category of assetsTodos.assets.category" :key="category" :value="category.codeCategory"
+          <option v-for="category of assetsTodos.assets.category" :key="category" :value="category.codeCategory"
           >{{ category.Category }}</option>
       </select>
     </div>

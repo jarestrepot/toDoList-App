@@ -3,11 +3,12 @@ import InputSearch from '../../shared/components/InputSearch.vue';
 import ProfileIcon from '../components/icons/ProfileIcon.vue'
 import LogoutIcon from '../components/icons/LogoutIcon.vue';
 import HomeIcon from '../components/icons/HomeIcon.vue';
+
 import { userAuthStore } from '../../../store/auth/authUser';
 import { useTodosStore } from '../../../store/todos/todosUser';
 import { useThemeMode } from '../../../store/theme/modeTheme';
 import ButtonTheme from './ButtonTheme.vue';
-
+import ArchiveTodoIcon from '../../todos/components/icons/ArchiveTodoIcon.vue';
 export default {
   data() {
     return {
@@ -21,7 +22,8 @@ export default {
     ProfileIcon,
     LogoutIcon,
     HomeIcon,
-    ButtonTheme
+    ButtonTheme,
+    ArchiveTodoIcon
 },
   methods: {
     logoutUser() {
@@ -48,21 +50,29 @@ export default {
         
         <router-link :to="{ name: 'entry' }"
           class="relative middle none font-sans font-medium text-center uppercase transition-all w-10 max-w-[40px] h-10 max-h-[40px] rounded-lg text-xs text-gray-500 hover:bg-blue-gray-500/10 active:bg-blue-gray-500/30 grid xl:hidden"
-          type="button" title="Profile">
+          type="button" title="Dashboard">
           <span class="absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2">
             <HomeIcon className="w-7 h-7" />
           </span>
         </router-link>
-
-        <ButtonTheme @click="storeTheme.changeTheme()"/>
-
-        <router-link :to="{ name: 'profile' }"
+        
+        <router-link :to="{ name: 'archive' }"
           class="relative middle none font-sans font-medium text-center uppercase transition-all w-10 max-w-[40px] h-10 max-h-[40px] rounded-lg text-xs text-gray-500 hover:bg-blue-gray-500/10 active:bg-blue-gray-500/30 grid xl:hidden"
-          type="button" title="Profile">
+          type="button" title="Archived"
+        >
           <span class="absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2">
-            <ProfileIcon className="w-7 h-7" />
+            <ArchiveTodoIcon className="w-7 h-7" :fill="'#6B7280'" />
           </span>
         </router-link>
+  
+        <router-link :to="{ name: 'profile' }"
+        class="relative middle none font-sans font-medium text-center uppercase transition-all w-10 max-w-[40px] h-10 max-h-[40px] rounded-lg text-xs text-gray-500 hover:bg-blue-gray-500/10 active:bg-blue-gray-500/30 grid xl:hidden"
+        type="button" title="Profile">
+          <span class="absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2">
+          <ProfileIcon className="w-7 h-7" />
+          </span>
+        </router-link>
+        <ButtonTheme @click="storeTheme.changeTheme()"/>
         <button
           @click="logoutUser()"
           class="relative middle none font-sans font-medium text-center uppercase transition-all w-10 max-w-[40px] h-10 max-h-[40px] rounded-lg text-xs text-gray-500 hover:bg-blue-gray-500/10 active:bg-blue-gray-500/30 grid xl:hidden"

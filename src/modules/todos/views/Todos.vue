@@ -1,7 +1,7 @@
 <script>
   import { useTodosStore } from '../../../store/todos/todosUser';
-import GridTodos from '../components/GridTodos.vue';
-import ListTodos from '../components/ListTodos.vue';
+  import GridTodos from '../components/GridTodos.vue';
+  import ListTodos from '../components/ListTodos.vue';
 
   export default {
     data () {
@@ -12,7 +12,7 @@ import ListTodos from '../components/ListTodos.vue';
     components: {
     GridTodos,
     ListTodos
-}
+    }
   }
 
 </script>

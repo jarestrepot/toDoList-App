@@ -9,7 +9,7 @@ export default {
   data() {
     return {
       openModal: false,
-      todoSelected: '',
+      todoSelected: null,
       store: userAuthStore(),
     };
   },
@@ -20,13 +20,26 @@ export default {
   },
   methods: {
     getId(id) {
-      this.todoSelected = this.store.getTodoId(id)
+      if(this.store.getTodoId(id) && this.$route.name === 'entry'){
+        this.todoSelected = this.store.getTodoId(id);
+        this.openModal = true
+      }
     }
   },
   computed: {
     useTodo(){
-      return this.store.todoFilter.length > 0 ? this.store.todoFilter : this.store.tasks;
-    }
+      if(this.$route.name === 'entry'){
+        return this.store.todoFilter.length > 0 
+          ? this.store.todoFilter 
+          : this.store.tasks;
+      }
+      if(this.$route.name === 'archive'){
+        return this.store.todoFilter.length > 0
+          ? this.store.todoFilter
+          : this.store.archivedTodos;
+      }
+      return [];
+    },
   }
 }
 </script>
@@ -35,15 +48,16 @@ export default {
   <div class="my-12 grid gap-y-10 gap-x-6 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
     <EachTodo 
       v-for="todo of useTodo" :key="todo.id"
-    :todo="todo" 
-    @click="getId(todo.id)"  
-    @open-modal="openModal = true" />
+      :todo="todo"  
+      @openModalUpdate="(id) => getId(id)" 
+    />
   </div>
 
   <ModalTodos 
     @updateTodo="() => updateTodoUser()" 
     :action="openModal">
     <FormEditTodo 
+      v-if="todoSelected"
       :todoSelected="todoSelected" 
       @closeModal="openModal = false" />
   </ModalTodos>

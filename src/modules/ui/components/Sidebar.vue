@@ -10,7 +10,7 @@ import ArchiveTodoIcon from '../../todos/components/icons/ArchiveTodoIcon.vue'
   export default {
     data(){
       return {
-        store: userAuthStore(),
+        storeAuth: userAuthStore(),
         storeTodos: useTodosStore()
       }
     },
@@ -22,7 +22,7 @@ import ArchiveTodoIcon from '../../todos/components/icons/ArchiveTodoIcon.vue'
 },
     methods: {
       logoutUser(){
-        this.store.logoutUser()
+        this.storeAuth.logoutUser()
         this.storeTodos.clearAssetsTodos()
         this.$router.push('/')
       }
@@ -48,6 +48,7 @@ import ArchiveTodoIcon from '../../todos/components/icons/ArchiveTodoIcon.vue'
               dashboard</p>
           </router-link>
         </li>
+
         <li>
           <router-link
             :to="{ name: 'archive' }"
@@ -57,6 +58,7 @@ import ArchiveTodoIcon from '../../todos/components/icons/ArchiveTodoIcon.vue'
               archived</p>
           </router-link>
         </li>
+
         <li>
           <router-link 
             :to="{name: 'profile'}"

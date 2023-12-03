@@ -14,13 +14,7 @@
       MoonIcon,
     },
     updated() {
-      if (this.storeTheme.darkMode) {
-        document.documentElement.classList.add("dark");
-        localStorage.setItem("theme", "dark")
-      } else {
-        document.documentElement.classList.remove("dark");
-        localStorage.setItem("theme", "light")
-      }
+      this.storeTheme.setItemTheme()
     }
   }
 </script>
