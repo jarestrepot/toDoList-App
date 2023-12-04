@@ -13,8 +13,8 @@
       codeImportance:null,
       codeStatus:'',
       created: false,
-      authStore: userAuthStore(),
-      assetsTodos: useTodosStore(),
+      storeAuth: userAuthStore(),
+      storeTodos: useTodosStore(),
       resMessage: {
         stateResponse: false,
         message: '',
@@ -33,9 +33,9 @@
         status: this.codeStatus
       }
 
-      const { newTodo } = this.authStore;
+      const { newTodo } = this.storeAuth;
 
-      const response = await newTodo(objectTodo, this.authStore.user.user_id);
+      const response = await newTodo(objectTodo, this.storeAuth.user.user_id);
 
       this.title = this.description = '';
       this.codeCategory = this.codeImportance = this.codeStatus = '';
@@ -69,7 +69,9 @@
     <h2 class="textDegrant text-2xl font-bold text-center">Add TODO</h2>
   </div>
 
-  <form @submit.prevent="createTodo()" class="max-w-md mx-auto">
+  <form 
+    @submit.prevent="createTodo()" 
+    class="max-w-md mx-auto">
 
     <div class="relative z-0 w-full mb-5 group">
       <label class="block mb-2 text-sm font-medium text-gray-900">Title:</label>
@@ -81,8 +83,7 @@
         required />
         <span
           class="text-red-500"
-          v-if="!isValidTitle && title.length > 0"
-        >
+          v-if="!isValidTitle && title.length > 0">
           Title is required
         </span>
     </div>
@@ -97,8 +98,7 @@
         required />
         <span
           class="text-red-500"
-          v-if="!isValidDescription && description.length > 0"
-        >
+          v-if="!isValidDescription && description.length > 0">
           Description is required
         </span>
     </div>
@@ -110,8 +110,11 @@
         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
         required>
           <option value="" disabled selected>Select an option</option>
-          <option v-for="category of assetsTodos.assets.category" :key="category" :value="category.codeCategory"
-          >{{ category.Category }}</option>
+          <option v-for="category of storeTodos.assets.category" 
+            :key="category" 
+            :value="category.codeCategory">
+            {{ category.Category }}
+          </option>
       </select>
     </div>
 
@@ -122,7 +125,9 @@
         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" 
         required>
         <option value="" disabled selected>Select an option</option>
-        <option v-for="status of assetsTodos.assets.status" :key="status" :value="status.codeStatus">
+        <option v-for="status of storeTodos.assets.status" 
+          :key="status" 
+          :value="status.codeStatus">
           {{ status.Status }}
         </option>
     </select>
@@ -130,7 +135,10 @@
     
     <div class="relative z-0 w-full mb-5 group gap-3 flex">
       <label class="block mb-2 text-sm font-medium text-gray-900">Importance:</label>
-      <input v-for="important of assetsTodos.assets.importance" :key="important"      v-model="codeImportance" :value="important.codeImportance" 
+      <input v-for="important of storeTodos.assets.importance" 
+        :key="important"
+        v-model="codeImportance" 
+        :value="important.codeImportance" 
         type="radio" 
         name="importance"
         :title="important.Importance"
@@ -148,7 +156,7 @@
         type="button"
         @click="$emit('closeModal')" 
         class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-200 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
-      Cancel 
+        Cancel 
       </button>
       <button
         :class="isValidFields ? 'opacity-100 cursor-pointer' : 'opacity-50 cursor-not-allowed'"

@@ -1,80 +1,93 @@
 <script lang="js">
-import ImageComponent from '../../shared/components/ImageComponent.vue';
-import LoginComponent from '../components/LoginComponent.vue';
-import RegisterComponent from '../components/RegisterComponent.vue';
+  import ImageComponent from '../../shared/components/ImageComponent.vue';
+  import LoginComponent from '../components/LoginComponent.vue';
+  import RegisterComponent from '../components/RegisterComponent.vue';
 
-export default {
-  data() {
-    return {
-      src: '../../public/login-background.webp',
-      alt: 'App task',
-      classImage: 'object-cover w-full h-screen'
-    }
-  },
-  components: {
-    LoginComponent,
-    ImageComponent,
-    RegisterComponent,
-  },
-  methods: {
-    showRegister() {
-      this.removeClass(this.$refs.containerImage, ['animateMoveLeft', 'containerImageLeft']);
-      this.addClass(this.$refs.containerImage, ['animateMoveRight']);
-      this.addClass(this.$refs.containerRegister, ['await', 'containerFormShow']);
-      this.removeClass(this.$refs.containerRegister, ['containerFormHidden']);
-      this.removeClass(this.$refs.containerLogin, ['containerFormShow']);
-      this.addClass(this.$refs.containerLogin, ['containerFormHidden']);
-    },
-
-    showLogin() {
-      this.removeClass(this.$refs.containerImage, ['animateMoveRight']);
-      this.addClass(this.$refs.containerImage, ['animateMoveLeft']);
-      this.addClass(this.$refs.containerLogin, ['await', 'containerFormShow']);
-      this.removeClass(this.$refs.containerLogin, ['containerFormHidden']);
-      this.removeClass(this.$refs.containerRegister, ['containerFormShow']);
-      this.addClass(this.$refs.containerRegister, ['containerFormHidden']);
-    },
-    removeClass({ classList }, nameClass) {
-      for (let classRemove of nameClass) {
-        classList.remove(classRemove);
+  export default {
+    data() {
+      return {
+        src: '../../public/login-background.webp',
+        alt: 'App task',
+        classImage: 'object-cover w-full h-screen'
       }
     },
-    addClass({ classList }, nameClass) {
-      for (let classAdd of nameClass) {
-        classList.add(classAdd);
+    components: {
+      LoginComponent,
+      ImageComponent,
+      RegisterComponent,
+    },
+    methods: {
+      showRegister() {
+        this.removeClass(this.$refs.containerImage, ['animateMoveLeft', 'containerImageLeft']);
+        this.addClass(this.$refs.containerImage, ['animateMoveRight']);
+        this.addClass(this.$refs.containerRegister, ['await', 'containerFormShow']);
+        this.removeClass(this.$refs.containerRegister, ['containerFormHidden']);
+        this.removeClass(this.$refs.containerLogin, ['containerFormShow']);
+        this.addClass(this.$refs.containerLogin, ['containerFormHidden']);
+      },
+
+      showLogin() {
+        this.removeClass(this.$refs.containerImage, ['animateMoveRight']);
+        this.addClass(this.$refs.containerImage, ['animateMoveLeft']);
+        this.addClass(this.$refs.containerLogin, ['await', 'containerFormShow']);
+        this.removeClass(this.$refs.containerLogin, ['containerFormHidden']);
+        this.removeClass(this.$refs.containerRegister, ['containerFormShow']);
+        this.addClass(this.$refs.containerRegister, ['containerFormHidden']);
+      },
+      removeClass({ classList }, nameClass) {
+        for (let classRemove of nameClass) {
+          classList.remove(classRemove);
+        }
+      },
+      addClass({ classList }, nameClass) {
+        for (let classAdd of nameClass) {
+          classList.add(classAdd);
+        }
       }
     }
   }
-}
 </script>
 
 <template>
   <div class="w-full h-screen grid grid-cols-1 xl:grid-cols-2 items-center">
     <!-- Form Login -->
-    <div ref="containerLogin" class="containerFormShow">
+    <div 
+      ref="containerLogin" 
+      class="containerFormShow">
       <LoginComponent>
         <p class="mb-0 mt-2 pt-1 text-sm font-semibold">
           Don't have an account?
-          <router-link :to="{ name: 'register' }" @click="showRegister()" class="textDegrant text-lg transition duration-200 ease-in-out  active:text-fun-blue-600 hover:underline
-              hover:underline-offset-4 hover:decoration-fun-blue-400">
+          <router-link 
+            :to="{ name: 'register' }" 
+            @click="showRegister()" 
+            class="textDegrant text-lg transition duration-200 ease-in-out active:text-fun-blue-600 hover:underline hover:underline-offset-4 hover:decoration-fun-blue-400">
             Register
           </router-link>
         </p>
       </LoginComponent>
     </div>
-    <picture ref="containerImage" class="hidden blur md:blur-none -z-10 md:z-50 absolute xl:block right-0 w-[50vw]">
-      <ImageComponent :src="src" :alt="alt" :classTailwind="classImage" />
+
+    <picture 
+      ref="containerImage" 
+      class="hidden blur md:blur-none -z-10 md:z-50 absolute xl:block right-0 w-[50vw]">
+      <ImageComponent 
+        :src="src" 
+        :alt="alt" 
+        :classTailwind="classImage" />
     </picture>
+
     <!-- Form Register -->
-    <div ref="containerRegister" class="containerFormHidden xl:absolute xl:top-0 xl:right-0 xl:w-1/2 h-full">
-      <RegisterComponent
-        @emitLogin="showLogin()"
-      >
+    <div 
+      ref="containerRegister" 
+      class="containerFormHidden xl:absolute xl:top-0 xl:right-0 xl:w-1/2 h-full">
+      <RegisterComponent @emitLogin="showLogin()">
         <div class="text-center lg:text-left flex flex-col w-full justify-between items-center">
           <p class="mb-0 mt-2 pt-1 text-sm font-semibold">
             Do you have an account?
-            <router-link :to="{ name: 'login' }" @click="showLogin()" class="textDegrant text-lg transition duration-200 ease-in-out  active:text-fun-blue-600 hover:underline
-                hover:underline-offset-4 hover:decoration-fun-blue-400">
+            <router-link 
+              :to="{ name: 'login' }" 
+              @click="showLogin()" 
+              class="textDegrant text-lg transition duration-200 ease-in-out active:text-fun-blue-600 hover:underline hover:underline-offset-4 hover:decoration-fun-blue-400">
               Login
             </router-link>
           </p>

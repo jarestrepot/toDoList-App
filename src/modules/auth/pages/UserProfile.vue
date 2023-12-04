@@ -1,116 +1,116 @@
 <script>
-import ProfileIcon from '../../ui/components/icons/ProfileIcon.vue';
-import EmailIcon from '../components/icons/EmailIcon.vue';
-import UserInfoIcon from '../components/icons/UserInfoIcon.vue';
-import PasswordIcon from '../components/icons/PasswordIcon.vue';
-import RefreshIcon from '../components/icons/RefreshIcon.vue';
-import TrashIcon from '../components/icons/TrashIcon.vue';
-import { userAuthStore } from '../../../store/auth/authUser';
-import { startDeleteUser, startEditUser } from '../../../helpers/authFetch';
-import CONSTANTS from '../../../helpers/constants';
-import ModalTodos from '../../todos/components/ModalTodos.vue';
-import ActionConfirm from '../../todos/components/ActionConfirm.vue';
+  import { startDeleteUser, startEditUser } from '../../../helpers/authFetch';
+  import { userAuthStore } from '../../../store/auth/authUser';
+  import ActionConfirm from '../../todos/components/ActionConfirm.vue';
+  import CONSTANTS from '../../../helpers/constants';
+  import EmailIcon from '../components/icons/EmailIcon.vue';
+  import ModalTodos from '../../todos/components/ModalTodos.vue';
+  import PasswordIcon from '../components/icons/PasswordIcon.vue';
+  import ProfileIcon from '../../ui/components/icons/ProfileIcon.vue';
+  import RefreshIcon from '../components/icons/RefreshIcon.vue';
+  import TrashIcon from '../components/icons/TrashIcon.vue';
+  import UserInfoIcon from '../components/icons/UserInfoIcon.vue';
 
-export default {
-  data () {
-    return {
-      name:'',
-      lastName: '',
-      email: '',
-      userId: '',
-      password: '',
-      newPassword: '',
-      move: false,
-      store: userAuthStore(),
-      responseMessage: {
-        status: false,
-        message:''
+  export default {
+    data () {
+      return {
+        name:'',
+        lastName: '',
+        email: '',
+        userId: '',
+        password: '',
+        newPassword: '',
+        move: false,
+        storeAuth: userAuthStore(),
+        responseMessage: {
+          status: false,
+          message:''
+        },
+        openModal: false,
+      }
+    },
+    async mounted() {
+      const { user } = this.storeAuth;
+      this.name = user?.name ?? 'name';
+      this.lastName = user?.lastName ?? 'last name';
+      this.email = user?.email ?? 'email';
+      this.userId = user?.user_id;
+    },
+    components: {
+      ProfileIcon,
+      EmailIcon,
+      UserInfoIcon,
+      PasswordIcon,
+      RefreshIcon,
+      TrashIcon,
+      ModalTodos,
+      ActionConfirm
+  },
+      computed: {
+      isValidName() {
+        return CONSTANTS.VALIDINPUT.test(this.name)
       },
-      openModal: false,
-    }
-  },
-  async mounted() {
-    const { user } = this.store;
-    this.name = user?.name ?? 'name';
-    this.lastName = user?.lastName ?? 'last name';
-    this.email = user?.email ?? 'email';
-    this.userId = user?.user_id;
-  },
-  components: {
-    ProfileIcon,
-    EmailIcon,
-    UserInfoIcon,
-    PasswordIcon,
-    RefreshIcon,
-    TrashIcon,
-    ModalTodos,
-    ActionConfirm
-},
-    computed: {
-    isValidName() {
-      return CONSTANTS.VALIDINPUT.test(this.name)
-    },
-    isValidLastName() {
-      return CONSTANTS.VALIDINPUT.test(this.lastName)
-    },
-    isValidEmail() {
-      return CONSTANTS.VALIDEMAIL.test(this.email)
-    },
-    isValidNewPassword() {
-      return CONSTANTS.VALIDPASSWORD.test(this.newPassword)
-    },
-    isValidFields() {
-      return this.isValidName && this.isValidLastName && this.isValidEmail && this.password
-    }
-  },
-  methods: {
-    cancelModal(){
-      this.openModal = this.move = false
-    },
-    async deleteAccount(){
-      const response = await startDeleteUser(this.userId)
-      if(response.Error){
-        this.responseMessage = {
-          message: response.Error
-        }
-      }else{
-        const { logoutUser } = this.store;
-        logoutUser();
-        this.$router.push('/');
+      isValidLastName() {
+        return CONSTANTS.VALIDINPUT.test(this.lastName)
+      },
+      isValidEmail() {
+        return CONSTANTS.VALIDEMAIL.test(this.email)
+      },
+      isValidNewPassword() {
+        return CONSTANTS.VALIDPASSWORD.test(this.newPassword)
+      },
+      isValidFields() {
+        return this.isValidName && this.isValidLastName && this.isValidEmail && this.password
       }
     },
-    async updateAccont(){
-
-      const user = { 
-        name: this.name.toLowerCase(), 
-        lastName:this.lastName.toLowerCase(),
-        email: this.email.toLowerCase(),
-        password: this.password,
-        newPassword: this.newPassword === '' ? this.password : this.newPassword,
-        userId:this.userId
-      }
-
-      const response = await startEditUser(user);
-
-      if(response.Error){
-        this.move = false;
-        this.password = null;
-        this.responseMessage = {
-          message: response.Error.Error
+    methods: {
+      cancelModal(){
+        this.openModal = this.move = false
+      },
+      async deleteAccount(){
+        const response = await startDeleteUser(this.userId)
+        if(response.Error){
+          this.responseMessage = {
+            message: response.Error
+          }
+        }else{
+          const { logoutUser } = this.storeAuth;
+          logoutUser();
+          this.$router.push('/');
         }
-      }else{
-        const { updateUser } = this.store;
-        updateUser(response);
-        this.move = false;
-        this.password = null;
-        this.responseMessage = {
-          status: true,
-          message: 'User updated successfully'
+      },
+      async updateAccont(){
+
+        const user = { 
+          name: this.name.toLowerCase(), 
+          lastName:this.lastName.toLowerCase(),
+          email: this.email.toLowerCase(),
+          password: this.password,
+          newPassword: this.newPassword === '' ? this.password : this.newPassword,
+          userId:this.userId
+        }
+
+        const response = await startEditUser(user);
+
+        if(response.Error){
+          this.move = false;
+          this.password = null;
+          this.responseMessage = {
+            message: response.Error.Error
+          }
+        }else{
+          const { updateUser } = this.storeAuth;
+          updateUser(response);
+          this.move = false;
+          this.password = null;
+          this.responseMessage = {
+            status: true,
+            message: 'User updated successfully'
+          }
         }
       }
     }
   }
-}
 </script>
 <template>
   <section class="flex flex-col gap-4 justify-around items-center lg:flex-row lg:items-start">
@@ -127,7 +127,11 @@ export default {
             <h1 class="text-gray-600 uppercase font-semibold">{{ `${name} ${lastName}` }}</h1>
           </div>
           <div class="w-full flex justify-end p-1 text-end">
-            <span v-if="responseMessage.status" class="text-green-500"> {{ responseMessage.message }}</span>
+            <span 
+              v-if="responseMessage.status" 
+              class="text-green-500"> 
+              {{ responseMessage.message }}
+            </span>
           </div>
         </div>
       </div>
@@ -149,7 +153,9 @@ export default {
                   placeholder="Your email" 
                   required />
                 </div>
-                <span class="text-red-500 ms-4" v-if="!isValidEmail && email.length > 0" >
+                <span 
+                  class="text-red-500 ms-4" 
+                  v-if="!isValidEmail && email.length > 0" >
                   Incorrect or empty email
                 </span>
             </div>
@@ -175,7 +181,9 @@ export default {
                     placeholder="Your name" 
                     required />
                   </div>
-                  <span class="text-red-500 ms-4" v-if="!isValidName && name.length > 0" >
+                  <span 
+                    class="text-red-500 ms-4" 
+                    v-if="!isValidName && name.length > 0" >
                     Incorrect or empty name
                   </span>
               </div>
@@ -193,11 +201,12 @@ export default {
                     placeholder="Your last name"
                     required />
                   </div>
-                  <span class="text-red-500 ms-4" v-if="!isValidLastName && email.length > 0" >
+                  <span 
+                    class="text-red-500 ms-4" 
+                    v-if="!isValidLastName && email.length > 0" >
                     Incorrect or empty last name
                   </span>
               </div>
-
             </div>
           </div>
 
@@ -221,7 +230,9 @@ export default {
                     placeholder="Your current password"
                     required />
                 </div>
-                <span :class="{'hidden': password !== ''}" class="text-slate-400 ms-4">
+                <span 
+                  :class="{'hidden': password !== ''}" 
+                  class="text-slate-400 ms-4">
                   Password is required
                 </span>
               </div>
@@ -239,7 +250,9 @@ export default {
                     placeholder="Your new password" />
                   </div>
                   <div class="ms-4">
-                    <span class="text-red-500" v-if="!isValidNewPassword && newPassword !== ''">
+                    <span 
+                      class="text-red-500" 
+                      v-if="!isValidNewPassword && newPassword !== ''">
                       The password must contain 8 characters including a number.
                     </span>
                   </div>
@@ -251,7 +264,11 @@ export default {
           <hr />
 
           <div class="w-full p-4 text-gray-500 flex items-center justify-end gap-4">
-            <span class="text-red-600" v-if="!responseMessage.status"> {{ responseMessage.message }}</span>
+            <span 
+              class="text-red-600" 
+              v-if="!responseMessage.status"> 
+              {{ responseMessage.message }}
+            </span>
             <button
               @click="updateAccont()"
               :class="isValidFields ? 'opacity-100 cursor-pointer' : 'opacity-50 cursor-not-allowed'"
@@ -271,9 +288,9 @@ export default {
     <!-- MODAL -->
     <ModalTodos :action="openModal">
       <ActionConfirm 
-      @closeModal="cancelModal()" 
-      @deleteAccount="deleteAccount()" 
-      textModal="Are you sure you want to delete your account?" />
+        @closeModal="cancelModal()" 
+        @deleteAccount="deleteAccount()" 
+        textModal="Are you sure you want to delete your account?" />
     </ModalTodos>
   </div>
 </section>

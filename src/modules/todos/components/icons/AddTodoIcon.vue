@@ -1,18 +1,19 @@
 <script>
-export default {
-  methods: {
-    openModal() {
-      this.$emit('open-modal');
+  export default {
+    methods: {
+      openModal() {
+        this.$emit('open-modal');
+      },
     },
-  },
-}
+  }
 </script>
 
 <template>
-  <svg @click="openModal()" viewBox="0 0 24 24" width="28" fill="none">
-    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
-    <g id="SVGRepo_iconCarrier">
+  <svg 
+    @click="openModal()" 
+    viewBox="0 0 24 24" 
+    width="28" 
+    fill="none">
     <path
       d="M3 5.25C3 4.00736 4.00736 3 5.25 3H18.75C19.9926 3 21 4.00736 21 5.25V12.0218C20.5368 11.7253 20.0335 11.4858 19.5 11.3135V5.25C19.5 4.83579 19.1642 4.5 18.75 4.5H5.25C4.83579 4.5 4.5 4.83579 4.5 5.25V18.75C4.5 19.1642 4.83579 19.5 5.25 19.5H11.3135C11.4858 20.0335 11.7253 20.5368 12.0218 21H5.25C4.00736 21 3 19.9926 3 18.75V5.25Z"
       fill="#133967"></path>
@@ -28,6 +29,5 @@ export default {
     <path
       d="M13.25 8.5C12.8358 8.5 12.5 8.83579 12.5 9.25C12.5 9.66421 12.8358 10 13.25 10H16.75C17.1642 10 17.5 9.66421 17.5 9.25C17.5 8.83579 17.1642 8.5 16.75 8.5H13.25Z"
       fill="#133967"></path>
-  </g>
-</svg>
+  </svg>
 </template>

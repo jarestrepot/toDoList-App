@@ -7,16 +7,26 @@
   }
 </script>
 <template>
-  <svg viewBox="0 -0.5 25 25" fill="none" :class="size ?? 'w-12 h-12'">
-    <path fill-rule="evenodd" clip-rule="evenodd"
+  <svg 
+    viewBox="0 -0.5 25 25" 
+    fill="none" :class="size ?? 'w-12 h-12'">
+    <path 
+      fill-rule="evenodd" 
+      clip-rule="evenodd"
       :stroke="color ?? '#fff'"
       d="M9.808 4.00001H15.329C15.3863 4.00001 15.4433 4.00367 15.5 4.01101C17.7473 4.16817 19.4924 6.0332 19.5 8.28601V14.715C19.4917 17.0871 17.5641 19.0044 15.192 19H9.808C7.43551 19.0044 5.50772 17.0865 5.5 14.714V8.28601C5.50772 5.91353 7.43551 3.99558 9.808 4.00001Z"
-      stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+      stroke-width="1" 
+      stroke-linecap="round" 
+      stroke-linejoin="round">
     </path>
-    <path fill-rule="evenodd" clip-rule="evenodd"
+    <path 
+      fill-rule="evenodd" 
+      clip-rule="evenodd"
       :stroke="color ?? '#fff'"
       d="M10.214 7.12902L8.72301 8.32902C8.57898 8.46627 8.49798 8.65687 8.49911 8.85582C8.50025 9.05476 8.58343 9.24442 8.72901 9.38002L9.69201 10.539L13.718 15.38C13.7851 15.458 13.875 15.5129 13.975 15.537L15.975 15.994C16.2395 16.009 16.4697 15.8152 16.5 15.552L16.407 13.606C16.4001 13.5061 16.36 13.4114 16.293 13.337L12.36 8.60702L11.3 7.33402C11.0448 6.99622 10.5748 6.90749 10.214 7.12902Z"
-      stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+      stroke-width="1" 
+      stroke-linecap="round" 
+      stroke-linejoin="round">
     </path>
     <path
       :stroke="color ?? '#fff'"

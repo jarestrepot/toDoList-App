@@ -20,5 +20,3 @@
     {{ textButton ?? 'Login' }}
   </button>
 </template>
-
-<style></style>

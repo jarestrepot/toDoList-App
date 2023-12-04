@@ -46,6 +46,18 @@ export const useTodosStore = defineStore("todos",{
       const [ propertiesCategory ] =  category.filter(cate => cate.codeCategory === code)
       return propertiesCategory.Category
     },
+    getKeyAssets(){
+      const keysAssets = Object.keys(this.assets);
+      return keysAssets;
+    },
+    getValuesAssets(){
+      const categoryArray = this.assets.category.map(item => item.Category);
+      const importanceArray = this.assets.importance.map(item => item.Importance);
+      const statusArray = this.assets.status.map(item => item.Status)
+
+      const valuesAssets = [...categoryArray, ...importanceArray, ...statusArray ]
+      return valuesAssets
+    },
     selectedListView(){
       this.grid = false;
     },

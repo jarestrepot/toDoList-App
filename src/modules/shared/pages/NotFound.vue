@@ -1,4 +1,0 @@
-<template>
-  <h3>Not Found</h3>
-  <p>404</p>
-</template>

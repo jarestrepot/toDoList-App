@@ -1,19 +1,19 @@
 <script>
   import { userAuthStore } from '../../../store/auth/authUser';
-import LabelForms from './LabelForms.vue';
+  import LabelForms from './LabelForms.vue';
 
   export default {
     data(){
       return {
         searchTodo: '',
-        authStore: userAuthStore()
+        storeAuth: userAuthStore()
       }
     },
     components: {
       LabelForms,
     },
     updated(){
-      const { getSearchTodos, addSearchTodo } = this.authStore;
+      const { getSearchTodos, addSearchTodo } = this.storeAuth;
       if(this.searchTodo.length > 0 && this.$route.name === 'entry'){
         const valuesFilter = getSearchTodos(this.searchTodo, 'dashboard')
         addSearchTodo(valuesFilter)

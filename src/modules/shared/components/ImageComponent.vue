@@ -12,8 +12,5 @@
   <img 
     :src="src"
     :alt="alt ?? 'Image task'"
-    :class="classTailwind"
-  >
+    :class="classTailwind" />
 </template>
-  
-<style></style>

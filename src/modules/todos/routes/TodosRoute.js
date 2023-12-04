@@ -1,5 +1,4 @@
 export default{
-
   name: 'dashboard',
   component: () => import('../pages/Dashboard.vue'),
   children: [

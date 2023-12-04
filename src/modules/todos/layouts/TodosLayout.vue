@@ -1,31 +1,31 @@
 <script>
-import { useTodosStore } from '../../../store/todos/todosUser';
-import Navbar from '../../ui/components/Navbar.vue';
-import FilterNav from '../../ui/components/FilterNav.vue';
-import Sidebar from '../../ui/components/Sidebar.vue';
-import Footer from '../../ui/components/Footer.vue';
-import { startAssetsTodos } from '../../../helpers/todosFetch';
-import { userAuthStore } from '../../../store/auth/authUser';
+  import { startAssetsTodos } from '../../../helpers/todosFetch';
+  import { userAuthStore } from '../../../store/auth/authUser';
+  import { useTodosStore } from '../../../store/todos/todosUser';
+  import FilterNav from '../../ui/components/FilterNav.vue';
+  import Footer from '../../ui/components/Footer.vue';
+  import Navbar from '../../ui/components/Navbar.vue';
+  import Sidebar from '../../ui/components/Sidebar.vue';
 
-export default{
-  data() {
-    return {
-      storeTodos: useTodosStore(),
-      storeAuth: userAuthStore()
-    };
-  },
-  async beforeCreate() {
-    const response = await startAssetsTodos();
-    const { assetsTodos } = this.storeTodos;
-    assetsTodos(response);
-  },
-  components: { 
-    Navbar,
-    FilterNav,
-    Sidebar,
-    Footer,
-  },
-}
+  export default{
+    data() {
+      return {
+        storeTodos: useTodosStore(),
+        storeAuth: userAuthStore()
+      };
+    },
+    async beforeCreate() {
+      const response = await startAssetsTodos();
+      const { assetsTodos } = this.storeTodos;
+      assetsTodos(response);
+    },
+    components: { 
+      FilterNav,
+      Footer,
+      Navbar,
+      Sidebar,
+    },
+  }
 </script>
 
 <template>

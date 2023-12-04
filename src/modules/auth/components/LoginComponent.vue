@@ -1,11 +1,10 @@
 <script>
-  import HelpBar from '../../shared/components/HelpBar.vue';
-  import TodoIcon from '../../todos/components/icons/TodoIcon.vue';
-  import ButtonMain from '../../shared/components/ButtonMain.vue';
   import { userAuthStore } from '../../../store/auth/authUser';
-  import LabelForms from '../../shared/components/LabelForms.vue';
+  import ButtonMain from '../../shared/components/ButtonMain.vue';
   import CONSTANTS from '../../../helpers/constants';
-
+  import HelpBar from '../../shared/components/HelpBar.vue';
+  import LabelForms from '../../shared/components/LabelForms.vue';
+  import TodoIcon from '../../todos/components/icons/TodoIcon.vue';
 
   export default {
     beforeCreate() {
@@ -14,11 +13,11 @@
       }
     },
     components: {
-    HelpBar,
-    TodoIcon,
-    ButtonMain,
-    LabelForms,
-},
+      ButtonMain,
+      HelpBar,
+      LabelForms,
+      TodoIcon,
+    },
     data(){
       return {
         email: '', 
@@ -28,7 +27,7 @@
           status:false,
           message: ''
         },
-        store: userAuthStore(),
+        storeAuth: userAuthStore(),
         clase: 'focus:ring-0 peer h-11 w-full rounded-[7px] border border-slate-500 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-slate-500 placeholder-shown:border-t-slate-500 focus:border-2 focus:border-blue-500 focus:border-t-transparent focus:outline-0'
       }
     },
@@ -52,8 +51,8 @@
       async loginUser(){
         try {
           this.startValidation = true;
-          await this.store.fetchLoginUser(this.email, this.password)
-          const { token, hasError } = this.store
+          await this.storeAuth.fetchLoginUser(this.email, this.password)
+          const { token, hasError } = this.storeAuth
 
           if(token){
             localStorage.setItem('tokenUser', token)
@@ -84,7 +83,7 @@
     </div>
 
     <HelpBar>
-      <TodoIcon :color="'#000'" />
+      <TodoIcon color="#000" />
     </HelpBar>
 
     <form 
@@ -105,7 +104,6 @@
         </div>
       </div>
 
-      <!-- Password input -->
       <div class="relative w-full min-w-[200px] mb-4">
         <input
           type="password"
@@ -120,8 +118,7 @@
           :class="!validFields ? 'opacity-60 cursor-not-allowed' : 'opacity-100 cursor-pointer'"
           @submitEmit="loginUser()"
           :textButton="'Login'" 
-          :disabledButton="!validFields"
-        />
+          :disabledButton="!validFields" />
         <slot />
       </div>
     </form>

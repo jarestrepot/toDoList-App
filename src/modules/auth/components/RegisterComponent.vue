@@ -1,80 +1,83 @@
 <script>
-import HelpBar from '../../shared/components/HelpBar.vue';
-import TodoIcon from '../../todos/components/icons/TodoIcon.vue';
-import ButtonMain from '../../shared/components/ButtonMain.vue';
-import { startRegister } from '../../../helpers/authFetch';
-import LabelForms from '../../shared/components/LabelForms.vue';
-import CONSTANTS from '../../../helpers/constants';
+  import { startRegister } from '../../../helpers/authFetch';
+  import ButtonMain from '../../shared/components/ButtonMain.vue';
+  import CONSTANTS from '../../../helpers/constants';
+  import HelpBar from '../../shared/components/HelpBar.vue';
+  import LabelForms from '../../shared/components/LabelForms.vue';
+  import TodoIcon from '../../todos/components/icons/TodoIcon.vue';
 
-export default {
-  components: {
-    HelpBar,
-    TodoIcon,
-    ButtonMain,
-    LabelForms
-},
-  data() {
-    return {
-      messageServerError: {
-        status: false,
-        message: ''
-      },
-      name: '',
-      lastName: '',
-      email: '',
-      password: '',
-      confirmPassword: '',
-      clase: 'focus:ring-0 peer h-9 2xl:h-11 w-full rounded-[7px] border border-slate-500 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-slate-500 placeholder-shown:border-t-slate-500 focus:border-2 focus:border-blue-500 focus:border-t-transparent focus:outline-0'
-    }
+  export default {
+    components: {
+      HelpBar,
+      TodoIcon,
+      ButtonMain,
+      LabelForms
   },
-  computed: {
-    isValidEmail() {
-      return CONSTANTS.VALIDEMAIL.test(this.email);
-    },
-    isValidPassword() {
-      return CONSTANTS.VALIDPASSWORD.test(this.password);
-    },
-    isValidName() {
-      return CONSTANTS.VALIDINPUT.test(this.name);
-    },
-    isValidLastname() {
-      return CONSTANTS.VALIDINPUT.test(this.lastName);
-    },
-    isValidConfirmPassword() {
-      return this.password === this.confirmPassword;
-    },
-    validFields() {
-      return this.isValidEmail && this.isValidPassword && this.isValidName && this.isValidLastname && this.isValidConfirmPassword;
-    }
-  },
-  methods: {
-    async registerUser() {
-      const paramsForm = {
-        name: this.name,
-        lastName: this.lastName,
-        email: this.email,
-        password: this.password,
-        location: null
-      }
-      const response = startRegister(paramsForm);
-      if (response) {
-        this.$emit('emitLogin', true)
-        this.resetForm();
-      } else {
-        this.resetForm();
-        this.messageServerError = {
+    data() {
+      return {
+        messageServerError: {
           status: false,
-          message: response.Error
-        }
+          message: ''
+        },
+        name: '',
+        lastName: '',
+        email: '',
+        password: '',
+        confirmPassword: '',
       }
     },
-    resetForm() {
-      this.name = this.lastName = this.email = this.password = this.confirmPassword = ''
-    }
-  },
+    computed: {
+      isValidEmail() {
+        return CONSTANTS.VALIDEMAIL.test(this.email);
+      },
+      isValidPassword() {
+        return CONSTANTS.VALIDPASSWORD.test(this.password);
+      },
+      isValidName() {
+        return CONSTANTS.VALIDINPUT.test(this.name);
+      },
+      isValidLastname() {
+        return CONSTANTS.VALIDINPUT.test(this.lastName);
+      },
+      isValidConfirmPassword() {
+        return this.password === this.confirmPassword;
+      },
+      validFields() {
+        return this.isValidEmail 
+          && this.isValidPassword 
+          && this.isValidName 
+          && this.isValidLastname 
+          && this.isValidConfirmPassword;
+      }
+    },
+    methods: {
+      async registerUser() {
+        const paramsForm = {
+          name: this.name,
+          lastName: this.lastName,
+          email: this.email,
+          password: this.password,
+          location: null
+        }
+        const response = startRegister(paramsForm);
+        if (response) {
+          this.$emit('emitLogin', true)
+          this.resetForm();
+        } else {
+          this.resetForm();
+          this.messageServerError = {
+            status: false,
+            message: response.Error
+          }
+        }
+      },
+      resetForm() {
+        this.name = this.lastName = this.email = this.password = this.confirmPassword = ''
+      }
+    },
 
 
-}
+  }
 </script>
 
 <template>
@@ -84,7 +87,7 @@ export default {
     </div>
 
     <HelpBar>
-      <TodoIcon :color="'#000'" />
+      <TodoIcon color="#000" />
     </HelpBar>
 
     <form @submit.prevent="showLogin">
@@ -93,10 +96,12 @@ export default {
         <input 
           type="text" 
           v-model="name"
-          :class="clase"
+          class="inputForm peer"
           placeholder=" " />
         <LabelForms textDisplay="Your name" />
-        <div v-if="!isValidName && name.length > 0" class="mt-1 text-red-600 text-sm 2xl:text-lg">
+        <div 
+          v-if="!isValidName && name.length > 0" 
+          class="mt-1 text-red-600 text-sm 2xl:text-lg">
           <span>Name incorrect!</span>
         </div>
       </div>
@@ -105,10 +110,12 @@ export default {
         <input 
           type="text" 
           v-model="lastName"
-          :class="clase"
+          class="inputForm peer"
           placeholder=" " />
         <LabelForms textDisplay="Last name" />
-        <div v-if="!isValidLastname && lastName.length > 0" class="mt-1 text-red-600 text-sm 2xl:text-lg">
+        <div 
+          v-if="!isValidLastname && lastName.length > 0" 
+          class="mt-1 text-red-600 text-sm 2xl:text-lg">
           <span>Last name incorrect!</span>
         </div>
       </div>
@@ -117,10 +124,12 @@ export default {
         <input 
           type="email" 
           v-model="email"
-          :class="clase"
+          class="inputForm peer"
           placeholder=" " />
         <LabelForms textDisplay="Email address" />
-        <div v-if="!isValidEmail && email.length > 0" class="mt-1 text-red-600 text-sm 2xl:text-lg">
+        <div 
+          v-if="!isValidEmail && email.length > 0" 
+          class="mt-1 text-red-600 text-sm 2xl:text-lg">
           <span>Email address incorrect!</span>
         </div>
       </div>
@@ -129,10 +138,12 @@ export default {
         <input 
           type="password" 
           v-model="password"
-          :class="clase"
+          class="inputForm peer"
           placeholder=" " />
         <LabelForms textDisplay="Password" />
-        <div v-if="!isValidPassword && password.length > 0" class="mt-1 text-red-600 text-sm 2xl:text-lg">
+        <div 
+          v-if="!isValidPassword && password.length > 0" 
+          class="mt-1 text-red-600 text-sm 2xl:text-lg">
           <span>Password incorrect!</span>
         </div>
       </div>
@@ -141,17 +152,22 @@ export default {
         <input 
           type="password" 
           v-model="confirmPassword"
-          :class="clase"
+          class="inputForm peer"
           placeholder=" " />
         <LabelForms textDisplay="Confirm password" />
-        <div v-if="!isValidConfirmPassword && confirmPassword.length > 0" class="mt-1 text-red-600 text-sm 2xl:text-lg">
+        <div 
+          v-if="!isValidConfirmPassword && confirmPassword.length > 0" 
+          class="mt-1 text-red-600 text-sm 2xl:text-lg">
           <span>Password does not match!</span>
         </div>
       </div>
 
       <div class="text-center lg:text-left flex flex-col w-full justify-between items-center">
-        <ButtonMain :class="!validFields ? 'opacity-60 cursor-not-allowed' : 'opacity-100 cursor-pointer'"
-          :textButton="'Register'" :disabledButton="!validFields" @submitEmit="registerUser()" />
+        <ButtonMain 
+          :class="!validFields ? 'opacity-60 cursor-not-allowed' : 'opacity-100 cursor-pointer'"
+          :textButton="'Register'" 
+          :disabledButton="!validFields" 
+          @submitEmit="registerUser()" />
         <slot />
       </div>
     </form>

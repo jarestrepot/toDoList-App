@@ -23,7 +23,6 @@ export const userAuthStore = defineStore("auth", {
         });
       }else{
         const { dataUser, tasks, token } = await response;
-        // TODO: Mañana arreglar para que se vaya a su espacio en memoria correspondiente
         let todosArchived = [];
         let normalyTodos = [];
         for ( let todo of tasks ) {
@@ -43,21 +42,24 @@ export const userAuthStore = defineStore("auth", {
         });
       }
     },
+    
     logoutUser(){
       this.$reset()
       localStorage.removeItem('tokenUser')
     },
+
     updateUser({ user }){
       this.$patch({
         user
       });
     },
+
     getTodoId(id){
       const [todo] = this.tasks.filter(todo => todo.id === id)
       return todo ?? null
     },
-    async updateTodoUser(todo){
 
+    async updateTodoUser(todo){
       const indexTodo = this.tasks.findIndex(task => task.id === todo.id);
       const response = await startUpdateTodo(todo);
       if(response.Error){
@@ -66,6 +68,7 @@ export const userAuthStore = defineStore("auth", {
       this.tasks.splice( indexTodo, 1, response.task );
       return response
     },
+
     async newTodo(todo, userRef){
       const response = await startNewTodo(todo, userRef);
       if(response.Error){
@@ -75,17 +78,11 @@ export const userAuthStore = defineStore("auth", {
       return response.msg
     },
 
-    getFilterTodos(nameFilter, asset){
-      this.tasks.forEach((todo, index )=> {
-        console.log(todo)
-        if (todo[asset] === nameFilter){
-          this.todoFilter.push(todo)
-          this.tasks.splice(index, 1)
-        }
-      });
+    getFilterTodos(nameFilter, asset) {
+      this.todoFilter = this.tasks.filter((todo) => todo[asset] === nameFilter);  
     },
+
     clearTodoFilter(){
-      this.tasks.push(...this.todoFilter);
       this.$patch({
         todoFilter: []
       })

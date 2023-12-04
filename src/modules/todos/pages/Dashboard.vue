@@ -1,13 +1,13 @@
 <script>
-import TodosLayout from '../layouts/TodosLayout.vue';
+  import TodosLayout from '../layouts/TodosLayout.vue';
 
-export default {
-  components: {
-    TodosLayout
+  export default {
+    components: {
+      TodosLayout
+    }
   }
-}
 </script>
 
 <template>
-    <TodosLayout />
+  <TodosLayout />
 </template>

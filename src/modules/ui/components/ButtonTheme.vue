@@ -1,7 +1,7 @@
 <script>
-  import SunIcon from '../components/icons/SunIcon.vue';
-  import MoonIcon from '../components/icons/MoonIcon.vue';
   import { useThemeMode } from '../../../store/theme/modeTheme'
+  import MoonIcon from '../components/icons/MoonIcon.vue';
+  import SunIcon from '../components/icons/SunIcon.vue';
 
   export default {
     data () {

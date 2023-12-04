@@ -1,11 +1,11 @@
 <script>
-import HeartIcon from '../components/icons/HeartIcon.vue'
+  import HeartIcon from '../components/icons/HeartIcon.vue'
 
-export default {
-  components: {
-    HeartIcon,
+  export default {
+    components: {
+      HeartIcon,
+    }
   }
-}
 </script>
 <template>
   <footer class="p-5 bottom-0 w-full bg-gray-50/50">
@@ -13,7 +13,10 @@ export default {
       © 2023, made with 
       <HeartIcon />
       by Grup 2. Our 
-      <a href="https://github.com/jarestrepot/todolist-app" target="_blank" class="transition-colors hover:text-blue-500">repository</a> 
+      <a 
+      href="https://github.com/jarestrepot/todolist-app" 
+      target="_blank" 
+      class="transition-colors hover:text-blue-500">repository</a> 
       in GitHub 
     </p>
   </footer>

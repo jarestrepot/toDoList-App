@@ -1,101 +1,101 @@
 <script>
-import StatusIcon from '../components/icons/StatusIcon.vue';
-import CategoryIcon from '../components/icons/CategoryIcon.vue';
-import ImportanceIcon from '../components/icons/ImportanceIcon.vue';
-import { useTodosStore } from '../../../store/todos/todosUser';
-import { userAuthStore } from '../../../store/auth/authUser';
-import CONSTANTS from '../../../helpers/constants';
+  import { userAuthStore } from '../../../store/auth/authUser';
+  import { useTodosStore } from '../../../store/todos/todosUser';
+  import CategoryIcon from '../components/icons/CategoryIcon.vue';
+  import CONSTANTS from '../../../helpers/constants';
+  import ImportanceIcon from '../components/icons/ImportanceIcon.vue';
+  import StatusIcon from '../components/icons/StatusIcon.vue';
 
-export default {
-  data() {
-    return {
-      editing: false,
-      id: this.todoSelected.id,
-      title: this.todoSelected.title,
-      description: this.todoSelected.description,
-      codeImportance: null,
-      nameImportance:null,
-      codeStatus:null,
-      nameStatus: null,
-      codeCategory: null,
-      nameCategory: null,
-      assetsTodos: useTodosStore(),
-      userStore: userAuthStore(),
-      resMessage: {
-        stateResponse: false,
-        message: '',
-        color: false
-      }
-    };
-  },
-  methods: {
-    startEditing() {
-      this.editing = true;
-    },
-    stopEditing() {
-      this.editing = false;
-    },
-    async updateTodoUser() {
-      const { updateTodoUser, user } = this.userStore;
-
-      const updateTodoObject = {
-        id: this.id,
-        title: this.title,
-        description: this.description,
-        status: this.codeStatus,
-        importance: this.codeImportance,
-        category: this.codeCategory,
-        userRef: user.user_id
-      }
-
-      const response = await updateTodoUser(updateTodoObject);
-
-      if(response.Error){
-        this.resMessage = {
-          stateResponse: true,
-          message: response.Error,
+  export default {
+    data() {
+      return {
+        editing: false,
+        id: this.todoSelected.id,
+        title: this.todoSelected.title,
+        description: this.todoSelected.description,
+        codeImportance: null,
+        nameImportance:null,
+        codeStatus:null,
+        nameStatus: null,
+        codeCategory: null,
+        nameCategory: null,
+        storeTodos: useTodosStore(),
+        storeAuth: userAuthStore(),
+        resMessage: {
+          stateResponse: false,
+          message: '',
+          color: false
         }
-      }else{
-        this.resMessage = {
-          stateResponse: true,
-          message: response.msg,
-          color: true
+      };
+    },
+    methods: {
+      startEditing() {
+        this.editing = true;
+      },
+      stopEditing() {
+        this.editing = false;
+      },
+      async updateTodoUser() {
+        const { updateTodoUser, user } = this.storeAuth;
+
+        const updateTodoObject = {
+          id: this.id,
+          title: this.title,
+          description: this.description,
+          status: this.codeStatus,
+          importance: this.codeImportance,
+          category: this.codeCategory,
+          userRef: user.user_id
         }
+
+        const response = await updateTodoUser(updateTodoObject);
+
+        if(response.Error){
+          this.resMessage = {
+            stateResponse: true,
+            message: response.Error,
+          }
+        }else{
+          this.resMessage = {
+            stateResponse: true,
+            message: response.msg,
+            color: true
+          }
+        }
+        this.editing = false;
       }
-      this.editing = false;
-    }
-  },
-  components: {
-    StatusIcon,
-    CategoryIcon,
-    ImportanceIcon
-  },
-  props: {
-    todoSelected: Object
-  },
-  computed: {
-    isValidTitle() {
-      return CONSTANTS.VALIDINPUT.test(this.title)
     },
-    isValidDescription() {
-      return CONSTANTS.VALIDNUMCHARACTERES.test(this.description)
+    components: {
+      StatusIcon,
+      CategoryIcon,
+      ImportanceIcon
     },
-    isValidFields() {
-      return this.isValidTitle && this.isValidDescription
+    props: {
+      todoSelected: Object
+    },
+    computed: {
+      isValidTitle() {
+        return CONSTANTS.VALIDINPUT.test(this.title)
+      },
+      isValidDescription() {
+        return CONSTANTS.VALIDNUMCHARACTERES.test(this.description)
+      },
+      isValidFields() {
+        return this.isValidTitle && this.isValidDescription
+      }
+    },
+    mounted(){
+      const { getImportance, getStatus, getCategory  } = this.storeTodos.getCodeAssets(this.todoSelected)
+      this.codeStatus = getStatus.codeStatus;
+      this.codeImportance = getImportance.codeImportance;
+      this.codeCategory = getCategory.codeCategory;
+    },
+    updated(){
+      this.nameStatus = this.storeTodos.getStatusCode(this.codeStatus)
+      this.nameImportance = this.storeTodos.getImportanceCode(this.codeImportance)
+      this.nameCategory = this.storeTodos.getCategoryCode(this.codeCategory)
     }
-  },
-  mounted(){
-    const { getImportance, getStatus, getCategory  } = this.assetsTodos.getCodeAssets(this.todoSelected)
-    this.codeStatus = getStatus.codeStatus;
-    this.codeImportance = getImportance.codeImportance;
-    this.codeCategory = getCategory.codeCategory;
-  },
-  updated(){
-    this.nameStatus = this.assetsTodos.getStatusCode(this.codeStatus)
-    this.nameImportance = this.assetsTodos.getImportanceCode(this.codeImportance)
-    this.nameCategory = this.assetsTodos.getCategoryCode(this.codeCategory)
   }
-}
 </script>
 <template>
   <div class="flex flex-col gap-6">
@@ -103,7 +103,9 @@ export default {
       <h2 class="textDegrant text-2xl font-bold text-center">Edit your TODO</h2>
     </div>
 
-    <form @submit.prevent="updateTodoUser()" class="flex flex-col gap-2">
+    <form 
+      @submit.prevent="updateTodoUser()" 
+      class="flex flex-col gap-2">
 
       <div class="inline-flex items-center gap-2 w-full">
         <span 
@@ -119,11 +121,12 @@ export default {
           <input 
             v-model="title" 
             @keyup.enter="stopEditing"
-            class="w-full h-full outline-0 focus:border focus:border-blue-500 rounded-md bg-transparent py-1 pl-2 pr-7 text-gray-500 sm:text-sm" 
-          />
+            class="w-full h-full outline-0 focus:border focus:border-blue-500 rounded-md bg-transparent py-1 pl-2 pr-7 text-gray-500 sm:text-sm" />
         </div>
       </div>
-      <span class="text-red-500 text-end pe-2" v-if="!isValidTitle && title.length > 0">
+      <span 
+        class="text-red-500 text-end pe-2" 
+        v-if="!isValidTitle && title.length > 0">
         Title is required
       </span>
 
@@ -143,11 +146,12 @@ export default {
             type="text" 
             v-model="description" 
             @keyup.enter="stopEditing"
-            class="w-full h-full rounded-md border-0 focus:border-0 bg-transparent py-1 pl-2 pr-7 text-gray-500 sm:text-sm">
-          </textarea>
+            class="w-full h-full rounded-md border-0 focus:border-0 bg-transparent py-1 pl-2 pr-7 text-gray-500 sm:text-sm"/>
         </div>
       </div>
-      <span class="text-red-500 text-end pe-2" v-if="!isValidDescription && description.length > 0">
+      <span 
+        class="text-red-500 text-end pe-2" 
+        v-if="!isValidDescription && description.length > 0">
         Description is required
       </span>
 
@@ -166,7 +170,9 @@ export default {
             v-model="codeStatus" 
             @keyup.enter="stopEditing"
             class="w-full h-full rounded-md border-0 focus:border-0 bg-transparent py-1 pl-2 pr-7 text-gray-500 sm:text-sm">
-            <option v-for="state of  assetsTodos.assets.status" :key="state" :value="state.codeStatus">
+            <option v-for="state of  storeTodos.assets.status" 
+              :key="state" 
+              :value="state.codeStatus">
               {{ state.Status }}
             </option>
           </select>
@@ -188,7 +194,9 @@ export default {
             v-model="codeCategory" 
             @keyup.enter="stopEditing"
             class="w-full h-full rounded-md border-0 focus:border-0 bg-transparent py-1 pl-2 pr-7 text-gray-500 sm:text-sm">
-            <option v-for="category of assetsTodos.assets.category" :key="category" :value="category.codeCategory">
+            <option v-for="category of storeTodos.assets.category" 
+              :key="category" 
+              :value="category.codeCategory">
               {{ category.Category }}
             </option>
           </select>
@@ -210,7 +218,9 @@ export default {
             v-model="codeImportance"
             @keyup.enter="stopEditing"
             class="w-full h-full rounded-md border-0 focus:border-0 bg-transparent py-1 pl-2 pr-7 text-gray-500 sm:text-sm">
-            <option v-for="important of assetsTodos.assets.importance" :key="important" :value="important.codeImportance">
+            <option v-for="important of storeTodos.assets.importance" 
+              :key="important" 
+              :value="important.codeImportance">
               {{ important.Importance }}
             </option>
           </select>

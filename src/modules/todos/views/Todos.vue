@@ -6,7 +6,6 @@
       ViewsTodos,
     }
   }
-
 </script>
 
 <template>
