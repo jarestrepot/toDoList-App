@@ -12,7 +12,8 @@ export const userAuthStore = defineStore("auth", {
     todoFilter: [],
     hasError: null,
     archivedTodos: [],
-    searchTodos: []
+    searchTodos: [],
+    serachTodosArchived: []
   }),
   actions: {
     async fetchLoginUser(email, password) {
@@ -78,8 +79,13 @@ export const userAuthStore = defineStore("auth", {
       return response.msg
     },
 
-    getFilterTodos(nameFilter, asset) {
-      this.todoFilter = this.tasks.filter((todo) => todo[asset] === nameFilter);  
+    getFilterTodos(nameFilter, asset , route) {
+      if(route === 'entry'){
+        this.todoFilter = this.tasks.filter((todo) => todo[asset] === nameFilter);  
+      }
+      else{
+        this.todoFilter = this.archivedTodos.filter(todo => todo[asset] === nameFilter)
+      }
     },
 
     clearTodoFilter(){
@@ -87,6 +93,7 @@ export const userAuthStore = defineStore("auth", {
         todoFilter: []
       })
     },
+
 
     async archivedTodo(id){
       const response = await startArchivedTodo(id)
@@ -129,8 +136,14 @@ export const userAuthStore = defineStore("auth", {
       this.$patch({ searchTodos: [] });
       this.searchTodos.push(...todos)
     },
+    addSearchTodoArchived(todos){
+      this.$patch( { serachTodosArchived: [] });
+      this.serachTodosArchived.push(...todos)
+    },
     getSearchTodos(search, type){
-      if (this.todoFilter.length > 0) return this.todoFilter.filter(todo => todo.title.toLowerCase().includes(search.toLowerCase()));
+      if (this.todoFilter.length > 0) {
+        return this.todoFilter.filter(todo => todo.title.toLowerCase().includes(search.toLowerCase()));
+      }
       if (type === 'dashboard' && this.todoFilter.length <= 0) {
         return this.tasks.filter(todo => todo.title.toLowerCase().includes(search.toLowerCase()));
       }

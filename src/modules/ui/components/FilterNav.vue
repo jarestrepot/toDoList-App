@@ -60,7 +60,7 @@ export default {
 
       for (let key of getKeyAssets()) {
         if (key === nameAsset) {
-          getFilterTodos(nameFilter, `${nameAsset[0].toUpperCase()}${nameAsset.slice(1)}`)
+          getFilterTodos(nameFilter, `${nameAsset[0].toUpperCase()}${nameAsset.slice(1)}`, this.$route.name)
         }
       }
 

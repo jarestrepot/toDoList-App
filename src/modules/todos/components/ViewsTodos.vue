@@ -25,19 +25,20 @@
           this.todoSelected = this.storeAuth.getTodoId(id);
           this.openModal = true
         }
-      }
+      },
     },
     computed: {
       useTodo() {
         if (this.$route.name === 'entry') {
-          return this.storeAuth.todoFilter.length > 0
-            ? this.storeAuth.todoFilter
-            : this.storeAuth.tasks;
+          if (this.storeAuth.todoFilter.length > 0) return this.storeAuth.todoFilter
+          if (this.storeAuth.searchTodos.length > 0) return this.storeAuth.searchTodos
+          return this.storeAuth.tasks
         }
+        
         if (this.$route.name === 'archive') {
-          return this.storeAuth.todoFilter.length > 0
-            ? this.storeAuth.todoFilter
-            : this.storeAuth.archivedTodos;
+          if (this.storeAuth.todoFilter.length > 0) return this.storeAuth.todoFilter
+          if (this.storeAuth.serachTodosArchived.length > 0) return this.storeAuth.serachTodosArchived
+          return this.storeAuth.archivedTodos
         }
         return [];
       },
@@ -45,8 +46,8 @@
         const { assets } = this.storeTodos;
         const [ Error, ...params ] = Object.keys(assets).reverse();
         return params.reverse()
-      }
-    }
+      },
+    },
   }
 </script>
 

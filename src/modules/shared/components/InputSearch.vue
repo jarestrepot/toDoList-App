@@ -13,16 +13,17 @@
       LabelForms,
     },
     updated(){
-      const { getSearchTodos, addSearchTodo } = this.storeAuth;
+      const { getSearchTodos, addSearchTodo, addSearchTodoArchived } = this.storeAuth;
       if(this.searchTodo.length > 0 && this.$route.name === 'entry'){
         const valuesFilter = getSearchTodos(this.searchTodo, 'dashboard')
         addSearchTodo(valuesFilter)
       }
       else if(this.searchTodo.length > 0 && this.$route.name === 'archive') {
         const valuesFilter = getSearchTodos(this.searchTodo, 'archive')
-        addSearchTodo(valuesFilter)
+        addSearchTodoArchived(valuesFilter)
       }else{
-        addSearchTodo([])
+        addSearchTodo([]);
+        addSearchTodoArchived([]);
       }
     }
   }

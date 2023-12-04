@@ -43,7 +43,7 @@
         <h6 
           v-if="this.$route.name !== 'profile'" 
           class=" block antialiased tracking-normal font-sans text-base font-semibold leading-relaxed text-gray-900 dark:text-blue-500">
-          Dashboard
+          {{ this.$route.name === 'entry' ? 'dashboard': 'archived' }}
         </h6>
       </div>
 
@@ -52,6 +52,7 @@
         <InputSearch v-if="this.$route.name !== 'profile'" />
         
         <router-link 
+          @click="storeAuth.clearTodoFilter()"
           :to="{ name: 'entry' }"
           class="relative middle none font-sans font-medium text-center uppercase transition-all w-10 max-w-[40px] h-10 max-h-[40px] rounded-lg text-xs text-gray-500 hover:bg-blue-gray-500/10 active:bg-blue-gray-500/30 grid xl:hidden"
           type="button" title="Dashboard">
@@ -61,6 +62,7 @@
         </router-link>
         
         <router-link 
+          @click="storeAuth.clearTodoFilter()"
           :to="{ name: 'archive' }"
           class="relative middle none font-sans font-medium text-center uppercase transition-all w-10 max-w-[40px] h-10 max-h-[40px] rounded-lg text-xs text-gray-500 hover:bg-blue-gray-500/10 active:bg-blue-gray-500/30 grid xl:hidden"
           type="button" title="Archived">
