@@ -56,7 +56,7 @@ export default {
       const { assets } = this.storeTodo;
       const { getFilterTodos, clearTodoFilter } = this.authStore
       const keysAssets = Object.keys(assets);
-      clearTodoFilter()
+      clearTodoFilter();
       for(let key of keysAssets){
         if(key === nameAsset){
           getFilterTodos(nameFilter, `${nameAsset[0].toUpperCase()}${nameAsset.slice(1)}`)

@@ -171,9 +171,11 @@ export default {
     </td>
   </tr>
   <!-- MODAL -->
-  <ModalTodos :action="openModalDelete">
+  <ModalTodos
+    :action="openModalDelete"
+    @escape="openModalDelete = false">
     <ActionConfirm 
-      @closeModal="cancelModal()" 
+      @closeModal="cancelModal()"
       @deleteAccount="deleteTodo(todo.id)" 
       textModal="Are you sure you want to delete your todo?" 
     />

@@ -5,24 +5,25 @@ import FormEditTodo from './FormEditTodo.vue';
 import { userAuthStore } from '../../../store/auth/authUser';
 import { useTodosStore } from '../../../store/todos/todosUser';
 
+
 export default {
   data() {
     return {
       openModal: false,
       todoSelected: null,
-      storeAuth: userAuthStore(),
+      store: userAuthStore(),
       storeTodo: useTodosStore(),
     };
   },
   components: {
     EachTodo,
     ModalTodos,
-    FormEditTodo,
+    FormEditTodo
   },
   methods: {
     getId(id) {
-      if(this.storeAuth.getTodoId(id) && this.$route.name === 'entry'){
-        this.todoSelected = this.storeAuth.getTodoId(id)
+      if (this.store.getTodoId(id) && this.$route.name === 'entry') {
+        this.todoSelected = this.store.getTodoId(id);
         this.openModal = true
       }
     }
@@ -30,14 +31,14 @@ export default {
   computed: {
     useTodo() {
       if (this.$route.name === 'entry') {
-        return this.storeAuth.todoFilter.length > 0
-          ? this.storeAuth.todoFilter
-          : this.storeAuth.tasks;
+        return this.store.todoFilter.length > 0
+          ? this.store.todoFilter
+          : this.store.tasks;
       }
       if (this.$route.name === 'archive') {
-        return this.storeAuth.todoFilter.length > 0
-          ? this.storeAuth.todoFilter
-          : this.storeAuth.archivedTodos;
+        return this.store.todoFilter.length > 0
+          ? this.store.todoFilter
+          : this.store.archivedTodos;
       }
       return [];
     },
@@ -49,9 +50,13 @@ export default {
   }
 }
 </script>
-<template>
-  <div class="bg-grey-50/50 rounded-md max-w-full">
 
+<template>
+  <div v-if="storeTodo.grid" class="my-12 grid gap-y-10 gap-x-6 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4" >
+    <EachTodo v-for="todo of useTodo" :key="todo.id" :todo="todo" @openModalUpdate="(id) => getId(id)" />
+  </div>
+
+  <div v-else class="bg-grey-50/50 rounded-md max-w-full">
     <div class=" py-4 overflow-x-auto max-w-full">
       <div class="inline-block min-w-full shadow rounded-lg overflow-hidden">
 
@@ -70,15 +75,17 @@ export default {
                 class="w-fit px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text- font-semibold text-gray-600 uppercase tracking-wider">
                 {{ key }}
               </th>
-              <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"></th>
+              <th
+                class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+              </th>
             </tr>
           </thead>
 
           <tbody>
             <EachTodo 
-              v-for="todo of useTodo" :key="todo.id" 
-              :todo="todo" 
-              @openModalUpdate="(id) => getId(id)"
+              v-for="todo of useTodo" 
+              :key="todo.id" :todo="todo" 
+              @openModalUpdate="(id) => getId(id)" 
             />
           </tbody>
         </table>
@@ -88,10 +95,8 @@ export default {
 
   <ModalTodos 
     @updateTodo="() => updateTodoUser()" 
+    @escape="openModal = false"
     :action="openModal">
-    <FormEditTodo 
-      v-if="todoSelected"
-      :todoSelected="todoSelected" 
-      @closeModal="openModal = false" />
+    <FormEditTodo v-if="todoSelected" :todoSelected="todoSelected" @closeModal="openModal = false" />
   </ModalTodos>
 </template>

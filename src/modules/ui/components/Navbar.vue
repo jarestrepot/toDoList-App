@@ -24,7 +24,7 @@ export default {
     HomeIcon,
     ButtonTheme,
     ArchiveTodoIcon
-},
+  },
   methods: {
     logoutUser() {
       this.storeAuth.logoutUser();
@@ -86,7 +86,7 @@ export default {
           class="middle none font-sans font-bold center uppercase transition-all text-xs p-3 rounded-lg text-gray-500 hover:bg-blue-gray-500/10 active:bg-blue-gray-500/30 hidden items-center gap-1 xl:flex"
           type="button" title="Profile">
           <ProfileIcon className="w-5 h-5" />
-          {{ `${storeAuth.user.name} ${storeAuth.user.lastName}` }}
+          {{ `${storeAuth.user ? storeAuth.user.name : '' } ${storeAuth.user ? storeAuth.user.lastName : '' }` }}
         </router-link>
 
       </div>

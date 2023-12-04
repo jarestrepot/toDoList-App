@@ -11,7 +11,8 @@ export const userAuthStore = defineStore("auth", {
     tasks: [],
     todoFilter: [],
     hasError: null,
-    archivedTodos: []
+    archivedTodos: [],
+    searchTodos: []
   }),
   actions: {
     async fetchLoginUser(email, password) {
@@ -43,15 +44,7 @@ export const userAuthStore = defineStore("auth", {
       }
     },
     logoutUser(){
-      this.$patch({
-        status: 'not-authenticated',
-        user: null, 
-        tasks: [],
-        token: null,
-        todoFilter: [],
-        hasError: null,
-        archivedTodos: []
-      });
+      this.$reset()
       localStorage.removeItem('tokenUser')
     },
     updateUser({ user }){
@@ -83,13 +76,16 @@ export const userAuthStore = defineStore("auth", {
     },
 
     getFilterTodos(nameFilter, asset){
-      this.tasks.forEach(todo => {
+      this.tasks.forEach((todo, index )=> {
+        console.log(todo)
         if (todo[asset] === nameFilter){
-          this.todoFilter = [...this.todoFilter, todo]
+          this.todoFilter.push(todo)
+          this.tasks.splice(index, 1)
         }
       });
     },
     clearTodoFilter(){
+      this.tasks.push(...this.todoFilter);
       this.$patch({
         todoFilter: []
       })
@@ -121,12 +117,30 @@ export const userAuthStore = defineStore("auth", {
       const indexTodo = this.tasks.findIndex(todo => todo.id === id);
       if(indexTodo !== -1){
         this.tasks.splice(indexTodo, 1);
-      }else {
-        const indexTodoArcived = this.archivedTodos.findIndex(todo => todo.id === id);
-        this.archivedTodos.splice(indexTodoArcived, 1);
+      } 
+      if (this.archivedTodos.findIndex(todo => todo.id === id) !== -1){
+        const indexArchivedTodo = this.archivedTodos.findIndex(todo => todo.id === id);
+        this.archivedTodos.splice(indexArchivedTodo, 1);
+      }
+      else {
+        const indexFilterTodo = this.todoFilter.findIndex(todo => todo.id === id);
+        this.todoFilter.splice(indexFilterTodo, 1)
       }
       return response
-    }
+    },
+    addSearchTodo(todos){
+      this.$patch({ searchTodos: [] });
+      this.searchTodos.push(...todos)
+    },
+    getSearchTodos(search, type){
+      if (this.todoFilter.length > 0) return this.todoFilter.filter(todo => todo.title.toLowerCase().includes(search.toLowerCase()));
+      if (type === 'dashboard' && this.todoFilter.length <= 0) {
+        return this.tasks.filter(todo => todo.title.toLowerCase().includes(search.toLowerCase()));
+      }
+      if (type === 'archive' && this.todoFilter.length <= 0) {
+        return this.archivedTodos.filter(todo => todo.title.toLowerCase().includes(search.toLowerCase()))
+      }
+    } 
   },
   persist: true,
 })
