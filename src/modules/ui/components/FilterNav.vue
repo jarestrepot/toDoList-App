@@ -1,89 +1,103 @@
 <script>
-import { userAuthStore } from '../../../store/auth/authUser';
-import { useTodosStore } from '../../../store/todos/todosUser';
-import AddTodoIcon from '../../todos/components/icons/AddTodoIcon.vue';
-import ArrowIcon from '../components/icons/ArrowIcon.vue';
-import CloseIcon from '../components/icons/CloseIcon.vue';
-import FilterIcon from './icons/FilterIcon.vue';
-import FormAddTodo from '../../todos/components/FormAddTodo.vue';
-import GridListToggle from '../../todos/components/GridListToggle.vue';
-import ModalTodos from '../../todos/components/ModalTodos.vue';
+  import { userAuthStore } from '../../../store/auth/authUser';
+  import { useTodosStore } from '../../../store/todos/todosUser';
+  import AddTodoIcon from '../../todos/components/icons/AddTodoIcon.vue';
+  import ArrowIcon from '../components/icons/ArrowIcon.vue';
+  import CloseIcon from '../components/icons/CloseIcon.vue';
+  import FilterIcon from './icons/FilterIcon.vue';
+  import FormAddTodo from '../../todos/components/FormAddTodo.vue';
+  import GridListToggle from '../../todos/components/GridListToggle.vue';
+  import ModalTodos from '../../todos/components/ModalTodos.vue';
 
-export default {
-  data() {
-    return {
-      openModal: false,
-      storeTodos: useTodosStore(),
-      storeAuth: userAuthStore()
-    };
-  },
-  components: {
-    AddTodoIcon,
-    ArrowIcon,
-    CloseIcon,
-    FilterIcon,
-    FormAddTodo,
-    GridListToggle,
-    ModalTodos,
-  },
-  methods: {
-    toggleVisibility(element) {
-      const elements = {
-        'parentUl': 'parentUl',
-        'firstUl': 'firstUl',
-        'secondUl': 'secondUl',
-        'thirdUl': 'thirdUl'
+  export default {
+    data() {
+      return {
+        assetClon: null,
+        filterClon: null,
+        openModal: false,
+        storeTodos: useTodosStore(),
+        storeAuth: userAuthStore()
       };
-
-      const { classList } = this.$refs[element];
-      for (const key in elements) {
-        if (key !== element && key !== 'parentUl') {
-          const otherElement = this.$refs[elements[key]];
-          otherElement.classList.remove('visible');
-          otherElement.classList.add('hidden');
-        }
-      }
-
-      if (classList.contains('hidden')) {
-        classList.remove('hidden');
-        classList.add('visible'); return;
-      }
-      classList.remove('visible');
-      classList.add('hidden');
     },
+    components: {
+      AddTodoIcon,
+      ArrowIcon,
+      CloseIcon,
+      FilterIcon,
+      FormAddTodo,
+      GridListToggle,
+      ModalTodos,
+    },
+    methods: {
+      toggleVisibility(element) {
+        const elements = {
+          'parentUl': 'parentUl',
+          'firstUl': 'firstUl',
+          'secondUl': 'secondUl',
+          'thirdUl': 'thirdUl'
+        };
 
-    handleFilter(nameFilter, nameAsset) {
-      const { getKeyAssets, getValuesAssets } = this.storeTodos;
-      const { getFilterTodos, clearTodoFilter, todoFilter } = this.storeAuth
-
-      clearTodoFilter();
-
-      for (let key of getKeyAssets()) {
-        if (key === nameAsset) {
-          getFilterTodos(nameFilter, `${nameAsset[0].toUpperCase()}${nameAsset.slice(1)}`, this.$route.name)
+        const { classList } = this.$refs[element];
+        for (const key in elements) {
+          if (key !== element && key !== 'parentUl') {
+            const otherElement = this.$refs[elements[key]];
+            otherElement.classList.remove('visible');
+            otherElement.classList.add('hidden');
+          }
         }
-      }
 
-      const [filter] = this.$refs[nameFilter]
-      const asset = this.$refs[nameAsset]
-
-      for (let ref in getValuesAssets()) {
-        if ( ref !== filter && todoFilter.length > 0 ) {
-          const [otherFilter] = this.$refs[getValuesAssets()[ref]];
-          filter.classList.add('text-slate-400', 'font-semibold');
-          otherFilter.classList.remove('text-slate-400', 'font-semibold');
+        if (classList.contains('hidden')) {
+          classList.remove('hidden');
+          classList.add('visible'); return;
         }
-      }
-      for (let ref in getKeyAssets()){
-        if ( ref !== asset && todoFilter.length > 0 ) {
-          const otherAsset = this.$refs[getKeyAssets()[ref]];
-          asset.classList.add('text-slate-400', 'font-semibold');
-          otherAsset.classList.remove('text-slate-400', 'font-semibold');
+        classList.remove('visible');
+        classList.add('hidden');
+      },
+
+      handleFilter(nameFilter, nameAsset) {
+        const { getKeyAssets, getValuesAssets } = this.storeTodos;
+        const { getFilterTodos, clearTodoFilter } = this.storeAuth;
+
+        clearTodoFilter();
+
+        for (let key of getKeyAssets()) {
+          if (key === nameAsset) {
+            getFilterTodos(nameFilter, `${nameAsset[0].toUpperCase()}${nameAsset.slice(1)}`, this.$route.name);
+          }
+        }
+
+        const [filter] = this.$refs[nameFilter];
+        const asset = this.$refs[nameAsset];
+
+        this.filterClon = filter;
+        this.assetClon = asset;
+        
+        for (let key in getValuesAssets()) {
+          const [otherFilter] = this.$refs[getValuesAssets()[key]];
+          
+          if(otherFilter && otherFilter !== filter){
+            filter.classList.add('activeFilter');
+            otherFilter.classList.remove('activeFilter');
+          }
+        }
+        for (let key in getKeyAssets()){
+          const otherAsset = this.$refs[getKeyAssets()[key]];
+
+          if(otherAsset && otherAsset !== asset){
+            asset.classList.add('activeFilter');
+            otherAsset.classList.remove('activeFilter');
+          }
+        }
+      },
+      handleAllTodos(){
+        this.storeAuth.clearTodoFilter();
+        if (this.assetClon && this.filterClon) {
+          this.assetClon.classList.remove('activeFilter');
+          this.filterClon.classList.remove('activeFilter');
         }
       }
     }
   }
-}
 </script>
 <template>
   <div class="flex items-center justify-end">
@@ -91,88 +105,85 @@ export default {
       <li class="relative filters">
 
         <div
-          class="flex justify-between items-center cursor-pointer md:cursor-default hover:bg-gray-50 space-x-2 relative"
+          class="flex justify-between items-center cursor-pointer relative"
           @click="toggleVisibility('parentUl')">
           <FilterIcon />
           <span 
             v-if="storeAuth.todoFilter.length > 0"
-            class="w-2 absolute right-0 top-0 h-2 rounded-full bg-blue-500">
+            class="w-2 absolute right-0 top-0 h-2 rounded-full bg-persian-green-500 dark:bg-persian-green-300">
           </span>
         </div>
 
         <ul 
           ref="parentUl"
-          class="filter hidden md:block transition duration-300 absolute right-0 top-full md:w-48 bg-white md:shadow-lg rounded-b z-10">
+          class="filter hidden md:block transition duration-300 absolute right-0 top-full md:w-48 bg-white md:shadow-lg rounded z-10 dark:bg-slate-900 dark:text-slate-300">
+
           <li 
-            @click="storeAuth.clearTodoFilter()"
-            class="flex-col md:flex submenu cursor-pointer px-4 py-3 hover:bg-gray-50">
+            @click="handleAllTodos()"
+            class="flex-col md:flex submenu cursor-pointer px-4 py-3 hover:bg-gray-50 dark:hover:bg-slate-800">
             {{ $t('all') }}
           </li>
+
           <li 
-            class="flex-col md:flex submenu cursor-pointer md:cursor-auto px-4 py-3 hover:bg-gray-50"
+            class="flex-col md:flex submenu cursor-pointer md:cursor-auto px-4 py-3 hover:bg-gray-50 dark:hover:bg-slate-800"
             @click="toggleVisibility('firstUl')">
-            <div 
-              ref="category" 
-              class="inline-flex items-center gap-2">
-              {{ $t('category') }}
+            <div class="inline-flex items-center gap-2">
+              <span ref="category">{{ $t('category') }}</span>
               <ArrowIcon rotateIcon="md:rotate-90 rotate-[-90deg]" />
             </div>
             <ul 
               ref="firstUl"
-              class="second-ul hidden transition duration-300 absolute left-32 md:left-auto top-0 md:top-0 w-full md:w-48 bg-white md:shadow-lg rounded md:p-3">
+              class="second-ul hidden transition duration-300 absolute left-32 md:left-auto top-0 md:top-0 w-full bg-white md:shadow-lg rounded dark:bg-slate-900 dark:text-slate-300 ">
               <li v-for="{ codeCategory, Category } of storeTodos.getCategory" 
                 :key="codeCategory"
                 @click="handleFilter(Category, 'category')" 
                 :ref="Category"
-                class="cursor-pointer p-2 md:px-4 md:py-3 hover:bg-gray-50">
+                class="cursor-pointer p-2 md:px-4 py-3 hover:bg-gray-50 dark:hover:bg-slate-800">
                 {{ $t(`${Category}`) }}
               </li>
             </ul>
           </li>
 
           <li 
-            class="flex-col md:flex submenu cursor-pointer md:cursor-auto px-4 py-3 hover:bg-gray-50"
+            class="flex-col md:flex submenu cursor-pointer md:cursor-auto px-4 py-3 hover:bg-gray-50 dark:hover:bg-slate-800"
             @click="toggleVisibility('secondUl')">
-            <div 
-              ref="status" 
-              class="inline-flex items-center gap-2 text-black">
-              {{ $t('status') }}
+            <div class="inline-flex items-center gap-2">
+              <span ref="status">{{ $t('status') }}</span>
               <ArrowIcon rotateIcon="md:rotate-90 rotate-[-90deg]" />
             </div>
             <ul 
               ref="secondUl"
-              class="second-ul hidden transition duration-300 absolute left-32 md:left-auto top-0 md:top-20 w-full md:w-48 bg-white md:shadow-lg rounded md:p-3">
-              <li v-for="{ Status, codeStatus } of storeTodos.getStatus" 
+              class="second-ul hidden transition duration-300 absolute left-32 md:left-auto top-0 md:top-20 w-full bg-white md:shadow-lg rounded dark:bg-slate-900 dark:text-slate-300">
+              <li v-for="{ codeStatus, Status } of storeTodos.getStatus" 
                 :key="codeStatus"
                 @click="handleFilter(Status, 'status')" 
                 :ref="Status"
-                class="cursor-pointer p-2 md:px-4 py-3 hover:bg-gray-50">
+                class="cursor-pointer p-2 md:px-4 py-3 hover:bg-gray-50 dark:hover:bg-slate-800">
                 {{ Status !== 'In Progress' ? $t(`${Status}`) : $t('InProgress') }}
               </li>
             </ul>
           </li>
 
           <li 
-            class="flex-col md:flex cursor-pointer md:cursor-auto submenu px-4 py-3 hover:bg-gray-50"
+            class="flex-col md:flex submenu cursor-pointer md:cursor-auto px-4 py-3 hover:bg-gray-50 dark:hover:bg-slate-800"
             @click="toggleVisibility('thirdUl')">
-            <div 
-              ref="importance" 
-              class="inline-flex items-center gap-2">
-              {{ $t('importance') }}
+            <div class="inline-flex items-center gap-2">
+                <span ref="importance">{{ $t('importance') }}</span>
               <ArrowIcon rotateIcon="md:rotate-90 rotate-[-90deg]" />
             </div>
             <ul 
               ref="thirdUl"
-              class="second-ul hidden transition duration-300 absolute left-32 md:left-auto top-0 md:top-[6.8rem] w-full md:w-48 bg-white md:shadow-lg md:rounded md:p-3">
+              class="second-ul hidden transition duration-300 absolute left-32 md:left-auto top-0 md:top-[6.8rem] w-full bg-white md:shadow-lg rounded dark:bg-slate-900 dark:text-slate-300">
               <li v-for="{ codeImportance, Importance } of storeTodos.getImportance" 
                 :key="codeImportance"
                 @click="handleFilter(Importance, 'importance')" 
                 :ref="Importance"
-                class="cursor-pointer p-2 md:px-4 py-3 hover:bg-gray-50">
+                class="cursor-pointer p-2 md:px-4 py-3 hover:bg-gray-50 dark:hover:bg-slate-800">
                 {{ $t(`${Importance}`) }}
               </li>
             </ul>
           </li>
+
         </ul>
       </li>
 

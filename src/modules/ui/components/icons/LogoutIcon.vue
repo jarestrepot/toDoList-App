@@ -8,8 +8,6 @@
 <template>
   <svg 
     viewBox="0 0 24 24" 
-    fill="currentColor" 
-    aria-hidden="true"
     :class="className ?? 'w-5 h-5'">
     <path 
       fill-rule="evenodd"

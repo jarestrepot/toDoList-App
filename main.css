@@ -58,11 +58,18 @@
   }
   
   .active {
-    @apply bg-white text-blue-400 rounded-full;
+    @apply bg-white dark:bg-gray-700 text-persian-green-500 dark:text-persian-green-300 rounded-full;
   }
 
   .inputForm{
-    @apply focus:ring-0 h-9 2xl:h-11 w-full rounded-[7px] border border-slate-500 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-slate-500 placeholder-shown:border-t-slate-500 focus:border-2 focus:border-blue-500 focus:border-t-transparent focus:outline-0;
+    @apply focus:ring-0 h-11 2xl:h-11 w-full rounded-[7px] border border-slate-500 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-slate-500 placeholder-shown:border-t-slate-500 focus:border-2 focus:border-persian-green-500 focus:border-t-transparent focus:outline-0;
+  }
+
+  .activeFilter{
+    @apply text-slate-500 font-semibold
+  }
+  .nav-mobile a.router-link-exact-active{
+    @apply fill-persian-green-500
   }
 
 }

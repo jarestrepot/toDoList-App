@@ -78,7 +78,7 @@
       <input 
         v-model="title"
         type="text"
-        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+        class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-persian-green-500 focus:border-persian-green-500 dark:bg-slate-800 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-persian-green-500 dark:focus:border-persian-green-500"
         placeholder="My first todo" 
         required />
         <span
@@ -93,7 +93,7 @@
       <textarea
         v-model="description"
         rows="3" 
-        class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-persian-green-500 focus:border-persian-green-500 dark:bg-slate-800 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-persian-green-500 dark:focus:border-persian-green-500"
         placeholder="Describing my first todo..."
         required />
         <span
@@ -107,7 +107,7 @@
       <label class="block mb-2 text-sm font-medium text-gray-900">Category:</label>
       <select
         v-model="codeCategory" 
-        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+        class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-persian-green-500 focus:border-persian-green-500 dark:bg-slate-800 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-persian-green-500 dark:focus:border-persian-green-500"
         required>
           <option value="" disabled selected>Select an option</option>
           <option v-for="category of storeTodos.assets.category" 
@@ -122,7 +122,7 @@
       <label class="block mb-2 text-sm font-medium text-gray-900">Status:</label>
       <select 
         v-model="codeStatus"
-        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" 
+        class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-persian-green-500 focus:border-persian-green-500 dark:bg-slate-800 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-persian-green-500 dark:focus:border-persian-green-500" 
         required>
         <option value="" disabled selected>Select an option</option>
         <option v-for="status of storeTodos.assets.status" 
@@ -134,7 +134,7 @@
     </div>
     
     <div class="relative z-0 w-full mb-5 group gap-3 flex">
-      <label class="block mb-2 text-sm font-medium text-gray-900">Importance:</label>
+      <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-slate-300">Importance:</label>
       <input v-for="important of storeTodos.assets.importance" 
         :key="important"
         v-model="codeImportance" 
@@ -142,10 +142,10 @@
         type="radio" 
         name="importance"
         :title="important.Importance"
-        :class= "{ 'border-red-500 checked:bg-red-500': important.Importance === 'High', 'border-yellow-300 checked:bg-yellow-300': important.Importance === 'Medium', 'border-green-500 checked:bg-green-500': important.Importance === 'Low' }"
-        class="w-5 h-5 border-4 rounded-full focus:ring-0 checked:bg-none"/>
+        :class= "{ 'border-red-500 checked:bg-red-500 dark:border-red-500 dark:checked:bg-red-500': important.Importance === 'High', 'border-yellow-300 checked:bg-yellow-300 dark:border-yellow-300 dark:checked:bg-yellow-300': important.Importance === 'Medium', 'border-green-500 checked:bg-green-500 dark:border-green-500 dark:checked:bg-green-500': important.Importance === 'Low' }"
+        class="w-5 h-5 border-4 rounded-full focus:ring-0 checked:ring-offset-0 focus:ring-offset-0 checked:ring-0 checked:bg-none dark:bg-slate-900 dark:checked:bg-none"/>
     </div>
-    <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row justify-end items-center">
+    <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row justify-end items-center dark:bg-slate-900">
       <span 
         class="flex-1"
         v-if="resMessage.stateResponse"
@@ -155,13 +155,13 @@
       <button 
         type="button"
         @click="$emit('closeModal')" 
-        class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-200 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
+        class="w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-200 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm dark:bg-slate-800 dark:text-white dark:border-none">
         Cancel 
       </button>
       <button
         :class="isValidFields ? 'opacity-100 cursor-pointer' : 'opacity-50 cursor-not-allowed'"
         type="submit"
-        class="w-full inline-flex justify-center rounded-md shadow-sm px-4 py-2 bg-gradient-to-br from-persian-green-700 to-persian-green-300 text-base font-medium text-white hover:bg-gradient-to-b focus:outline-none sm:ml-3 sm:w-auto sm:text-sm">
+        class="mt-3 sm:mt-0 w-full inline-flex justify-center rounded-md shadow-sm px-4 py-2 bg-gradient-to-br from-persian-green-700 to-persian-green-300 text-base font-medium text-white hover:bg-gradient-to-b focus:outline-none sm:ml-3 sm:w-auto sm:text-sm">
         Save
       </button>
     </div>

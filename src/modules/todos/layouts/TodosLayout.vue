@@ -30,11 +30,11 @@
 
 <template>
   <Sidebar />
-  <header class="bg-gray-50/50 pt-4 px-4 xl:ml-80">
+  <header class="bg-gray-50/50 pt-4 px-4 xl:ml-80 dark:bg-slate-900">
     <Navbar />
     <FilterNav v-if="this.$route.name !== 'profile'" />
   </header>
-  <main class="min-h-screen bg-gray-50/50 p-4 xl:ml-80">
+  <main class="min-h-screen bg-gray-50/50 p-4 xl:ml-80 dark:bg-slate-900">
     <router-view v-if="storeAuth.tasks.length > 0" name="todos"/>
     <router-view v-else name="emptyTodos"/>
     <router-view name="userProfile"/>

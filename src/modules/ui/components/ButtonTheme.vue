@@ -19,10 +19,8 @@
   }
 </script>
 <template>
-  <button v-if="storeTheme.darkMode">
-    <SunIcon />
-  </button>
-  <button v-else>
-    <MoonIcon />
+  <button>
+    <SunIcon v-if="storeTheme.darkMode" className="w-5 md:w-6 fill-slate-300" />
+    <MoonIcon v-else className="w-5 md:w-6 fill-slate-500" />
   </button>
 </template>

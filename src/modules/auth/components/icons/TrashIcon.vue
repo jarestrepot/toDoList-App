@@ -1,7 +1,6 @@
 <script>
   export default{
     props: {
-      stroke: String,
       className: String
     }
   }
@@ -9,10 +8,9 @@
 <template>
   <svg 
     fill="none" 
-    class="mr-2" 
-    :class="className ?? 'w-4'" 
-    viewBox="0 0 24 24" 
-    :stroke="stroke ?? '#777'">
+    class="mr-2 w-5" 
+    :class="className ?? 'stroke-slate-600 dark:stroke-slate-500 hover:stroke-red-500 dark:hover:stroke-red-500'" 
+    viewBox="0 0 24 24">
     <path 
       stroke-linecap="round" 
       stroke-linejoin="round" 

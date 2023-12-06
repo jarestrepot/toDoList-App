@@ -96,7 +96,7 @@
     v-if="storeTodos.grid" 
     @click="openModal(todo)"
     :class="$route.name === 'archive' ? 'cursor-default' : 'cursor-pointer'"
-    class="flex flex-col bg-clip-border rounded-xl bg-white text-gray-700 shadow-md min-h-full eachtodo">
+    class="flex flex-col bg-clip-border rounded-xl bg-white text-gray-700 shadow-md min-h-full eachtodo dark:bg-slate-800 dark:text-slate-300">
     <div
       class="bg-clip-border mx-4 rounded-xl overflow-hidden shadow-lg  -mt-4 lg:-mt-7 grid h-10 w-10 place-items-center"
       :class="{ highImportacnce: todo.Importance === 'High', mediumImportacnce: todo.Importance === 'Medium', lowImportacnce: todo.Importance === 'Low' }">
@@ -123,15 +123,13 @@
             :title="todo.archived === 0 ? 'Archived' : 'Unarchive'" 
             @click.stop="AddArchiveTodo(todo.id)" 
             class="icons opacity-0">
-            <ArchiveTodoIcon fill="#999"/>
+            <ArchiveTodoIcon />
           </button>
           <button 
             class="icons opacity-0"  
             @click.stop="openModalDelete = true" 
             title="Delete" >
-            <TrashIcon 
-              stroke="#999" 
-              className="w-5 hover:stroke-red-500"/>
+            <TrashIcon/>
           </button>
         </div>
       </div>
@@ -143,51 +141,50 @@
   @click="openModal(todo)" 
   class="eachtodo" 
   :class="$route.name === 'archive' ? 'cursor-default' : 'cursor-pointer'">
-    <td class="ps-3 py-5 border-b border-gray-200 bg-white text-sm">
-      <p class="text-gray-900 whitespace-no-wrap">{{ getNewTitle(todo.title) }}</p>
+    <td class="px-5 py-3 border-b border-gray-200 bg-white dark:bg-slate-800 dark:border-slate-600 text-sm">
+      <p class="text-gray-900 whitespace-no-wrap dark:text-slate-300">{{ getNewTitle(todo.title) }}</p>
     </td>
 
-    <td class="ps-3 py-5 border-b border-gray-200 bg-white text-sm">
-      <p class="text-gray-900 whitespace-no-wrap">{{ getNewDescription(todo.description) }}</p>
+    <td class="px-5 py-3 border-b border-gray-200 bg-white dark:bg-slate-800 dark:border-slate-600 text-sm">
+      <p class="text-gray-900 whitespace-no-wrap dark:text-slate-300">{{ getNewDescription(todo.description) }}</p>
     </td>
 
-    <td class="ps-3 py-5 border-b border-gray-200 bg-white text-sm">
+    <td class="px-5 py-3 border-b border-gray-200 bg-white dark:bg-slate-800 dark:border-slate-600 text-sm">
       <div class="flex gap-2">
         <CategoryIcon :className="getFillCategory(todo.Category)" />
-        <p class="text-gray-900 whitespace-no-wrap">{{ todo.Category }}</p>
+        <p class="text-gray-900 whitespace-no-wrap dark:text-slate-300">{{ todo.Category }}</p>
       </div>
     </td>
 
-    <td class="ps-3 py-5 border-b border-gray-200 bg-white text-sm">
+    <td class="px-5 py-3 border-b border-gray-200 bg-white dark:bg-slate-800 dark:border-slate-600 text-sm">
       <div class="flex gap-2">
         <StatusIcon :className="getFillStatus(todo.Status)" />
-        <p class="text-gray-900 whitespace-no-wrap">{{ todo.Status }}</p>
+        <p class="text-gray-900 whitespace-no-wrap dark:text-slate-300">{{ todo.Status }}</p>
       </div>
     </td>
 
-    <td class="ps-3 py-5 border-b border-gray-200 bg-white text-sm">
+    <td class="px-5 py-3 border-b border-gray-200 bg-white dark:bg-slate-800 dark:border-slate-600 text-sm">
       <span
         :class="{ highImportacnce: todo.Importance === 'High', mediumImportacnce: todo.Importance === 'Medium', lowImportacnce: todo.Importance === 'Low' }"
         class="px-3 py-1 rounded-full text-black font-semibold uppercase text-center w-10">
         {{ todo.Importance }}
       </span>
     </td>
-    <td class="w-[3rem] py-5 border-b border-gray-200 bg-white">
+
+    <td class="w-[3rem] py-5 border-b border-gray-200 bg-white dark:bg-slate-800 dark:border-slate-500">
       <div class="flex gap-1 items-center justify-end">
         <button 
           v-show="todo.Status === 'Completed'" 
           :title="todo.archived === 0 ? 'Archived' : 'Unarchive'"  
           @click.stop="AddArchiveTodo(todo.id)" 
           class="icons opacity-0">
-          <ArchiveTodoIcon fill="#999" />
+          <ArchiveTodoIcon />
         </button>
         <button 
           class="icons opacity-0" 
           title="Delete" 
           @click.stop="openModalDelete = true">
-          <TrashIcon 
-            stroke="#999" 
-            className="w-5 hover:stroke-red-500" />
+          <TrashIcon />
         </button>
       </div>
     </td>

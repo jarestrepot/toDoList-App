@@ -98,7 +98,7 @@
   }
 </script>
 <template>
-  <div class="flex flex-col gap-6">
+  <div class="flex flex-col gap-6  px-4 py-3 sm:px-6">
     <div class="flex justify-end items-center">
       <h2 class="textDegrant text-2xl font-bold text-center">Edit your TODO</h2>
     </div>
@@ -111,17 +111,19 @@
         <span 
           v-if="!editing"
           @click="startEditing" 
-          class="text-xl font-semibold text-gray-800 uppercase">  
+          class="text-xl font-semibold text-gray-800 uppercase dark:text-gray-300">  
           {{ title }}
         </span>
         <div 
           v-else 
           class="w-full inline-flex items-center gap-2">
-          <span class="w-5/12">Title:</span>
-          <input 
-            v-model="title" 
+          <span class="w-5/12 dark:text-slate-300">Title:</span>
+          <input
+            type="text" 
+            v-model="title"
             @keyup.enter="stopEditing"
-            class="w-full h-full outline-0 focus:border focus:border-blue-500 rounded-md bg-transparent py-1 pl-2 pr-7 text-gray-500 sm:text-sm" />
+            placeholder="The title of your todo"
+            class="w-full h-full rounded-md border-0 focus:border-0 bg-transparent py-1 pl-2 pr-7 text-gray-500 sm:text-sm focus:ring-persian-green-500 focus:border-persian-green-500 dark:focus:bg-slate-800 dark:text-white dark:placeholder-slate-500" />
         </div>
       </div>
       <span 
@@ -134,19 +136,20 @@
         <span 
           v-if="!editing"
           @click="startEditing" 
-          class="py-2 text-gray-500">
+          class="py-2 text-gray-500 dark:text-slate-300">
           {{ description }}
         </span>
         <div 
           v-else 
           class="w-full inline-flex items-center gap-2">
-          <span class="w-5/12">Description:</span>
+          <span class="w-5/12 dark:text-slate-300">Description:</span>
           <textarea
             rows="3" 
             type="text" 
             v-model="description" 
             @keyup.enter="stopEditing"
-            class="w-full h-full rounded-md border-0 focus:border-0 bg-transparent py-1 pl-2 pr-7 text-gray-500 sm:text-sm"/>
+            placeholder="The description of your todo"
+            class="w-full h-full rounded-md border-0 focus:border-0 bg-transparent py-1 pl-2 pr-7 text-gray-500 sm:text-sm focus:ring-persian-green-500 focus:border-persian-green-500 dark:focus:bg-slate-800 dark:text-white dark:placeholder-slate-500"/>
         </div>
       </div>
       <span 
@@ -159,17 +162,18 @@
         <StatusIcon />
         <span 
           v-if="!editing"
+          class="dark:text-slate-300"
           @click="startEditing"> 
           {{ nameStatus ?? todoSelected.Status  }}
         </span>
         <div 
           v-else
           class="w-full inline-flex items-center"> 
-          <span class="w-5/12">Status:</span>
+          <span class="w-5/12 dark:text-slate-300">Status:</span>
           <select
             v-model="codeStatus" 
             @keyup.enter="stopEditing"
-            class="w-full h-full rounded-md border-0 focus:border-0 bg-transparent py-1 pl-2 pr-7 text-gray-500 sm:text-sm">
+            class="w-full h-full rounded-md border-0 focus:border-0 bg-transparent py-1 pl-2 pr-7 text-gray-500 sm:text-sm focus:ring-persian-green-500 focus:border-persian-green-500 dark:focus:bg-slate-800 dark:text-white">
             <option v-for="state of  storeTodos.assets.status" 
               :key="state" 
               :value="state.codeStatus">
@@ -183,17 +187,18 @@
         <CategoryIcon />
         <span 
           v-if="!editing"
+          class="dark:text-slate-300"
           @click="startEditing"> 
           {{ nameCategory ?? todoSelected.Category }}
         </span>
         <div 
           v-else
           class="w-full inline-flex items-center"> 
-          <span class="w-5/12">Category:</span>
+          <span class="w-5/12 dark:text-slate-300">Category:</span>
           <select
             v-model="codeCategory" 
             @keyup.enter="stopEditing"
-            class="w-full h-full rounded-md border-0 focus:border-0 bg-transparent py-1 pl-2 pr-7 text-gray-500 sm:text-sm">
+            class="w-full h-full rounded-md border-0 focus:border-0 bg-transparent py-1 pl-2 pr-7 text-gray-500 sm:text-sm focus:ring-persian-green-500 focus:border-persian-green-500 dark:focus:bg-slate-800 dark:text-white">
             <option v-for="category of storeTodos.assets.category" 
               :key="category" 
               :value="category.codeCategory">
@@ -207,17 +212,18 @@
         <ImportanceIcon />
         <span 
           v-if="!editing"
+          class="dark:text-slate-300"
           @click="startEditing"> 
           {{ nameImportance ?? todoSelected.Importance }}
         </span>
         <div 
           v-else
           class="w-full inline-flex items-center"> 
-          <span class="w-5/12">Importance:</span>
+          <span class="w-5/12 dark:text-slate-300">Importance:</span>
           <select
             v-model="codeImportance"
             @keyup.enter="stopEditing"
-            class="w-full h-full rounded-md border-0 focus:border-0 bg-transparent py-1 pl-2 pr-7 text-gray-500 sm:text-sm">
+            class="w-full h-full rounded-md border-0 focus:border-0 bg-transparent py-1 pl-2 pr-7 text-gray-500 sm:text-sm focus:ring-persian-green-500 focus:border-persian-green-500 dark:focus:bg-slate-800 dark:text-white">
             <option v-for="important of storeTodos.assets.importance" 
               :key="important" 
               :value="important.codeImportance">
@@ -226,7 +232,7 @@
           </select>
         </div>
       </div>
-      <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row justify-end items-center">
+      <div class="bg-gray-50 mt-6 sm:flex sm:flex-row justify-end items-center dark:bg-slate-900">
         <span 
           v-if="resMessage.stateResponse"
           :class="resMessage.color ? 'text-green-500': 'text-red-500'">
@@ -235,14 +241,14 @@
         <button 
           type="button"
           @click="$emit('closeModal')" 
-          class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-200 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
+          class="w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-200 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm dark:bg-gray-700 dark:text-white dark:border-none">
         Cancel 
         </button>
         <button
           type="submit"
           :disabled="!editing"
           :class="editing && isValidFields ? 'opacity-100 cursor-pointer' : 'opacity-50 cursor-not-allowed'"
-          class="w-full inline-flex justify-center rounded-md shadow-sm px-4 py-2 bg-gradient-to-br from-persian-green-700 to-persian-green-300 text-base font-medium text-white hover:bg-gradient-to-b focus:outline-none sm:ml-3 sm:w-auto sm:text-sm">
+          class="mt-3 sm:mt-0 w-full inline-flex justify-center rounded-md shadow-sm px-4 py-2 bg-gradient-to-br from-persian-green-700 to-persian-green-300 text-base font-medium text-white hover:bg-gradient-to-b focus:outline-none sm:ml-3 sm:w-auto sm:text-sm">
           Save
         </button>
       </div>

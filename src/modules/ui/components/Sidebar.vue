@@ -30,7 +30,7 @@
   }
 </script>
 <template>
-  <aside class="aside bg-gradient-to-br from-fun-blue-900 to-fun-blue-950 -translate-x-80 fixed inset-0 z-50 my-4 ml-4 h-[calc(100vh-32px)] w-72 rounded-xl transition-transform duration-300 xl:translate-x-0">
+  <aside class="aside bg-gradient-to-br from-fun-blue-900 to-fun-blue-950 -translate-x-80 fixed inset-0 z-50 my-4 ml-4 h-[calc(100vh-32px)] w-72 rounded-xl transition-transform duration-300 xl:translate-x-0 dark:bg-gradiente-to-b dark:from-slate-950/30 dark:to-slate-950">
     <div class="relative border-b border-white/20">
       <router-link 
         :to="{ name: 'entry'}" 
@@ -45,7 +45,7 @@
             @click="storeAuth.clearTodoFilter()"
             :to="{ name: 'entry' }"
             class="middle none font-sans font-bold center transition-all text-xs py-3 rounded-lg text-white w-full flex items-center gap-4 px-4 capitalize hover:bg-white/10">
-            <HomeIcon />
+            <HomeIcon className="w-5 h-5 fill-white"/>
             <p class="block antialiased font-sans text-base leading-relaxed text-inherit font-medium capitalize">dashboard</p>
           </router-link>
         </li>
@@ -55,7 +55,7 @@
             @click="storeAuth.clearTodoFilter()"
             :to="{ name: 'archive' }"
             class="middle none font-sans font-bold center transition-all text-xs py-3 rounded-lg text-white w-full flex items-center gap-4 px-4 capitalize hover:bg-white/10">
-            <ArchiveTodoIcon className="w-5"/>
+            <ArchiveTodoIcon className="w-5 fill-white"/>
             <p class="block antialiased font-sans text-base leading-relaxed text-inherit font-medium capitalize">archived</p>
           </router-link>
         </li>
@@ -64,7 +64,7 @@
           <router-link 
             :to="{name: 'profile'}"
             class="middle none font-sans font-bold center transition-all text-xs py-3 rounded-lg text-white w-full flex items-center gap-4 px-4 capitalize hover:bg-white/10">
-            <ProfileIcon className="w-5 h-5" />
+            <ProfileIcon className="w-5 h-5 fill-white" />
             <p class="block antialiased font-sans text-base leading-relaxed text-inherit font-medium capitalize">profile</p>
           </router-link>
         </li>
@@ -80,7 +80,7 @@
             @click="logoutUser()"
             class="middle none font-sans font-bold center transition-all text-xs py-3 rounded-lg text-white hover:bg-white/10 [&.active]:bg-white/30 w-full flex items-center gap-4 px-4 capitalize"
             type="button">
-            <LogoutIcon />
+            <LogoutIcon className="w-5 h-5 fill-white" />
             <p class="block antialiased font-sans text-base leading-relaxed text-inherit font-medium capitalize">Logout</p>
           </button>
         </li>

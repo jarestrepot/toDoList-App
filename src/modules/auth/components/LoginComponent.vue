@@ -30,7 +30,6 @@
           message: ''
         },
         storeAuth: userAuthStore(),
-        clase: 'focus:ring-0 peer h-11 w-full rounded-[7px] border border-slate-500 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-slate-500 placeholder-shown:border-t-slate-500 focus:border-2 focus:border-blue-500 focus:border-t-transparent focus:outline-0'
       }
     },
     computed:{
@@ -96,7 +95,7 @@
         <input 
           type="text"
           v-model="email"
-          :class="clase"
+          class="inputForm peer"
           placeholder=" " />
         <LabelForms :textDisplay="$t('email')"/>
         <div 
@@ -110,7 +109,7 @@
         <input
           type="password"
           v-model="password"
-          :class="clase"
+          class="inputForm peer"
           @keyup.enter="checkingCredencials()"
           placeholder=" " />
         <LabelForms :textDisplay="$t('password')"/>
