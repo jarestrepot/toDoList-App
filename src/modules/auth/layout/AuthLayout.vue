@@ -56,12 +56,12 @@
       class="containerFormShow">
       <LoginComponent>
         <p class="mb-0 mt-2 pt-1 text-sm font-semibold">
-          Don't have an account?
+          {{ $t('messageAccont') }}
           <router-link 
             :to="{ name: 'register' }" 
             @click="showRegister()" 
             class="textDegrant text-lg transition duration-200 ease-in-out active:text-fun-blue-600 hover:underline hover:underline-offset-4 hover:decoration-fun-blue-400">
-            Register
+            {{ $t('register') }}
           </router-link>
         </p>
       </LoginComponent>
@@ -83,12 +83,12 @@
       <RegisterComponent @emitLogin="showLogin()">
         <div class="text-center lg:text-left flex flex-col w-full justify-between items-center">
           <p class="mb-0 mt-2 pt-1 text-sm font-semibold">
-            Do you have an account?
+            {{ $t('messageAccont') }}
             <router-link 
               :to="{ name: 'login' }" 
               @click="showLogin()" 
               class="textDegrant text-lg transition duration-200 ease-in-out active:text-fun-blue-600 hover:underline hover:underline-offset-4 hover:decoration-fun-blue-400">
-              Login
+              {{ $t('login') }}
             </router-link>
           </p>
         </div>

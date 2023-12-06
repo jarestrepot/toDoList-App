@@ -37,7 +37,7 @@
         v-model="searchTodo"
         class="focus:ring-0 peer h-full w-full rounded-[7px] border border-slate-500 border-t-transparent bg-transparent px-3 py-2 font-sans text-sm font-normal text-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-slate-500 placeholder-shown:border-t-slate-500 focus:border-2 focus:border-blue-500 focus:border-t-transparent focus:outline-0"
         placeholder=" " />
-      <LabelForms textDisplay="Search here"/>
+      <LabelForms :textDisplay="$t('searchHere')"/>
   </div>
 </div>
 </template>

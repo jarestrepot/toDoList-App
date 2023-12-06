@@ -7,7 +7,8 @@
   import HomeIcon from '../components/icons/HomeIcon.vue';
   import InputSearch from '../../shared/components/InputSearch.vue';
   import LogoutIcon from '../components/icons/LogoutIcon.vue';
-  import ProfileIcon from '../components/icons/ProfileIcon.vue'
+  import ProfileIcon from '../components/icons/ProfileIcon.vue';
+  import ChangeLanguage from '../../shared/components/ChangeLanguage.vue';
 
   export default {
     data() {
@@ -24,6 +25,7 @@
       InputSearch,
       LogoutIcon,
       ProfileIcon,
+      ChangeLanguage,
     },
     methods: {
       logoutUser() {
@@ -32,6 +34,14 @@
         this.$router.push('/')
       }
     },
+    computed: {
+      getTitlesViews(){
+        if(this.$route.name === 'entry'){
+          return this.$t('dashboard') 
+        }
+        return this.$t('archivedView')
+      }
+    }
   }
 </script>
 
@@ -43,7 +53,7 @@
         <h6 
           v-if="this.$route.name !== 'profile'" 
           class=" block antialiased tracking-normal font-sans text-base font-semibold leading-relaxed text-gray-900 dark:text-blue-500">
-          {{ this.$route.name === 'entry' ? 'dashboard': 'archived' }}
+          {{ getTitlesViews }}
         </h6>
       </div>
 
@@ -55,7 +65,7 @@
           @click="storeAuth.clearTodoFilter()"
           :to="{ name: 'entry' }"
           class="relative middle none font-sans font-medium text-center uppercase transition-all w-10 max-w-[40px] h-10 max-h-[40px] rounded-lg text-xs text-gray-500 hover:bg-blue-gray-500/10 active:bg-blue-gray-500/30 grid xl:hidden"
-          type="button" title="Dashboard">
+          type="button" :title="$i18n.locale === 'es' ? 'Panel': 'Dashboard'">
           <span class="absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2">
             <HomeIcon className="w-7 h-7" />
           </span>
@@ -65,7 +75,7 @@
           @click="storeAuth.clearTodoFilter()"
           :to="{ name: 'archive' }"
           class="relative middle none font-sans font-medium text-center uppercase transition-all w-10 max-w-[40px] h-10 max-h-[40px] rounded-lg text-xs text-gray-500 hover:bg-blue-gray-500/10 active:bg-blue-gray-500/30 grid xl:hidden"
-          type="button" title="Archived">
+          type="button" :title="$i18n.locale === 'es' ? 'Archivado' : 'Archived'">
           <span class="absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2">
             <ArchiveTodoIcon 
               className="w-7 h-7" 
@@ -76,17 +86,20 @@
         <router-link 
           :to="{ name: 'profile' }"
           class="relative middle none font-sans font-medium text-center uppercase transition-all w-10 max-w-[40px] h-10 max-h-[40px] rounded-lg text-xs text-gray-500 hover:bg-blue-gray-500/10 active:bg-blue-gray-500/30 grid xl:hidden"
-          type="button" title="Profile">
+          type="button" :title="$i18n.locale === 'es' ? 'Perfil' : 'Profile'">
           <span class="absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2">
             <ProfileIcon className="w-7 h-7" />
           </span>
         </router-link>
 
         <ButtonTheme @click="storeTheme.changeTheme()"/>
+    
+        <ChangeLanguage classDiv="px-2" classButtonLanguaje="text-slate-500 text-lg font-bold underline decoration-slate-500 px-1 hover:text-slate-400 hover:decoration-slate-400 transition-all duration-200 ease-in-out" />
+
         <button
           @click="logoutUser()"
           class="relative middle none font-sans font-medium text-center uppercase transition-all w-10 max-w-[40px] h-10 max-h-[40px] rounded-lg text-xs text-gray-500 hover:bg-blue-gray-500/10 active:bg-blue-gray-500/30 grid xl:hidden"
-          type="button" title="Logout">
+          type="button" :title="$i18n.locale === 'es' ? 'Cerrar sesión' : 'Logout'">
           <span class="absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2">
             <LogoutIcon className="w-6 h-6" />
           </span>
@@ -95,7 +108,7 @@
         <router-link 
           :to="{ name: 'profile' }"
           class="middle none font-sans font-bold center uppercase transition-all text-xs p-3 rounded-lg text-gray-500 hover:bg-blue-gray-500/10 active:bg-blue-gray-500/30 hidden items-center gap-1 xl:flex"
-          type="button" title="Profile">
+          type="button" :title="$i18n.locale === 'es' ? 'Perfil' : 'Profile'">
           <ProfileIcon className="w-5 h-5" />
           {{ `${storeAuth.user ? storeAuth.user.name : '' } ${storeAuth.user ? storeAuth.user.lastName : '' }` }}
         </router-link>

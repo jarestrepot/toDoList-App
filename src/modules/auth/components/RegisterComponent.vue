@@ -5,13 +5,15 @@
   import HelpBar from '../../shared/components/HelpBar.vue';
   import LabelForms from '../../shared/components/LabelForms.vue';
   import TodoIcon from '../../todos/components/icons/TodoIcon.vue';
+  import ChangeLanguage from '../../shared/components/ChangeLanguage.vue'
 
   export default {
     components: {
       HelpBar,
       TodoIcon,
       ButtonMain,
-      LabelForms
+      LabelForms,
+      ChangeLanguage
   },
     data() {
       return {
@@ -82,8 +84,9 @@
 
 <template>
   <div class="w-8/12 p-2 2xl:w-3/5 overflow-x-auto md:p-3 grid z-10 bg-white rounded-md md:bg-transparent">
+    <ChangeLanguage classDiv="w-full flex justify-end" />
     <div class="flex flex-row items-center justify-center">
-      <h1 class="text-center p-3 text-3xl md:text-6xl font-bold textDegrant">Register</h1>
+      <h1 class="text-center p-3 text-3xl md:text-6xl font-bold textDegrant">{{ $t('register') }}</h1>
     </div>
 
     <HelpBar>
@@ -98,11 +101,11 @@
           v-model="name"
           class="inputForm peer"
           placeholder=" " />
-        <LabelForms textDisplay="Your name" />
+        <LabelForms :textDisplay="$t('yourName')" />
         <div 
           v-if="!isValidName && name.length > 0" 
           class="mt-1 text-red-600 text-sm 2xl:text-lg">
-          <span>Name incorrect!</span>
+          <span>{{ $t('invalidName') }}</span>
         </div>
       </div>
 
@@ -112,11 +115,11 @@
           v-model="lastName"
           class="inputForm peer"
           placeholder=" " />
-        <LabelForms textDisplay="Last name" />
+        <LabelForms :textDisplay="$t('lastname')" />
         <div 
           v-if="!isValidLastname && lastName.length > 0" 
           class="mt-1 text-red-600 text-sm 2xl:text-lg">
-          <span>Last name incorrect!</span>
+          <span>{{ $t('invalidLastName') }}</span>
         </div>
       </div>
 
@@ -126,11 +129,11 @@
           v-model="email"
           class="inputForm peer"
           placeholder=" " />
-        <LabelForms textDisplay="Email address" />
+        <LabelForms :textDisplay="$t('email')" />
         <div 
           v-if="!isValidEmail && email.length > 0" 
           class="mt-1 text-red-600 text-sm 2xl:text-lg">
-          <span>Email address incorrect!</span>
+          <span>{{ $t('invalidEmail') }}</span>
         </div>
       </div>
 
@@ -140,11 +143,11 @@
           v-model="password"
           class="inputForm peer"
           placeholder=" " />
-        <LabelForms textDisplay="Password" />
+        <LabelForms :textDisplay="$t('password')" />
         <div 
           v-if="!isValidPassword && password.length > 0" 
           class="mt-1 text-red-600 text-sm 2xl:text-lg">
-          <span>Password incorrect!</span>
+          <span>{{ $t('invalidPassword') }}</span>
         </div>
       </div>
 
@@ -154,18 +157,18 @@
           v-model="confirmPassword"
           class="inputForm peer"
           placeholder=" " />
-        <LabelForms textDisplay="Confirm password" />
+        <LabelForms :textDisplay="$t('confirmPassword')" />
         <div 
           v-if="!isValidConfirmPassword && confirmPassword.length > 0" 
           class="mt-1 text-red-600 text-sm 2xl:text-lg">
-          <span>Password does not match!</span>
+          <span>{{ $t('invalidConfirmPassword') }}</span>
         </div>
       </div>
 
       <div class="text-center lg:text-left flex flex-col w-full justify-between items-center">
         <ButtonMain 
           :class="!validFields ? 'opacity-60 cursor-not-allowed' : 'opacity-100 cursor-pointer'"
-          :textButton="'Register'" 
+          :textButton="$t('register')" 
           :disabledButton="!validFields" 
           @submitEmit="registerUser()" />
         <slot />

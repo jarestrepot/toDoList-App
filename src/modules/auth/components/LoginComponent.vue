@@ -5,6 +5,7 @@
   import HelpBar from '../../shared/components/HelpBar.vue';
   import LabelForms from '../../shared/components/LabelForms.vue';
   import TodoIcon from '../../todos/components/icons/TodoIcon.vue';
+  import ChangeLanguage from '../../shared/components/ChangeLanguage.vue';
 
   export default {
     beforeCreate() {
@@ -17,6 +18,7 @@
       HelpBar,
       LabelForms,
       TodoIcon,
+      ChangeLanguage,
     },
     data(){
       return {
@@ -77,9 +79,9 @@
 
 <template>
   <div class="w-8/12 p-2 2xl:w-3/5 md:p-3 grid gap-4 z-10 bg-white rounded-md md:bg-transparent">
-    
+    <ChangeLanguage classDiv="w-full flex justify-end" />
     <div class="flex flex-row items-center justify-center">
-      <h1 class="text-center text-3xl p-3 md:text-6xl font-bold textDegrant">Welcome</h1>
+      <h1 class="text-center text-3xl p-3 md:text-6xl font-bold textDegrant">{{ $t('welcome') }}</h1>
     </div>
 
     <HelpBar>
@@ -96,11 +98,11 @@
           v-model="email"
           :class="clase"
           placeholder=" " />
-        <LabelForms textDisplay="Email address"/>
+        <LabelForms :textDisplay="$t('email')"/>
         <div 
           v-if="!isValidEmail && email.length > 0"
           class="mt-2 text-red-600 text-sm 2xl:text-lg">
-          <span>Email incorrect!</span>
+          <span>{{ $t('invalidEmail') }}</span>
         </div>
       </div>
 
@@ -111,13 +113,13 @@
           :class="clase"
           @keyup.enter="checkingCredencials()"
           placeholder=" " />
-        <LabelForms textDisplay="Password"/>
+        <LabelForms :textDisplay="$t('password')"/>
       </div>
       <div class="text-center lg:text-left flex flex-col w-full justify-between items-center">
         <ButtonMain
           :class="!validFields ? 'opacity-60 cursor-not-allowed' : 'opacity-100 cursor-pointer'"
           @submitEmit="loginUser()"
-          :textButton="'Login'" 
+          :textButton="$t('login')" 
           :disabledButton="!validFields" />
         <slot />
       </div>

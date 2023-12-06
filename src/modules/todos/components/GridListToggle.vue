@@ -22,14 +22,14 @@
       :class="storeTodos.grid && 'active'"
       class="inline-flex items-center transition-colors duration-300 ease-in focus:outline-none hover:text-blue-400 focus:text-blue-400 rounded-l-full px-2 py-1">
       <GridIcon/>
-      <span>Grid</span>
+      <span>{{ $t('gridMode') }}</span>
     </button>
     <button 
       @click="storeTodos.selectedListView" 
       :class="!storeTodos.grid && 'active'"
       class="inline-flex items-center transition-colors duration-300 ease-in focus:outline-none hover:text-blue-400 focus:text-blue-400 rounded-r-full px-2 py-1">
       <ListIcon />
-      <span>List</span>
+      <span>{{ $t('listMode') }}</span>
     </button>
   </div>
 </template>

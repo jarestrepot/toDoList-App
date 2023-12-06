@@ -106,7 +106,7 @@ export default {
           <li 
             @click="storeAuth.clearTodoFilter()"
             class="flex-col md:flex submenu cursor-pointer px-4 py-3 hover:bg-gray-50">
-            All
+            {{ $t('all') }}
           </li>
           <li 
             class="flex-col md:flex submenu cursor-pointer md:cursor-auto px-4 py-3 hover:bg-gray-50"
@@ -114,7 +114,7 @@ export default {
             <div 
               ref="category" 
               class="inline-flex items-center gap-2">
-              Category
+              {{ $t('category') }}
               <ArrowIcon rotateIcon="md:rotate-90 rotate-[-90deg]" />
             </div>
             <ul 
@@ -125,7 +125,7 @@ export default {
                 @click="handleFilter(Category, 'category')" 
                 :ref="Category"
                 class="cursor-pointer p-2 md:px-4 md:py-3 hover:bg-gray-50">
-                {{ Category }}
+                {{ $t(`${Category}`) }}
               </li>
             </ul>
           </li>
@@ -136,7 +136,7 @@ export default {
             <div 
               ref="status" 
               class="inline-flex items-center gap-2 text-black">
-              Status
+              {{ $t('status') }}
               <ArrowIcon rotateIcon="md:rotate-90 rotate-[-90deg]" />
             </div>
             <ul 
@@ -147,7 +147,7 @@ export default {
                 @click="handleFilter(Status, 'status')" 
                 :ref="Status"
                 class="cursor-pointer p-2 md:px-4 py-3 hover:bg-gray-50">
-                {{ Status }}
+                {{ Status !== 'In Progress' ? $t(`${Status}`) : $t('InProgress') }}
               </li>
             </ul>
           </li>
@@ -158,7 +158,7 @@ export default {
             <div 
               ref="importance" 
               class="inline-flex items-center gap-2">
-              Importance
+              {{ $t('importance') }}
               <ArrowIcon rotateIcon="md:rotate-90 rotate-[-90deg]" />
             </div>
             <ul 
@@ -169,7 +169,7 @@ export default {
                 @click="handleFilter(Importance, 'importance')" 
                 :ref="Importance"
                 class="cursor-pointer p-2 md:px-4 py-3 hover:bg-gray-50">
-                {{ Importance }}
+                {{ $t(`${Importance}`) }}
               </li>
             </ul>
           </li>
