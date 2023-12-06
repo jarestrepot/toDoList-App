@@ -82,6 +82,18 @@
       },
       isValidFields() {
         return this.isValidTitle && this.isValidDescription
+      },
+      getStatusModal(){
+        if(this.todoSelected.Status !== 'In Progress'){
+          return this.$t(this.todoSelected.Status)
+        }
+        else {
+          return this.$t('InProgress')
+        }
+      },
+      getStatusSelect(status){
+        console.log(status);
+        return null;
       }
     },
     mounted(){
@@ -91,16 +103,21 @@
       this.codeCategory = getCategory.codeCategory;
     },
     updated(){
-      this.nameStatus = this.storeTodos.getStatusCode(this.codeStatus)
-      this.nameImportance = this.storeTodos.getImportanceCode(this.codeImportance)
-      this.nameCategory = this.storeTodos.getCategoryCode(this.codeCategory)
+      if(this.storeTodos.getStatusCode(this.codeStatus) !== 'In Progress') {
+        this.nameStatus = this.$t(this.storeTodos.getStatusCode(this.codeStatus))
+      }else {
+        this.nameStatus = this.$t('InProgress')
+      }
+
+      this.nameImportance = this.$t(this.storeTodos.getImportanceCode(this.codeImportance))
+      this.nameCategory = this.$t(this.storeTodos.getCategoryCode(this.codeCategory))
     }
   }
 </script>
 <template>
   <div class="flex flex-col gap-6  px-4 py-3 sm:px-6">
     <div class="flex justify-end items-center">
-      <h2 class="textDegrant text-2xl font-bold text-center">Edit your TODO</h2>
+      <h2 class="textDegrant text-2xl font-bold text-center">{{ $t('editTodo') }}</h2>
     </div>
 
     <form 
@@ -117,7 +134,7 @@
         <div 
           v-else 
           class="w-full inline-flex items-center gap-2">
-          <span class="w-5/12 dark:text-slate-300">Title:</span>
+          <span class="w-5/12 dark:text-slate-300">{{ $t('titleAddTodo') }}</span>
           <input
             type="text" 
             v-model="title"
@@ -129,7 +146,7 @@
       <span 
         class="text-red-500 text-end pe-2" 
         v-if="!isValidTitle && title.length > 0">
-        Title is required
+        {{ $t('isRequiredTitle') }}
       </span>
 
       <div class="inline-flex items-center gap-2 w-full">
@@ -142,7 +159,7 @@
         <div 
           v-else 
           class="w-full inline-flex items-center gap-2">
-          <span class="w-5/12 dark:text-slate-300">Description:</span>
+          <span class="w-5/12 dark:text-slate-300">{{ $t('descriptionAddTodo') }}</span>
           <textarea
             rows="3" 
             type="text" 
@@ -155,7 +172,7 @@
       <span 
         class="text-red-500 text-end pe-2" 
         v-if="!isValidDescription && description.length > 0">
-        Description is required
+        {{ $t('descriptionIsRequired') }}
       </span>
 
       <div class="inline-flex items-center gap-2 w-full">
@@ -164,12 +181,12 @@
           v-if="!editing"
           class="dark:text-slate-300"
           @click="startEditing"> 
-          {{ nameStatus ?? todoSelected.Status  }}
+          {{ nameStatus ?? getStatusModal }}
         </span>
         <div 
           v-else
           class="w-full inline-flex items-center"> 
-          <span class="w-5/12 dark:text-slate-300">Status:</span>
+          <span class="w-5/12 dark:text-slate-300">{{ $t('status') }}:</span>
           <select
             v-model="codeStatus" 
             @keyup.enter="stopEditing"
@@ -177,7 +194,7 @@
             <option v-for="state of  storeTodos.assets.status" 
               :key="state" 
               :value="state.codeStatus">
-              {{ state.Status }}
+              {{ state.Status === 'In Progress' ? $t('InProgress') : $t(`${state.Status}`) }}
             </option>
           </select>
         </div>
@@ -189,12 +206,12 @@
           v-if="!editing"
           class="dark:text-slate-300"
           @click="startEditing"> 
-          {{ nameCategory ?? todoSelected.Category }}
+          {{ nameCategory ?? $t(`${todoSelected.Category}`) }}
         </span>
         <div 
           v-else
           class="w-full inline-flex items-center"> 
-          <span class="w-5/12 dark:text-slate-300">Category:</span>
+          <span class="w-5/12 dark:text-slate-300">{{ $t('category') }}:</span>
           <select
             v-model="codeCategory" 
             @keyup.enter="stopEditing"
@@ -202,7 +219,7 @@
             <option v-for="category of storeTodos.assets.category" 
               :key="category" 
               :value="category.codeCategory">
-              {{ category.Category }}
+              {{ $t(`${category.Category}`) }}
             </option>
           </select>
         </div>
@@ -214,12 +231,12 @@
           v-if="!editing"
           class="dark:text-slate-300"
           @click="startEditing"> 
-          {{ nameImportance ?? todoSelected.Importance }}
+          {{ nameImportance ?? $t(`${todoSelected.Importance}`) }}
         </span>
         <div 
           v-else
           class="w-full inline-flex items-center"> 
-          <span class="w-5/12 dark:text-slate-300">Importance:</span>
+          <span class="w-5/12 dark:text-slate-300">{{ $t('importance') }}:</span>
           <select
             v-model="codeImportance"
             @keyup.enter="stopEditing"
@@ -227,7 +244,7 @@
             <option v-for="important of storeTodos.assets.importance" 
               :key="important" 
               :value="important.codeImportance">
-              {{ important.Importance }}
+              {{ $t(`${important.Importance}`) }}
             </option>
           </select>
         </div>
@@ -242,14 +259,14 @@
           type="button"
           @click="$emit('closeModal')" 
           class="w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-200 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm dark:bg-gray-700 dark:text-white dark:border-none">
-        Cancel 
+          {{ $t('cancel') }}
         </button>
         <button
           type="submit"
           :disabled="!editing"
           :class="editing && isValidFields ? 'opacity-100 cursor-pointer' : 'opacity-50 cursor-not-allowed'"
           class="mt-3 sm:mt-0 w-full inline-flex justify-center rounded-md shadow-sm px-4 py-2 bg-gradient-to-br from-persian-green-700 to-persian-green-300 text-base font-medium text-white hover:bg-gradient-to-b focus:outline-none sm:ml-3 sm:w-auto sm:text-sm">
-          Save
+          {{ $t('save') }}
         </button>
       </div>
     </form>
