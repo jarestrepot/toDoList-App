@@ -52,7 +52,7 @@
       <div class="capitalize">
         <h6 
           v-if="this.$route.name !== 'profile'" 
-          class=" block antialiased tracking-normal font-sans text-base font-semibold leading-relaxed text-gray-900">
+          class=" block antialiased tracking-normal font-sans text-base font-semibold leading-relaxed text-gray-900 dark:text-slate-300">
           {{ getTitlesViews }}
         </h6>
       </div>
