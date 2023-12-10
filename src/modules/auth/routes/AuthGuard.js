@@ -1,12 +1,14 @@
-// import store from '@/store'
+import { userAuthStore } from '../../../store/auth/authUser';
+// import authUser from '../../../store/auth/authUser'
 
 
-// const isAuthenticatedGuard = async (to, from, next) => {
+const isAuthenticatedGuard = (to, from, next) => {
 
-//   const { ok } = await store.dispatch('auth/checkAuthentication')
+  
+  const { status } =  userAuthStore();
 
-//   if (ok) next()
-//   else next({ name: 'login' })
-// }
+  if ( status === 'authenticated' ) next()
+  else next({ name: 'login' })
+}
 
-// export default isAuthenticatedGuard
+export default isAuthenticatedGuard

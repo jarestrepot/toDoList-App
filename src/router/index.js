@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import AuthRoute from '../modules/auth/routes/AuthRoute';
 import TodoRoute from '../modules/todos/routes/TodosRoute';
-// import isAuthenticatedGuard from '../modules/auth/routes/AuthGuard';
+import isAuthenticatedGuard from '../modules/auth/routes/AuthGuard.js';
 
 const routes = [
   {
@@ -10,12 +10,12 @@ const routes = [
   },
   {
     path: '/dashboard',
-    // beforeEnter: [isAuthenticatedGuard],
+    beforeEnter: [isAuthenticatedGuard],
     ...TodoRoute
   },
   {
     path: '/:pathMatch(.*)*',
-    component: () => import('../modules/ui/components/NotFound.vue')
+    redirect: { name: 'entry' }
   }
 ]
 
