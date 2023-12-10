@@ -191,7 +191,7 @@
         <GridListToggle />
       </li>
 
-      <li>
+      <li :title="$t('addTodo')">
         <AddTodoIcon 
           role="button" 
           @open-modal="openModal = true" />
