@@ -88,6 +88,13 @@
         this.openModalDelete = false
       },
     },
+    computed: {
+      archivedIcontTitle(){
+        if(this.todo.archived === 0) return this.$t('iconArchived')
+        return this.$t('unarchive')
+      }
+    }
+
   }
 </script>
 <template>
@@ -105,7 +112,7 @@
     <div class="p-3 text-right">
       <div class="flex justify-end gap-2">
         <CategoryIcon :className="getFillCategory(todo.Category)" />
-        <p class="block antialiased font-sans text-sm leading-normal font-normal text-gray-400">{{ todo.Category }}</p>
+        <p class="block antialiased font-sans text-sm leading-normal font-normal text-gray-400">{{ $t(`${todo.Category}`) }}</p>
       </div>
       <h4 class="block antialiased tracking-normal font-sans text-2xl font-semibold leading-snug text-blue-gray-900">{{ getNewTitle(todo.title) }}</h4>
     </div>
@@ -115,12 +122,12 @@
       <div class="flex flex-row-reverse justify-between pt-3">
         <div class="flex justify-end gap-2">
           <StatusIcon :className="getFillStatus(todo.Status)" />
-          <p class="block antialiased font-sans text-sm leading-normal font-normal text-right text-gray-400">{{ todo.Status }}</p>
+          <p class="block antialiased font-sans text-sm leading-normal font-normal text-right text-gray-400">{{ todo.Status !== 'In Progress' ? $t(`${todo.Status}`) : $t('InProgress') }}</p>
         </div>
         <div class="flex gap-1 items-center justify-end">
           <button 
             v-show="todo.Status === 'Completed'" 
-            :title="todo.archived === 0 ? 'Archived' : 'Unarchive'" 
+            :title="archivedIcontTitle" 
             @click.stop="AddArchiveTodo(todo.id)" 
             class="icons opacity-0">
             <ArchiveTodoIcon />
@@ -128,7 +135,7 @@
           <button 
             class="icons opacity-0"  
             @click.stop="openModalDelete = true" 
-            title="Delete" >
+            :title="$t('delete')" >
             <TrashIcon/>
           </button>
         </div>
@@ -152,14 +159,14 @@
     <td class="px-5 py-3 border-b border-gray-200 bg-white dark:bg-slate-800 dark:border-slate-600 text-sm">
       <div class="flex gap-2">
         <CategoryIcon :className="getFillCategory(todo.Category)" />
-        <p class="text-gray-900 whitespace-no-wrap dark:text-slate-300">{{ todo.Category }}</p>
+        <p class="text-gray-900 whitespace-no-wrap dark:text-slate-300">{{ $t(todo.Category) }}</p>
       </div>
     </td>
 
     <td class="px-5 py-3 border-b border-gray-200 bg-white dark:bg-slate-800 dark:border-slate-600 text-sm">
       <div class="flex gap-2">
         <StatusIcon :className="getFillStatus(todo.Status)" />
-        <p class="text-gray-900 whitespace-no-wrap dark:text-slate-300">{{ todo.Status }}</p>
+        <p class="text-gray-900 whitespace-no-wrap dark:text-slate-300">{{ todo.Status !== 'In Progress' ? $t(`${todo.Status}`) : $t('InProgress') }}</p>
       </div>
     </td>
 
@@ -167,7 +174,7 @@
       <span
         :class="{ highImportacnce: todo.Importance === 'High', mediumImportacnce: todo.Importance === 'Medium', lowImportacnce: todo.Importance === 'Low' }"
         class="px-3 py-1 rounded-full text-black font-semibold uppercase text-center w-10">
-        {{ todo.Importance }}
+        {{ $t(todo.Importance) }}
       </span>
     </td>
 
@@ -175,14 +182,14 @@
       <div class="flex gap-1 items-center justify-end">
         <button 
           v-show="todo.Status === 'Completed'" 
-          :title="todo.archived === 0 ? 'Archived' : 'Unarchive'"  
+          :title="archivedIcontTitle"  
           @click.stop="AddArchiveTodo(todo.id)" 
           class="icons opacity-0">
           <ArchiveTodoIcon />
         </button>
         <button 
           class="icons opacity-0" 
-          title="Delete" 
+          :title="$t('delete')" 
           @click.stop="openModalDelete = true">
           <TrashIcon />
         </button>
@@ -196,7 +203,7 @@
     <ActionConfirm 
       @closeModal="cancelModal()"
       @deleteAccount="deleteTodo(todo.id)" 
-      textModal="Are you sure you want to delete your todo?"/>
+      :textModal="$t('confirmDeleteTodo')"/>
   </ModalTodos>
 </template>
 

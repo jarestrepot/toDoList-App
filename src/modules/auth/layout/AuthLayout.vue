@@ -58,7 +58,7 @@
       class="containerFormShow">
       <LoginComponent>
         <p class="mb-0 mt-2 pt-1 text-sm font-semibold dark:text-slate-300 flex flex-col lg:flex-row lg:gap-3 items-center">
-          {{ $t('messageAccont') }}
+          {{ $t('messageAccountLogin') }}
           <router-link 
             :to="{ name: 'register' }" 
             @click="showRegister()" 
@@ -86,7 +86,7 @@
       <RegisterComponent @emitLogin="showLogin()">
         <div class="text-center lg:text-left flex flex-col w-full justify-between items-center">
           <p class="mb-0 mt-2 pt-1 text-sm font-semibold dark:text-slate-300 flex min-w-full flex-col lg:flex-row lg:gap-3 items-center justify-center">
-            {{ $t('messageAccont') }}
+            {{ $t('messageAccountRegister') }}
             <router-link 
               :to="{ name: 'login' }" 
               @click="showLogin()" 

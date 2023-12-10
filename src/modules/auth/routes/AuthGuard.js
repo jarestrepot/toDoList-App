@@ -1,6 +1,4 @@
 import { userAuthStore } from '../../../store/auth/authUser';
-// import authUser from '../../../store/auth/authUser'
-
 
 const isAuthenticatedGuard = (to, from, next) => {
 

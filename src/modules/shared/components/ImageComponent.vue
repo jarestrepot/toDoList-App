@@ -11,6 +11,6 @@
 <template>
   <img 
     :src="src"
-    :alt="alt ?? 'Image task'"
+    :alt="alt ?? $t('altImageTodo')"
     :class="classTailwind" />
 </template>

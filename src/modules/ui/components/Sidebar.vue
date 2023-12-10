@@ -35,7 +35,7 @@
       <router-link 
         :to="{ name: 'entry'}" 
         class="flex items-center gap-4 py-6 px-8">
-        <h6 class="block antialiased tracking-normal font-sans text-2xl font-semibold leading-relaxed text-white">TODO List App</h6>
+        <h6 class="block antialiased tracking-normal font-sans text-2xl font-semibold leading-relaxed text-white">{{ $t('todoListApp') }}</h6>
       </router-link>
     </div>
     <nav class="m-4 navbar">
@@ -46,7 +46,7 @@
             :to="{ name: 'entry' }"
             class="middle none font-sans font-bold center transition-all text-xs py-3 rounded-lg text-white w-full flex items-center gap-4 px-4 capitalize hover:bg-white/10">
             <HomeIcon className="w-5 h-5 fill-white"/>
-            <p class="block antialiased font-sans text-base leading-relaxed text-inherit font-medium capitalize">dashboard</p>
+            <p class="block antialiased font-sans text-base leading-relaxed text-inherit font-medium capitalize">{{ $t('dashboard') }}</p>
           </router-link>
         </li>
 
@@ -56,7 +56,7 @@
             :to="{ name: 'archive' }"
             class="middle none font-sans font-bold center transition-all text-xs py-3 rounded-lg text-white w-full flex items-center gap-4 px-4 capitalize hover:bg-white/10">
             <ArchiveTodoIcon className="w-5 fill-white"/>
-            <p class="block antialiased font-sans text-base leading-relaxed text-inherit font-medium capitalize">archived</p>
+            <p class="block antialiased font-sans text-base leading-relaxed text-inherit font-medium capitalize">{{ $t('archivedView') }}</p>
           </router-link>
         </li>
 
@@ -65,14 +65,14 @@
             :to="{name: 'profile'}"
             class="middle none font-sans font-bold center transition-all text-xs py-3 rounded-lg text-white w-full flex items-center gap-4 px-4 capitalize hover:bg-white/10">
             <ProfileIcon className="w-5 h-5 fill-white" />
-            <p class="block antialiased font-sans text-base leading-relaxed text-inherit font-medium capitalize">profile</p>
+            <p class="block antialiased font-sans text-base leading-relaxed text-inherit font-medium capitalize">{{ $t('profile') }}</p>
           </router-link>
         </li>
       </ul>
 
       <ul class="mb-4 flex flex-col gap-1">
         <li class="mx-3.5 mt-4 mb-2">
-          <p class="block antialiased font-sans text-sm leading-normal text-white font-black uppercase opacity-75">auth pages</p>
+          <p class="block antialiased font-sans text-sm leading-normal text-white font-black uppercase opacity-75">{{ $t('authPages') }}</p>
         </li>
         
         <li>
@@ -81,7 +81,7 @@
             class="middle none font-sans font-bold center transition-all text-xs py-3 rounded-lg text-white hover:bg-white/10 [&.active]:bg-white/30 w-full flex items-center gap-4 px-4 capitalize"
             type="button">
             <LogoutIcon className="w-5 h-5 fill-white" />
-            <p class="block antialiased font-sans text-base leading-relaxed text-inherit font-medium capitalize">Logout</p>
+            <p class="block antialiased font-sans text-base leading-relaxed text-inherit font-medium capitalize">{{ $t('logout') }}</p>
           </button>
         </li>
       </ul>

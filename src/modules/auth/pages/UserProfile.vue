@@ -10,6 +10,7 @@
   import RefreshIcon from '../components/icons/RefreshIcon.vue';
   import TrashIcon from '../components/icons/TrashIcon.vue';
   import UserInfoIcon from '../components/icons/UserInfoIcon.vue';
+  import { startVerifyPassword } from '../../../helpers/authFetch'
 
   export default {
     data () {
@@ -27,6 +28,8 @@
           message:''
         },
         openModal: false,
+        rolPassword: false,
+        messgeModal: ''
       }
     },
     async mounted() {
@@ -45,8 +48,8 @@
       RefreshIcon,
       TrashIcon,
       UserInfoIcon,
-  },
-      computed: {
+    },
+    computed: {
       isValidName() {
         return CONSTANTS.VALIDINPUT.test(this.name)
       },
@@ -55,6 +58,9 @@
       },
       isValidEmail() {
         return CONSTANTS.VALIDEMAIL.test(this.email)
+      },
+      isValidPassWord(){
+        return CONSTANTS.VALIDPASSWORD.test(this.password)
       },
       isValidNewPassword() {
         return CONSTANTS.VALIDPASSWORD.test(this.newPassword)
@@ -108,6 +114,18 @@
             message: 'User updated successfully'
           }
         }
+      },
+      async veryfyPasswordToDeleteAccount(){
+        const { user } = this.storeAuth;
+        const { found } = await startVerifyPassword(user.user_id,this.password);
+        this.openModal = true;
+        if(found){
+          this.rolPassword = true;
+          this.messgeModal = this.$t('confirmDeleteAccount')
+        }else {
+          this.rolPassword = this.move = false;
+          this.messgeModal = this.$t('rolIncorrect')
+        }
       }
     }
   }
@@ -115,8 +133,8 @@
 <template>
   <section class="flex flex-col gap-4 justify-around items-center lg:flex-row lg:items-start">
     <div>
-      <h2 class="textDegrant text-4xl mb-4 xl:my-6 text-center lg:text-start font-semibold">Profile</h2>
-      <span class="dark:text-slate-300">Add information about yourself</span>
+      <h2 class="textDegrant text-4xl mb-4 xl:my-6 text-center lg:text-start font-semibold">{{ $t('profile') }}</h2>
+      <span class="dark:text-slate-300">{{ $t('addInformationYouSelft') }}</span>
     </div>
     <div class="container max-w-2xl md:w-3/4 shadow-md rounded-md overflow-hidden">
 
@@ -139,10 +157,10 @@
       <form @submit.prevent="move = true">
         <div class="bg-white space-y-6 dark:bg-slate-800">
           <div class="md:inline-flex space-y-4 md:space-y-0 w-full p-4 text-gray-500 items-center">
-            <h2 class="md:w-1/3 max-w-sm mx-auto dark:text-slate-200">Account</h2>
+            <h2 class="md:w-1/3 max-w-sm mx-auto dark:text-slate-200">{{ $t('account') }}</h2>
 
             <div class="md:w-2/3 max-w-sm mx-auto">
-              <label class="text-sm text-gray-400 dark:text-slate-300">Email</label>
+              <label class="text-sm text-gray-400 dark:text-slate-300">{{ $t('email') }}</label>
               <div class="w-full inline-flex rounded-md overflow-hidden">
                 <div class="pt-2 w-1/12 bg-gray-100 dark:bg-gray-600 rounded-s-md">
                   <EmailIcon />
@@ -151,13 +169,13 @@
                   v-model="email"
                   type="email" 
                   class="rounded-e-md border-slate-300 w-11/12 focus:ring-persian-green-500 focus:border-persian-green-500 dark:focus:border-persian-green-500 focus:outline-none focus:text-gray-600 p-2 dark:bg-slate-700 dark:text-white dark:border-slate-500 dark:placeholder-slate-400"
-                  placeholder="Your email" 
+                  :placeholder="$t('yourEmail')" 
                   required />
                 </div>
                 <span 
                   class="text-red-500 ms-4" 
                   v-if="!isValidEmail && email.length > 0" >
-                  Incorrect or empty email
+                  {{ $t('incorrectOrEmptyEmail') }}
                 </span>
             </div>
           </div>
@@ -165,12 +183,12 @@
           <hr class="dark:border-slate-500"/>
 
           <div class="md:inline-flex  space-y-4 md:space-y-0  w-full p-4 text-gray-500 items-center">
-            <h2 class="md:w-1/3 mx-auto max-w-sm dark:text-slate-200">Personal info</h2>
+            <h2 class="md:w-1/3 mx-auto max-w-sm dark:text-slate-200">{{ $t('personalInfo') }}</h2>
 
             <div class="md:w-2/3 mx-auto max-w-sm space-y-5">
 
               <div>
-                <label class="text-sm text-gray-400 dark:text-slate-300">Name</label>
+                <label class="text-sm text-gray-400 dark:text-slate-300">{{ $t('name') }}</label>
                 <div class="w-full inline-flex rounded-md overflow-hidden">
                   <div class="w-1/12 pt-2 bg-gray-100 dark:bg-gray-600 rounded-s-md">
                     <UserInfoIcon />
@@ -179,18 +197,18 @@
                     v-model="name" 
                     type="text" 
                     class="rounded-e-md border-slate-300 w-11/12 focus:ring-persian-green-500 focus:border-persian-green-500 dark:focus:border-persian-green-500 focus:outline-none focus:text-gray-600 p-2 dark:bg-slate-700 dark:text-white dark:border-slate-500 dark:placeholder-slate-400"
-                    placeholder="Your name" 
+                    :placeholder="$t('yourName')" 
                     required />
                   </div>
                   <span 
                     class="text-red-500 ms-4" 
                     v-if="!isValidName && name.length > 0" >
-                    Incorrect or empty name
+                    {{ $t('incorrectNameOrEmpty') }}
                   </span>
               </div>
 
               <div>
-                <label class="text-sm text-gray-400 dark:text-slate-300">Last name</label>
+                <label class="text-sm text-gray-400 dark:text-slate-300">{{ $t('lastname') }}</label>
                 <div class="w-full inline-flex rounded-md overflow-hidden">
                   <div class="pt-2 w-1/12 bg-gray-100 dark:bg-gray-600 rounded-s-md">
                     <UserInfoIcon />
@@ -199,13 +217,13 @@
                     v-model="lastName" 
                     type="text" 
                     class="rounded-e-md border-slate-300 w-11/12 focus:ring-persian-green-500 focus:border-persian-green-500 dark:focus:border-persian-green-500 focus:outline-none focus:text-gray-600 p-2 dark:bg-slate-700 dark:text-white dark:border-slate-500 dark:placeholder-slate-400"
-                    placeholder="Your last name"
+                    :placeholder="$t('yourLastName')"
                     required />
                   </div>
                   <span 
                     class="text-red-500 ms-4" 
                     v-if="!isValidLastName && email.length > 0" >
-                    Incorrect or empty last name
+                    {{ $t('incorrectLastNameOrEmpty') }}
                   </span>
               </div>
             </div>
@@ -214,12 +232,12 @@
           <hr class="dark:border-slate-500"/>
 
           <div class="md:inline-flex space-y-4 md:space-y-0  w-full p-4 text-gray-500 items-center">
-            <h2 class="md:w-1/3 mx-auto max-w-sm dark:text-slate-200">Change password</h2>
+            <h2 class="md:w-1/3 mx-auto max-w-sm dark:text-slate-200">{{ $t('changePassword') }}</h2>
 
             <div class="md:w-2/3 mx-auto max-w-sm space-y-5">
-              <span class="dark:text-slate-400">The current password is required to make any data changes to your account.</span>
+              <span class="dark:text-slate-400">{{ $t('passwordIsRequiredMessage') }}</span>
               <div>
-                <label class="text-sm text-gray-400 dark:text-slate-300">Password</label>
+                <label class="text-sm text-gray-400 dark:text-slate-300">{{ $t('password') }}</label>
                 <div class="w-full inline-flex rounded-md overflow-hidden">
                   <div class="w-1/12 pt-2 bg-gray-100 dark:bg-gray-600 rounded-s-md">
                     <PasswordIcon />
@@ -228,18 +246,18 @@
                     v-model="password" 
                     type="password" 
                     class="rounded-e-md border-slate-300 w-11/12 focus:ring-persian-green-500 focus:border-persian-green-500 dark:focus:border-persian-green-500 focus:outline-none focus:text-gray-600 p-2 dark:bg-slate-700 dark:text-white dark:border-slate-500 dark:placeholder-slate-400"
-                    placeholder="Your current password"
+                    :placeholder="$t('currentPassword')"
                     required />
                 </div>
                 <span 
                   :class="{'hidden': password !== ''}" 
                   class="text-slate-400 ms-4">
-                  Password is required
+                  {{ $t('passwordRequired') }}
                 </span>
               </div>
 
               <div>
-                <label class="text-sm text-gray-400 dark:text-slate-300">New password</label>
+                <label class="text-sm text-gray-400 dark:text-slate-300">{{ $t('newPassword') }}</label>
                 <div class="w-full inline-flex rounded-md overflow-hidden">
                   <div class="pt-2 w-1/12 bg-gray-100 dark:bg-gray-600 rounded-s-md">
                     <PasswordIcon />
@@ -248,13 +266,13 @@
                     v-model="newPassword" 
                     type="password" 
                     class="rounded-e-md border-slate-300 w-11/12 focus:ring-persian-green-500 focus:border-persian-green-500 dark:focus:border-persian-green-500 focus:outline-none focus:text-gray-600 p-2 dark:bg-slate-700 dark:text-white dark:border-slate-500 dark:placeholder-slate-400"
-                    placeholder="Your new password" />
+                    :placeholder="$t('yourNewPassword')" />
                   </div>
                   <div class="ms-4">
                     <span 
                       class="text-red-500" 
                       v-if="!isValidNewPassword && newPassword !== ''">
-                      The password must contain 8 characters including a number.
+                      {{ $t('requiredNewpasswordMessage') }}
                     </span>
                   </div>
               </div>
@@ -265,6 +283,7 @@
           <hr class="dark:border-slate-500"/>
 
           <div class="w-full p-4 text-gray-500 flex items-center justify-end gap-4">
+            <h2 class="md:w-1/3 mx-auto max-w-sm dark:text-slate-200">{{ $t('actions') }}</h2>
             <span 
               class="text-red-600" 
               v-if="!responseMessage.status"> 
@@ -275,13 +294,15 @@
               :class="isValidFields ? 'opacity-100 cursor-pointer' : 'opacity-50 cursor-not-allowed'"
               class="text-white w-full max-w-fit rounded-md text-center title-page py-2 px-4 inline-flex items-center focus:outline-none hover:bg-gradient-to-b">
               <RefreshIcon :className="{ 'motion-reduce:hidden animate-spin': move }"/>
-              Update
+              {{ $t('update') }}
             </button>
             <button 
-              @click="openModal = true"
+              :class="isValidPassWord  ? 'opacity-100 cursor-pointer' : 'opacity-50 cursor-not-allowed'"
+              :disabled="!isValidPassWord"
+              @click="veryfyPasswordToDeleteAccount"
               class="inline-flex text-slate-600 group items-center focus:outline-none mr-4 hover:text-red-500 dark:text-slate-200 dark:hover:text-red-500 duration-200">
               <TrashIcon className="w-4 stroke-slate-600 group-hover:stroke-red-500 dark:stroke-slate-200"/>
-              Delete account
+              {{ $t('deleteAccount') }}
             </button>
         </div>
       </div>
@@ -291,7 +312,8 @@
       <ActionConfirm 
         @closeModal="cancelModal()" 
         @deleteAccount="deleteAccount()" 
-        textModal="Are you sure you want to delete your account?" />
+        :confimrRol="rolPassword"
+        :textModal="messgeModal" />
     </ModalTodos>
   </div>
 </section>

@@ -66,13 +66,15 @@ export default {
             <tr>
               <th
                 class="px-6 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider dark:bg-slate-700 dark:border-slate-600 dark:text-slate-200">
-                Title</th>
+                {{ $t('title') }}
+              </th>
               <th
                 class="px-6 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider dark:bg-slate-700 dark:border-slate-600 dark:text-slate-200">
-                Description</th>
+                {{ $t('description') }}
+              </th>
               <th v-for="key of getKeysAssetsTodos" :key="key"
                 class="px-6 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider dark:bg-slate-700 dark:border-slate-600 dark:text-slate-200">
-                {{ key }}
+                {{ $t(`${key}`) }}
               </th>
               <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 dark:bg-slate-700 dark:border-slate-600"></th>
             </tr>

@@ -85,7 +85,25 @@ export async function startEditUser({ name, lastName, email, password, newPasswo
   } catch (error) {
     return { Error: error}
   }
-  
+}
+
+export async function startVerifyPassword(userRef, password ){
+  try {
+    const veriFyPassword = await fetch(`${CONSTANTS.ENDPOINT}/checkedPassword/${userRef}`, { 
+      method : 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'authorization': `Bearer ${window.localStorage.getItem('tokenUser')}`
+      },
+      body: JSON.stringify({
+        password
+      })
+    });
+    return await veriFyPassword.json();
+  } catch (error) {
+    console.log(error)
+    return { Error: error }
+  }
 }
 
 
