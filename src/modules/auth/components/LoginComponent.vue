@@ -5,7 +5,6 @@
   import HelpBar from '../../shared/components/HelpBar.vue';
   import LabelForms from '../../shared/components/LabelForms.vue';
   import TodoIcon from '../../todos/components/icons/TodoIcon.vue';
-  import ChangeLanguage from '../../shared/components/ChangeLanguage.vue';
 
   export default {
     beforeCreate() {
@@ -18,7 +17,6 @@
       HelpBar,
       LabelForms,
       TodoIcon,
-      ChangeLanguage,
     },
     data(){
       return {
@@ -77,14 +75,13 @@
 </script>
 
 <template>
-  <div class="w-8/12 p-2 2xl:w-3/5 md:p-3 grid gap-4 z-10 bg-white rounded-md md:bg-transparent">
-    <ChangeLanguage classDiv="w-full flex justify-end" />
+  <div class="w-8/12 p-2 2xl:w-3/5 md:p-3 grid gap-4 z-10 bg-white rounded-md md:bg-transparent dark:bg-slate-900">
     <div class="flex flex-row items-center justify-center">
       <h1 class="text-center text-3xl p-3 md:text-6xl font-bold textDegrant">{{ $t('welcome') }}</h1>
     </div>
 
     <HelpBar>
-      <TodoIcon color="#000" />
+      <TodoIcon stroke="stroke-black dark:stroke-slate-100" fill="fill-black dark:fill-slate-100" />
     </HelpBar>
 
     <form 

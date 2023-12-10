@@ -83,8 +83,7 @@
 </script>
 
 <template>
-  <div class="w-8/12 p-2 2xl:w-3/5 overflow-x-auto md:p-3 grid z-10 bg-white rounded-md md:bg-transparent">
-    <ChangeLanguage classDiv="w-full flex justify-end" />
+  <div class="w-8/12 p-2 2xl:w-3/5 overflow-x-auto md:p-3 grid z-10 bg-white rounded-md md:bg-transparent dark:bg-slate-900">
     <div class="flex flex-row items-center justify-center">
       <h1 class="text-center p-3 text-3xl md:text-6xl font-bold textDegrant">{{ $t('register') }}</h1>
     </div>

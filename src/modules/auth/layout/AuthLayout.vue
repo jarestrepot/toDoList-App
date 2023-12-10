@@ -2,6 +2,7 @@
   import ImageComponent from '../../shared/components/ImageComponent.vue';
   import LoginComponent from '../components/LoginComponent.vue';
   import RegisterComponent from '../components/RegisterComponent.vue';
+  import ChangeLanguage from '../../shared/components/ChangeLanguage.vue';
 
   export default {
     data() {
@@ -13,6 +14,7 @@
     },
     components: {
       LoginComponent,
+      ChangeLanguage,
       ImageComponent,
       RegisterComponent,
     },
@@ -55,7 +57,7 @@
       ref="containerLogin" 
       class="containerFormShow">
       <LoginComponent>
-        <p class="mb-0 mt-2 pt-1 text-sm font-semibold">
+        <p class="mb-0 mt-2 pt-1 text-sm font-semibold dark:text-slate-300 flex flex-col lg:flex-row lg:gap-3 items-center">
           {{ $t('messageAccont') }}
           <router-link 
             :to="{ name: 'register' }" 
@@ -63,6 +65,7 @@
             class="textDegrant text-lg transition duration-200 ease-in-out active:text-fun-blue-600 hover:underline hover:underline-offset-4 hover:decoration-fun-blue-400">
             {{ $t('register') }}
           </router-link>
+          <ChangeLanguage />
         </p>
       </LoginComponent>
     </div>
@@ -82,7 +85,7 @@
       class="containerFormHidden xl:absolute xl:top-0 xl:right-0 xl:w-1/2 h-full">
       <RegisterComponent @emitLogin="showLogin()">
         <div class="text-center lg:text-left flex flex-col w-full justify-between items-center">
-          <p class="mb-0 mt-2 pt-1 text-sm font-semibold">
+          <p class="mb-0 mt-2 pt-1 text-sm font-semibold dark:text-slate-300 flex min-w-full flex-col lg:flex-row lg:gap-3 items-center justify-center">
             {{ $t('messageAccont') }}
             <router-link 
               :to="{ name: 'login' }" 
@@ -90,6 +93,7 @@
               class="textDegrant text-lg transition duration-200 ease-in-out active:text-fun-blue-600 hover:underline hover:underline-offset-4 hover:decoration-fun-blue-400">
               {{ $t('login') }}
             </router-link>
+            <ChangeLanguage />
           </p>
         </div>
       </RegisterComponent>

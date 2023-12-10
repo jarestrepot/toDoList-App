@@ -16,7 +16,7 @@
   <button
     @click="emitValue()"
     :disabled="disabledButton ?? false"
-    type="button" class="button-main">
+    type="button" class="title-page button-main">
     {{ textButton ?? 'Login' }}
   </button>
 </template>

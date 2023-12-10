@@ -6,11 +6,7 @@
 @layer components {
   
   .button-main {
-    @apply bg-gradient-to-r from-fun-blue-400 to-fun-blue-600 w-full rounded-md text-white text-lg p-1 shadow-md shadow-fun-blue-300 transition-all duration-150 ease-in my-4;
-  }
-  
-  .button-main:hover {
-    @apply  hover:from-fun-blue-600 hover:to-fun-blue-400 hover:bg-white;
+    @apply  w-full rounded-md text-slate-200 text-lg p-1 shadow shadow-fun-blue-500 transition-all duration-150 ease-in my-4 hover:bg-gradient-to-bl font-semibold;
   }
   
   .outline-black {
@@ -62,7 +58,7 @@
   }
 
   .inputForm{
-    @apply focus:ring-0 h-11 2xl:h-11 w-full rounded-[7px] border border-slate-500 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-slate-500 placeholder-shown:border-t-slate-500 focus:border-2 focus:border-persian-green-500 focus:border-t-transparent focus:outline-0;
+    @apply focus:ring-0 h-11 2xl:h-11 w-full rounded-[7px] border border-slate-500 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-slate-500 placeholder-shown:border-t-slate-500 focus:border-2 focus:border-persian-green-500 focus:border-t-transparent focus:outline-0 dark:focus:border-persian-green-300 dark:focus:border-t-transparent dark:text-white;
   }
 
   .activeFilter{
