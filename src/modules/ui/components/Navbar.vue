@@ -105,8 +105,10 @@
           </span>
         </router-link>
 
-        <ButtonTheme @click="storeTheme.changeTheme()" />
-        <ChangeLanguage classDiv="px-2" classButtonLanguaje="text-slate-500 text-lg font-bold underline decoration-slate-500 px-1 hover:text-slate-400 hover:decoration-slate-400 transition-all duration-200 ease-in-out" />
+        <div class="flex gap-2">
+          <ChangeLanguage classButtonLanguaje="text-slate-500 text-xl font-bold decoration-slate-500 hover:underline hover:decoration-slate-500 transition-all duration-200 ease-in-out dark:text-slate-300 dark:hover:decoration-slate-300" />
+          <ButtonTheme @click="storeTheme.changeTheme()" />
+        </div>
 
         <button
           @click="logoutUser()"
