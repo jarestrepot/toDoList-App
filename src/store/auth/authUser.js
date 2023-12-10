@@ -13,7 +13,7 @@ export const userAuthStore = defineStore("auth", {
     hasError: null,
     archivedTodos: [],
     searchTodos: [],
-    serachTodosArchived: []
+    searchTodosArchived: []
   }),
   actions: {
     async fetchLoginUser(email, password) {
@@ -137,8 +137,8 @@ export const userAuthStore = defineStore("auth", {
       this.searchTodos.push(...todos)
     },
     addSearchTodoArchived(todos){
-      this.$patch( { serachTodosArchived: [] });
-      this.serachTodosArchived.push(...todos)
+      this.$patch({ searchTodosArchived: [] });
+      this.searchTodosArchived.push(...todos)
     },
     getSearchTodos(search, type){
       if (this.todoFilter.length > 0) {

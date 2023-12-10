@@ -20,7 +20,7 @@
       {{ $t('cancel') }}
     </button>
     <button 
-      v-if="confimrRol ?? true"
+      v-if="confimrRol"
       type="button"
       @click="$emit('deleteAccount')"
       class="mt-3 sm:mt-0 w-full inline-flex justify-center rounded-md shadow-sm px-4 py-2 bg-gradient-to-br from-persian-green-700 to-persian-green-300 text-base font-medium text-white hover:bg-gradient-to-b focus:outline-none sm:ml-3 sm:w-auto sm:text-sm">

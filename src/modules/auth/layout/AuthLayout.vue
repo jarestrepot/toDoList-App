@@ -5,11 +5,12 @@
   import ChangeLanguage from '../../shared/components/ChangeLanguage.vue';
 
   export default {
+    emits: ['registerClicked'],
     data() {
       return {
         src: '../../public/login-background.webp',
         alt: 'App task',
-        classImage: 'object-cover w-full h-screen'
+        classImage: 'object-cover w-full h-screen',
       }
     },
     components: {
@@ -20,6 +21,7 @@
     },
     methods: {
       showRegister() {
+        this.$refs.loginComponent.resetForm()
         this.removeClass(this.$refs.containerImage, ['animateMoveLeft', 'containerImageLeft']);
         this.addClass(this.$refs.containerImage, ['animateMoveRight']);
         this.addClass(this.$refs.containerRegister, ['await', 'containerFormShow']);
@@ -29,6 +31,7 @@
       },
 
       showLogin() {
+        this.$refs.registerComponent.resetForm()
         this.removeClass(this.$refs.containerImage, ['animateMoveRight']);
         this.addClass(this.$refs.containerImage, ['animateMoveLeft']);
         this.addClass(this.$refs.containerLogin, ['await', 'containerFormShow']);
@@ -56,7 +59,7 @@
     <div 
       ref="containerLogin" 
       class="containerFormShow">
-      <LoginComponent>
+      <LoginComponent ref="loginComponent">
         <p class="mb-0 mt-2 pt-1 text-sm font-semibold dark:text-slate-300 flex flex-col lg:flex-row lg:gap-3 items-center">
           {{ $t('messageAccountLogin') }}
           <router-link 
@@ -83,7 +86,7 @@
     <div 
       ref="containerRegister" 
       class="containerFormHidden xl:absolute xl:top-0 xl:right-0 xl:w-1/2 h-full">
-      <RegisterComponent @emitLogin="showLogin()">
+      <RegisterComponent ref="registerComponent" @emitLogin="showLogin()">
         <div class="text-center lg:text-left flex flex-col w-full justify-between items-center">
           <p class="mb-0 mt-2 pt-1 text-sm font-semibold dark:text-slate-300 flex min-w-full flex-col lg:flex-row lg:gap-3 items-center justify-center">
             {{ $t('messageAccountRegister') }}

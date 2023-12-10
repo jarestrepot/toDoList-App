@@ -91,10 +91,6 @@
           return this.$t('InProgress')
         }
       },
-      getStatusSelect(status){
-        console.log(status);
-        return null;
-      }
     },
     mounted(){
       const { getImportance, getStatus, getCategory  } = this.storeTodos.getCodeAssets(this.todoSelected)

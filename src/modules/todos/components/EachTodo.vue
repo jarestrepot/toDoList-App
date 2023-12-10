@@ -202,6 +202,7 @@
     @escape="openModalDelete = false">
     <ActionConfirm 
       @closeModal="cancelModal()"
+      :confimrRol="true"
       @deleteAccount="deleteTodo(todo.id)" 
       :textModal="$t('confirmDeleteTodo')"/>
   </ModalTodos>

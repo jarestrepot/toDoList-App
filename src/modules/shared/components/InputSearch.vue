@@ -25,6 +25,11 @@
         addSearchTodo([]);
         addSearchTodoArchived([]);
       }
+    },
+    methods: {
+      clearInputSearch(){
+        this.searchTodo = '';
+      }
     }
   }
 

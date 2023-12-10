@@ -5,6 +5,7 @@
   import HelpBar from '../../shared/components/HelpBar.vue';
   import LabelForms from '../../shared/components/LabelForms.vue';
   import TodoIcon from '../../todos/components/icons/TodoIcon.vue';
+  import Loading from '../../shared/components/Loading.vue'
 
   export default {
     beforeCreate() {
@@ -17,6 +18,7 @@
       HelpBar,
       LabelForms,
       TodoIcon,
+      Loading,
     },
     data(){
       return {
@@ -28,6 +30,7 @@
           message: ''
         },
         storeAuth: userAuthStore(),
+        isLoading: false
       }
     },
     computed:{
@@ -49,7 +52,7 @@
       },
       async loginUser(){
         try {
-          this.startValidation = true;
+          this.startValidation = this.isLoading = true;
           await this.storeAuth.fetchLoginUser(this.email, this.password)
           const { token, hasError } = this.storeAuth
 
@@ -58,9 +61,11 @@
             this.$router.push('/dashboard')
           }else{
             this.errorMessage(hasError);
-            this.email = this.password = ''
+            this.resetForm()
           }
+          this.isLoading = false;
         } catch (error) {
+          this.isLoading = false;
           this.errorMessage(error);
         }
       },
@@ -69,8 +74,11 @@
           status: true,
           message: message
         } 
+      },
+      resetForm(){
+        this.email = this.password = ''
       }
-    }
+    },
   }
 </script>
 
@@ -120,6 +128,8 @@
         <slot />
       </div>
     </form>
+    <!-- Loading -->
+    <Loading v-if="isLoading"/>
     <div
       v-if="messageServerError.status"
       class="text-lg p-2 text-red-700 text-center">

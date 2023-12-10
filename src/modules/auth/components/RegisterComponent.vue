@@ -75,7 +75,7 @@
       },
       resetForm() {
         this.name = this.lastName = this.email = this.password = this.confirmPassword = ''
-      }
+      },
     },
 
 

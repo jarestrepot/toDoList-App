@@ -15,16 +15,19 @@
       }
     },
     components: {
-    ArchiveTodoIcon,
-    HomeIcon,
-    LogoutIcon,
-    ProfileIcon,
-},
+      ArchiveTodoIcon,
+      HomeIcon,
+      LogoutIcon,
+      ProfileIcon,
+    },
     methods: {
       logoutUser(){
         this.storeAuth.logoutUser()
         this.storeTodos.clearAssetsTodos()
         this.$router.push('/')
+      },
+      clearInput(){
+        this.storeAuth.clearTodoFilter();
       }
     }
   }
@@ -42,7 +45,7 @@
       <ul class="mb-4 flex flex-col gap-1">
         <li>
           <router-link
-            @click="storeAuth.clearTodoFilter()"
+            @click="clearInput()"
             :to="{ name: 'entry' }"
             class="middle none font-sans font-bold center transition-all text-xs py-3 rounded-lg text-white w-full flex items-center gap-4 px-4 capitalize hover:bg-white/10">
             <HomeIcon className="w-5 h-5 fill-white"/>
@@ -52,7 +55,7 @@
 
         <li>
           <router-link
-            @click="storeAuth.clearTodoFilter()"
+            @click="clearInput()"
             :to="{ name: 'archive' }"
             class="middle none font-sans font-bold center transition-all text-xs py-3 rounded-lg text-white w-full flex items-center gap-4 px-4 capitalize hover:bg-white/10">
             <ArchiveTodoIcon className="w-5 fill-white"/>

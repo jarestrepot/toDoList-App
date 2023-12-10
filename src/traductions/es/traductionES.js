@@ -4,7 +4,7 @@ export default {
   invalidEmail: "¡Correo electrónico incorrecto!",
   password: "Contraseña",
   invalidPassword: "¡Contraseña incorrecta!",
-  confirmPassword: "Confirmar Contraseña",
+  confirmPassword: "Confirmar contraseña",
   invalidConfirmPassword: "¡Las contraseñas no coinciden!",
   login: "Iniciar sesión",
   messageAccountLogin: "¿No tienes una cuenta?",

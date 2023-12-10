@@ -128,7 +128,7 @@
         <option v-for="status of storeTodos.assets.status" 
           :key="status" 
           :value="status.codeStatus">
-          {{ $t(`${status.Status}`) }}
+          {{ status.Status !== 'In Progress' ? $t(`${status.Status}`) : $t('InProgress')}}
         </option>
     </select>
     </div>

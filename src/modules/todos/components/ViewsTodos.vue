@@ -37,7 +37,7 @@ export default {
 
       if (this.$route.name === 'archive') {
         if (this.storeAuth.todoFilter.length > 0 && this.storeAuth.searchTodos.length <= 0) return this.storeAuth.todoFilter
-        if (this.storeAuth.serachTodosArchived.length > 0) return this.storeAuth.serachTodosArchived
+        if (this.storeAuth.searchTodosArchived.length > 0) return this.storeAuth.searchTodosArchived
         return this.storeAuth.archivedTodos
       }
       return [];
