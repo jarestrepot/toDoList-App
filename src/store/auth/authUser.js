@@ -94,7 +94,6 @@ export const userAuthStore = defineStore("auth", {
       })
     },
 
-
     async archivedTodo(id){
       const response = await startArchivedTodo(id)
       if(response.Error){

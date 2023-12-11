@@ -282,8 +282,8 @@
 
           <hr class="dark:border-slate-500"/>
 
-          <div class="w-full p-4 text-gray-500 flex items-center justify-end gap-4">
-            <h2 class="md:w-1/3 mx-auto max-w-sm dark:text-slate-200">{{ $t('actions') }}</h2>
+          <div class="w-full p-4 text-gray-500 flex items-center justify-end gap-2 flex-col md:flex-row">
+            <h2 class="md:w-1/2 max-w-sm mx-auto dark:text-slate-200 text-left">{{ $t('actions') }}</h2>
             <span 
               class="text-red-600" 
               v-if="!responseMessage.status"> 
@@ -300,7 +300,7 @@
               :class="isValidPassWord  ? 'opacity-100 cursor-pointer' : 'opacity-50 cursor-not-allowed'"
               :disabled="!isValidPassWord"
               @click="veryfyPasswordToDeleteAccount"
-              class="inline-flex text-slate-600 group items-center focus:outline-none mr-4 hover:text-red-500 dark:text-slate-200 dark:hover:text-red-500 duration-200">
+              class="inline-flex text-slate-600 group items-center focus:outline-none lg:mr-4 hover:text-red-500 dark:text-slate-200 dark:hover:text-red-500 duration-200">
               <TrashIcon className="w-4 stroke-slate-600 group-hover:stroke-red-500 dark:stroke-slate-200"/>
               {{ $t('deleteAccount') }}
             </button>

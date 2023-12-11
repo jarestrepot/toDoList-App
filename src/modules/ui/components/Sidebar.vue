@@ -6,7 +6,6 @@
   import LogoutIcon from '../components/icons/LogoutIcon.vue'
   import ProfileIcon from '../components/icons/ProfileIcon.vue'
 
-
   export default {
     data(){
       return {
@@ -26,8 +25,9 @@
         this.storeTodos.clearAssetsTodos()
         this.$router.push('/')
       },
-      clearInput(){
+      clearSearchAndFilter(){
         this.storeAuth.clearTodoFilter();
+        this.storeTodos.clearInputSearch();
       }
     }
   }
@@ -45,7 +45,7 @@
       <ul class="mb-4 flex flex-col gap-1">
         <li>
           <router-link
-            @click="clearInput()"
+            @click="clearSearchAndFilter()"
             :to="{ name: 'entry' }"
             class="middle none font-sans font-bold center transition-all text-xs py-3 rounded-lg text-white w-full flex items-center gap-4 px-4 capitalize hover:bg-white/10">
             <HomeIcon className="w-5 h-5 fill-white"/>
@@ -55,7 +55,7 @@
 
         <li>
           <router-link
-            @click="clearInput()"
+            @click="clearSearchAndFilter()"
             :to="{ name: 'archive' }"
             class="middle none font-sans font-bold center transition-all text-xs py-3 rounded-lg text-white w-full flex items-center gap-4 px-4 capitalize hover:bg-white/10">
             <ArchiveTodoIcon className="w-5 fill-white"/>
@@ -81,10 +81,10 @@
         <li>
           <button
             @click="logoutUser()"
-            class="middle none font-sans font-bold center transition-all text-xs py-3 rounded-lg text-white hover:bg-white/10 [&.active]:bg-white/30 w-full flex items-center gap-4 px-4 capitalize"
+            class="middle none font-sans font-bold center transition-all text-xs py-3 rounded-lg text-white hover:bg-white/10 [&.active]:bg-white/30 w-full flex items-center gap-4 px-4"
             type="button">
             <LogoutIcon className="w-5 h-5 fill-white" />
-            <p class="block antialiased font-sans text-base leading-relaxed text-inherit font-medium capitalize">{{ $t('logout') }}</p>
+            <p class="block antialiased font-sans text-base leading-relaxed text-inherit font-medium">{{ $t('logout') }}</p>
           </button>
         </li>
       </ul>

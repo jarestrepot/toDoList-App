@@ -58,7 +58,8 @@
   }
 
   .inputForm{
-    @apply focus:ring-0 h-11 2xl:h-11 w-full rounded-[7px] border border-slate-500 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-slate-500 placeholder-shown:border-t-slate-500 focus:border-2 focus:border-fun-blue-800 focus:border-t-transparent focus:outline-0 dark:focus:border-persian-green-300 dark:focus:border-t-transparent dark:text-white;
+    @apply focus:ring-0 h-11 2xl:h-11 w-full rounded-[7px] border border-slate-500 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-slate-500 placeholder-shown:border-t-slate-500 focus:border-2 focus:border-fun-blue-800 focus:border-t-transparent focus:outline-0 dark:focus:border-persian-green-300 dark:focus:border-t-transparent dark:text-white dark:border-t-transparent dark:border-slate-300
+    dark:placeholder-shown:border-t-slate-300;
   }
 
   .activeFilter{

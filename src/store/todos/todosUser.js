@@ -5,6 +5,7 @@ export const useTodosStore = defineStore("todos",{
   state: () => ({
     assets: {},
     grid: true,
+    searchTodo: '',
   }),
   
   getters: {
@@ -32,8 +33,12 @@ export const useTodosStore = defineStore("todos",{
       }
     },
 
+    clearInputSearch(){
+      this.searchTodo = '';
+    },
+
     clearAssetsTodos(){
-      this.$reset()
+      this.$reset();
     },
 
     getStatusCode(code){

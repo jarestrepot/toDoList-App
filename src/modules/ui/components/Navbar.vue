@@ -33,9 +33,9 @@
         this.storeTodos.clearAssetsTodos()
         this.$router.push('/')
       },
-      clearInput(){
-        this.storeAuth.clearTodoFilter()
-        this.$refs.inputComponent.clearInputSearch();
+      clearSearchAndFilter(){
+        this.storeAuth.clearTodoFilter();
+        this.storeTodos.clearInputSearch();
       }
     },
     computed: {
@@ -63,7 +63,7 @@
 
       <div class="flex items-center justify-end gap-2 xl:gap-6 xl:me-3 min-h-[40px]">
 
-        <InputSearch ref="inputComponent" v-if="this.$route.name !== 'profile'" />
+        <InputSearch v-if="this.$route.name !== 'profile'" />
 
         <router-link 
           :to="{ name: 'profile' }"
@@ -75,7 +75,7 @@
         </router-link>
         
         <router-link 
-          @click="clearInput()"
+          @click="clearSearchAndFilter()"
           :to="{ name: 'entry' }"
           class="xl:hidden"
           type="button" 
@@ -87,7 +87,7 @@
         </router-link>
         
         <router-link 
-          @click="clearInput()"
+          @click="clearSearchAndFilter()"
           :to="{ name: 'archive' }"
           class="xl:hidden"
           type="button" 

@@ -89,7 +89,7 @@
     </div>
 
     <HelpBar>
-      <TodoIcon color="#000" />
+      <TodoIcon stroke="stroke-black dark:stroke-slate-100" fill="fill-black dark:fill-slate-100" />
     </HelpBar>
 
     <form @submit.prevent="showLogin">
