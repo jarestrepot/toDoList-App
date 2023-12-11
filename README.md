@@ -1,35 +1,62 @@
-# todolist-app
+# Todo List App
 
-This template should help get you started developing with Vue 3 in Vite.
 
-## Recommended IDE Setup
+  <table align="center">
+    <tr>
+      <td align="center">Dashboard Grid Light</td>
+      <td align="center">Dashboard List Dark</td>
+      <td align="center">Login Dark</td>
+      <td align="center">User Profile Light</td>
+    </tr>
+    <tr>
+      <td align="center"><img src="https://github.com/jarestrepot/server-todo/assets/102864419/4beb07c9-4959-40aa-bbe5-e9c00735e79d" alt="Desktop"></td>
+      <td align="center"><img src="https://github.com/jarestrepot/server-todo/assets/102864419/3fac3596-211b-4c1b-a487-b4c9bceaaaf5" alt="Tablet"></td>
+      <td align="center"><img src="https://github.com/jarestrepot/server-todo/assets/102864419/dcb28076-0874-4c5c-bae8-173489936087" alt="Móvil"></td>
+      <td align="center"><img src="https://github.com/jarestrepot/server-todo/assets/102864419/8ae01b5c-416f-4c00-97c4-582c6fc98d9e" alt="Móvil"></td>
+    </tr>
+  </table>
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
 
-## Customize configuration
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+## :receipt: Generalities 
 
-## Project Setup
+This application allows you to keep track of all your pending tasks, whether work, domestic, personal, medical, and more. You can assign them a level of importance to determine where to start.
 
-```sh
-npm install
-```
+By registering, you will have access to your private area. Every time you log in with your username and password, you will be able to view all your pending tasks, edit them, filter them, add new ones or archive those that are already completed.
 
-### Compile and Hot-Reload for Development
+In your profile, you can edit your information or change the password according to your needs. The app has multi-language functionality and dark and light modes to suit your preferences.
 
-```sh
-npm run dev
-```
+## :arrow_forward: Demo
 
-### Compile and Minify for Production
+> You can try our app, [here](https://mortyapprick.netlify.app/)
 
-```sh
-npm run build
-```
+## :technologist: Guide for developer
 
-### Lint with [ESLint](https://eslint.org/)
+### Technologies used
 
-```sh
-npm run lint
-```
+- Vue JS
+- Vite
+- CSS - Tailwind
+
+### Install
+> If you want to deploy this project on your localhost, run the following commands in your terminal, but first make sure you have node and npm installed.
+
+- Clone repository
+  
+  `git clone https://github.com/jarestrepot/todolist-app.git`
+
+- Enter the project directory
+
+  `cd todolist-app`
+
+- Install dependencies
+  
+  `npm install`
+
+- Execute the developer enviroment
+
+  `npm run dev`
+
+ ## :card_file_box: API
+
+> [Server Todo API](https://github.com/jarestrepot/server-todo)
