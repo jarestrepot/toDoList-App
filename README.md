@@ -9,10 +9,10 @@
       <td align="center">User Profile Light</td>
     </tr>
     <tr>
-      <td align="center"><img src="https://github.com/jarestrepot/server-todo/assets/102864419/4beb07c9-4959-40aa-bbe5-e9c00735e79d" alt="Desktop"></td>
-      <td align="center"><img src="https://github.com/jarestrepot/server-todo/assets/102864419/3fac3596-211b-4c1b-a487-b4c9bceaaaf5" alt="Tablet"></td>
-      <td align="center"><img src="https://github.com/jarestrepot/server-todo/assets/102864419/dcb28076-0874-4c5c-bae8-173489936087" alt="Móvil"></td>
-      <td align="center"><img src="https://github.com/jarestrepot/server-todo/assets/102864419/8ae01b5c-416f-4c00-97c4-582c6fc98d9e" alt="Móvil"></td>
+      <td align="center"><img src="https://github.com/jarestrepot/server-todo/assets/102864419/4beb07c9-4959-40aa-bbe5-e9c00735e79d" alt="Dashboard Grid Light"></td>
+      <td align="center"><img src="https://github.com/jarestrepot/server-todo/assets/102864419/3fac3596-211b-4c1b-a487-b4c9bceaaaf5" alt="Dashboard List Dark"></td>
+      <td align="center"><img src="https://github.com/jarestrepot/server-todo/assets/102864419/dcb28076-0874-4c5c-bae8-173489936087" alt="Login Dark"></td>
+      <td align="center"><img src="https://github.com/jarestrepot/server-todo/assets/102864419/8ae01b5c-416f-4c00-97c4-582c6fc98d9e" alt="User Profile Light"></td>
     </tr>
   </table>
 
@@ -28,7 +28,7 @@ In your profile, you can edit your information or change the password according 
 
 ## :arrow_forward: Demo
 
-> You can try our app, [here](https://mortyapprick.netlify.app/)
+> You can try our app, [here](https://todosalle.netlify.app/)
 
 ## :technologist: Guide for developer
 
