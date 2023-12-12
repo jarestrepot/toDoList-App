@@ -1,6 +1,5 @@
-<script>
-  import { userAuthStore } from '../../../store/auth/authUser';
-  import { useTodosStore } from '../../../store/todos/todosUser';
+<script lang="js">
+  import { userAuthStore, useTodosStore } from '../../../store';
   import LabelForms from './LabelForms.vue';
 
   export default {

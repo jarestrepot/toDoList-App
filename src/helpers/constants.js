@@ -1,6 +1,4 @@
-
-
-const CONSTANTS = {
+export const CONSTANTS = {
   ENDPOINT: 'https://server-todo-list-app.cleverapps.io/user',
   VALIDEMAIL: /^\w+([\\.-]?\w+)*@\w+([\\.-]?\w+)*(\.\w{2,3})+$/,
   VALIDPASSWORD: /^(?=.*\d)(?=.*[A-Za-z]).{8,}$/,
@@ -8,5 +6,3 @@ const CONSTANTS = {
   VALIDNUMCHARACTERES: /^.{8,}$/
 }
 Object.freeze(CONSTANTS);
-
-export default CONSTANTS;

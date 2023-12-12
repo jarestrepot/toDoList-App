@@ -1,5 +1,6 @@
 <script>
-  import ViewsTodos from '../components/ViewsTodos.vue';
+  import { ViewsTodos } from '../components';
+  
   export default {
     components: {
       ViewsTodos,

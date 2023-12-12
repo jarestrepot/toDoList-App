@@ -1,7 +1,6 @@
 <script>
-  import { useTodosStore } from '../../../store/todos/todosUser';
-  import GridIcon from './icons/GridIcon.vue';
-  import ListIcon from './icons/ListIcon.vue';
+  import { useTodosStore } from '../../../store';
+  import { GridIcon, ListIcon } from './icons';
 
   export default{
     data () {

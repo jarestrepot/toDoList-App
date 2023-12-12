@@ -1,5 +1,6 @@
 <script>
-  import StartIcon from '../components/icons/StartIcon.vue'
+  import { StartIcon } from '../components/icons'
+  
   export default {
     components: {
       StartIcon

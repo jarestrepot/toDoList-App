@@ -1,11 +1,7 @@
 <script>
-  import { startAssetsTodos } from '../../../helpers/todosFetch';
-  import { userAuthStore } from '../../../store/auth/authUser';
-  import { useTodosStore } from '../../../store/todos/todosUser';
-  import FilterNav from '../../ui/components/FilterNav.vue';
-  import Footer from '../../ui/components/Footer.vue';
-  import Navbar from '../../ui/components/Navbar.vue';
-  import Sidebar from '../../ui/components/Sidebar.vue';
+  import { userAuthStore, useTodosStore } from '../../../store';
+  import { startAssetsTodos } from '../../../helpers';
+  import { FilterNav, Footer, Navbar, Sidebar } from '../../ui/components';
 
   export default{
     data() {

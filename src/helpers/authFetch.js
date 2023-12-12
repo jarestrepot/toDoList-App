@@ -1,4 +1,5 @@
-import CONSTANTS from "./constants";
+import { CONSTANTS } from "./";
+
 export async function startLogin(email, password){
   try {
     const postLoginUser = await fetch(`${CONSTANTS.ENDPOINT}/login`, {

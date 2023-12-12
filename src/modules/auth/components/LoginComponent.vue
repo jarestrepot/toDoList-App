@@ -1,11 +1,8 @@
 <script>
-  import { userAuthStore } from '../../../store/auth/authUser';
-  import ButtonMain from '../../shared/components/ButtonMain.vue';
-  import CONSTANTS from '../../../helpers/constants';
-  import HelpBar from '../../shared/components/HelpBar.vue';
-  import LabelForms from '../../shared/components/LabelForms.vue';
-  import TodoIcon from '../../todos/components/icons/TodoIcon.vue';
-  import Loading from '../../shared/components/Loading.vue'
+  import { userAuthStore } from '../../../store';
+  import { CONSTANTS } from '../../../helpers';
+  import { TodoIcon } from '../../todos/components/icons';
+  import { ButtonMain, HelpBar, LabelForms, Loading } from '../../shared';
 
   export default {
     beforeCreate() {

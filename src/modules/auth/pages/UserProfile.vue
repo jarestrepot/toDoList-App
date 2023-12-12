@@ -1,16 +1,9 @@
 <script>
-  import { startDeleteUser, startEditUser } from '../../../helpers/authFetch';
-  import { userAuthStore } from '../../../store/auth/authUser';
-  import ActionConfirm from '../../todos/components/ActionConfirm.vue';
-  import CONSTANTS from '../../../helpers/constants';
-  import EmailIcon from '../components/icons/EmailIcon.vue';
-  import ModalTodos from '../../todos/components/ModalTodos.vue';
-  import PasswordIcon from '../components/icons/PasswordIcon.vue';
-  import ProfileIcon from '../../ui/components/icons/ProfileIcon.vue';
-  import RefreshIcon from '../components/icons/RefreshIcon.vue';
-  import TrashIcon from '../components/icons/TrashIcon.vue';
-  import UserInfoIcon from '../components/icons/UserInfoIcon.vue';
-  import { startVerifyPassword } from '../../../helpers/authFetch'
+  import { userAuthStore } from '../../../store';
+  import { startDeleteUser, startEditUser, startVerifyPassword, CONSTANTS } from '../../../helpers';
+  import { ActionConfirm, ModalTodos } from '../../todos/components';
+  import { ProfileIcon } from '../../ui/components/icons';
+  import { EmailIcon, PasswordIcon, RefreshIcon, TrashIcon, UserInfoIcon } from '../components/icons';
 
   export default {
     data () {

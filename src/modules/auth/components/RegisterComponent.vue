@@ -1,11 +1,7 @@
 <script>
-  import { startRegister } from '../../../helpers/authFetch';
-  import ButtonMain from '../../shared/components/ButtonMain.vue';
-  import CONSTANTS from '../../../helpers/constants';
-  import HelpBar from '../../shared/components/HelpBar.vue';
-  import LabelForms from '../../shared/components/LabelForms.vue';
-  import TodoIcon from '../../todos/components/icons/TodoIcon.vue';
-  import ChangeLanguage from '../../shared/components/ChangeLanguage.vue'
+  import { startRegister, CONSTANTS } from '../../../helpers';
+  import { TodoIcon } from '../../todos/components/icons';
+  import { ButtonMain, HelpBar, LabelForms, ChangeLanguage } from '../../shared';
 
   export default {
     components: {

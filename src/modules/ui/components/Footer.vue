@@ -1,5 +1,5 @@
 <script>
-  import HeartIcon from '../components/icons/HeartIcon.vue'
+  import { HeartIcon } from '../components/icons'
 
   export default {
     components: {

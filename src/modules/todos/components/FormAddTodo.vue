@@ -1,7 +1,6 @@
 <script>
-  import { userAuthStore } from '../../../store/auth/authUser';
-  import { useTodosStore } from '../../../store/todos/todosUser';
-  import CONSTANTS from '../../../helpers/constants'
+  import { userAuthStore, useTodosStore } from '../../../store';
+  import { CONSTANTS } from '../../../helpers'
 
   export default {
   emits: ['closeModal'],

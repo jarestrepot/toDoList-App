@@ -1,9 +1,6 @@
 <script>
-import { userAuthStore } from '../../../store/auth/authUser';
-import { useTodosStore } from '../../../store/todos/todosUser';
-import EachTodo from './EachTodo.vue';
-import FormEditTodo from './FormEditTodo.vue';
-import ModalTodos from './ModalTodos.vue';
+import { userAuthStore, useTodosStore } from '../../../store';
+import { EachTodo, FormEditTodo, ModalTodos } from './';
 
 export default {
   data() {

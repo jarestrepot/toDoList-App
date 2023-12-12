@@ -1,10 +1,7 @@
 <script>
-  import { userAuthStore } from '../../../store/auth/authUser'
-  import { useTodosStore } from '../../../store/todos/todosUser'
-  import ArchiveTodoIcon from '../../todos/components/icons/ArchiveTodoIcon.vue'
-  import HomeIcon from '../components/icons/HomeIcon.vue'
-  import LogoutIcon from '../components/icons/LogoutIcon.vue'
-  import ProfileIcon from '../components/icons/ProfileIcon.vue'
+  import { userAuthStore, useTodosStore } from '../../../store'
+  import { ArchiveTodoIcon } from '../../todos/components/icons'
+  import { HomeIcon, LogoutIcon, ProfileIcon } from '../components/icons'
 
   export default {
     data(){

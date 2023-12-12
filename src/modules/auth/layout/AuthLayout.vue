@@ -1,8 +1,6 @@
 <script lang="js">
-  import ImageComponent from '../../shared/components/ImageComponent.vue';
-  import LoginComponent from '../components/LoginComponent.vue';
-  import RegisterComponent from '../components/RegisterComponent.vue';
-  import ChangeLanguage from '../../shared/components/ChangeLanguage.vue';
+  import { ImageComponent, ChangeLanguage } from '../../shared';
+  import { LoginComponent, RegisterComponent } from '../components';
 
   export default {
     emits: ['registerClicked'],

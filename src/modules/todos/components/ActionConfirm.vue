@@ -6,7 +6,6 @@
       confimrRol: Boolean,
     }
   }
-
 </script>
 <template>
   <div class="p-5 sm:text-lg dark:text-slate-300">

@@ -1,7 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import AuthRoute from '../modules/auth/routes/AuthRoute';
+import { AuthRoute, isAuthenticatedGuard } from '../modules/auth/routes';
 import TodoRoute from '../modules/todos/routes/TodosRoute';
-import isAuthenticatedGuard from '../modules/auth/routes/AuthGuard.js';
 
 const routes = [
   {

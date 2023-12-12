@@ -7,19 +7,6 @@ export const content = [
 export const theme = {
   extend: {
     colors:{
-      'chateau-green': {
-        '50': '#effef6',
-        '100': '#dafeeb',
-        '200': '#b8fad6',
-        '300': '#81f4b8',
-        '400': '#43e590',
-        '500': '#1acd70',
-        '600': '#0fa959',
-        '700': '#108549',
-        '800': '#12693d',
-        '900': '#115634',
-        '950': '#03301b',
-      },
       'persian-green': {
         '50': '#f0fdfa',
         '100': '#cbfcf2',

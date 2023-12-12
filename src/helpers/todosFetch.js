@@ -1,4 +1,4 @@
-import CONSTANTS from "./constants";
+import { CONSTANTS } from "./";
 
 export async function startAssetsTodos(){
   try {

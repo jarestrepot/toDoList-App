@@ -1,14 +1,9 @@
 <script>
-  import { userAuthStore } from '../../../store/auth/authUser';
-  import { useTodosStore } from '../../../store/todos/todosUser';
-  import ActionConfirm from './ActionConfirm.vue';
-  import ArchiveTodoIcon from './icons/ArchiveTodoIcon.vue';
-  import CategoryIcon from '../components/icons/CategoryIcon.vue';
-  import ImportanceIcon from '../components/icons/ImportanceIcon.vue'
-  import ModalTodos from './ModalTodos.vue';
-  import StatusIcon from '../components/icons/StatusIcon.vue';
-  import TodoIcon from '../components/icons/TodoIcon.vue'
-  import TrashIcon from '../../auth/components/icons/TrashIcon.vue';
+  import { userAuthStore, useTodosStore } from '../../../store';
+  import { TrashIcon } from '../../auth/components/icons';
+  import  ModalTodos  from './ModalTodos.vue';
+  import  ActionConfirm  from './ActionConfirm.vue';
+  import { ArchiveTodoIcon, CategoryIcon, ImportanceIcon, StatusIcon, TodoIcon } from './icons';
 
   export default {
     emits: ['click', 'openModalUpdate'],
@@ -29,10 +24,10 @@
       ArchiveTodoIcon,
       CategoryIcon,
       ImportanceIcon,
-      ModalTodos,
       StatusIcon,
       TodoIcon,
       TrashIcon,
+      ModalTodos,
     },
     methods: {
       getFillCategory(category) {

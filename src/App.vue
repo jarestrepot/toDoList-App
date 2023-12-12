@@ -1,5 +1,5 @@
 <script>
-import { useThemeMode } from './store/theme/modeTheme'
+import { useThemeMode } from './store'
 
 export default {
   data() {

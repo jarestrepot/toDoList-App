@@ -1,14 +1,9 @@
 <script>
-  import { userAuthStore } from '../../../store/auth/authUser';
-  import { useThemeMode } from '../../../store/theme/modeTheme';
-  import { useTodosStore } from '../../../store/todos/todosUser';
-  import ArchiveTodoIcon from '../../todos/components/icons/ArchiveTodoIcon.vue';
-  import ButtonTheme from './ButtonTheme.vue';
-  import HomeIcon from '../components/icons/HomeIcon.vue';
-  import InputSearch from '../../shared/components/InputSearch.vue';
-  import LogoutIcon from '../components/icons/LogoutIcon.vue';
-  import ProfileIcon from '../components/icons/ProfileIcon.vue';
-  import ChangeLanguage from '../../shared/components/ChangeLanguage.vue';
+  import { userAuthStore, useThemeMode, useTodosStore } from '../../../store';
+  import { ArchiveTodoIcon } from '../../todos/components/icons';
+  import { InputSearch, ChangeLanguage } from '../../shared';
+  import { ButtonTheme, } from './';
+  import { HomeIcon, LogoutIcon, ProfileIcon } from './icons';
 
   export default {
     data() {
@@ -20,12 +15,12 @@
     },
     components: {
       ArchiveTodoIcon,
+      InputSearch,
+      ChangeLanguage,
       ButtonTheme,
       HomeIcon,
-      InputSearch,
       LogoutIcon,
       ProfileIcon,
-      ChangeLanguage,
     },
     methods: {
       logoutUser() {

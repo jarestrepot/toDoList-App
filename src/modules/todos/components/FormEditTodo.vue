@@ -1,10 +1,7 @@
 <script>
-  import { userAuthStore } from '../../../store/auth/authUser';
-  import { useTodosStore } from '../../../store/todos/todosUser';
-  import CategoryIcon from '../components/icons/CategoryIcon.vue';
-  import CONSTANTS from '../../../helpers/constants';
-  import ImportanceIcon from '../components/icons/ImportanceIcon.vue';
-  import StatusIcon from '../components/icons/StatusIcon.vue';
+  import { userAuthStore, useTodosStore } from '../../../store';
+  import { CONSTANTS } from '../../../helpers';
+  import { CategoryIcon, ImportanceIcon, StatusIcon } from '../components/icons';
 
   export default {
     data() {

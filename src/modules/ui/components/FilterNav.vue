@@ -1,13 +1,8 @@
 <script>
-  import { userAuthStore } from '../../../store/auth/authUser';
-  import { useTodosStore } from '../../../store/todos/todosUser';
-  import AddTodoIcon from '../../todos/components/icons/AddTodoIcon.vue';
-  import ArrowIcon from '../components/icons/ArrowIcon.vue';
-  import CloseIcon from '../components/icons/CloseIcon.vue';
-  import FilterIcon from './icons/FilterIcon.vue';
-  import FormAddTodo from '../../todos/components/FormAddTodo.vue';
-  import GridListToggle from '../../todos/components/GridListToggle.vue';
-  import ModalTodos from '../../todos/components/ModalTodos.vue';
+  import { userAuthStore, useTodosStore } from '../../../store';
+  import { FormAddTodo, GridListToggle, ModalTodos } from '../../todos/components';
+  import { AddTodoIcon } from '../../todos/components/icons';
+  import { ArrowIcon, FilterIcon } from '../components/icons';
 
   export default {
     data() {
@@ -22,7 +17,6 @@
     components: {
       AddTodoIcon,
       ArrowIcon,
-      CloseIcon,
       FilterIcon,
       FormAddTodo,
       GridListToggle,
