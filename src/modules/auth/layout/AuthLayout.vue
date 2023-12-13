@@ -4,21 +4,11 @@
 
   export default {
     emits: ['registerClicked'],
-    data() {
-      return {
-        src: '../assets/images/login-background.webp',
-        alt: 'App task',
-        classImage: 'object-cover w-full h-screen',
-      }
-    },
     components: {
       LoginComponent,
       ChangeLanguage,
       ImageComponent,
       RegisterComponent,
-    },
-    mounted() {
-      console.log(this.src)
     },
     methods: {
       showRegister() {
@@ -78,9 +68,9 @@
       ref="containerImage" 
       class="hidden blur md:blur-none -z-10 md:z-50 absolute xl:block right-0 w-[50vw]">
       <ImageComponent 
-        :src="src" 
-        :alt="alt" 
-        :classTailwind="classImage" />
+        src="/src/modules/auth/assets/images/login-background.webp" 
+        alt="Todo list App" 
+        classTailwind="object-cover w-full h-screen" />
     </picture>
 
     <!-- Form Register -->
