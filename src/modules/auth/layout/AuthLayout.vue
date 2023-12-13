@@ -6,7 +6,7 @@
     emits: ['registerClicked'],
     data() {
       return {
-        src: '../assets/images/login-background.webp',
+        src: '/src/modules/auth/assets/images/login-background.webp',
         alt: 'App task',
         classImage: 'object-cover w-full h-screen',
       }
