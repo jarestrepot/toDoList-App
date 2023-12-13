@@ -68,7 +68,7 @@
       ref="containerImage" 
       class="hidden blur md:blur-none -z-10 md:z-50 absolute xl:block right-0 w-[50vw]">
       <ImageComponent 
-        src="/src/modules/auth/assets/images/login-background.webp" 
+        src="/public/login-background.webp"
         alt="Todo list App" 
         classTailwind="object-cover w-full h-screen" />
     </picture>
