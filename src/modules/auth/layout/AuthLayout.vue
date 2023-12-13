@@ -6,7 +6,7 @@
     emits: ['registerClicked'],
     data() {
       return {
-        src: '/assets/images/login-background.webp',
+        src: '../assets/images/login-background.webp',
         alt: 'App task',
         classImage: 'object-cover w-full h-screen',
       }
@@ -16,6 +16,9 @@
       ChangeLanguage,
       ImageComponent,
       RegisterComponent,
+    },
+    mounted() {
+      console.log(this.src)
     },
     methods: {
       showRegister() {
