@@ -1,20 +1,20 @@
 import CONSTANTS from "./constants";
 
-export async function startAssetsTodos(){
+export async function startAssetsTodos() {
   try {
-    const assetsTodo = await fetch(CONSTANTS.ENDPOINT);
+    const assetsTodo = await fetch(CONSTANTS.ENDPOINT_LOCAL);
 
     return await assetsTodo.json();
 
   } catch (error) {
     return { Error: error }
   }
-  
+
 }
 
-export async function startUpdateTodo({id, title, description, status, category, importance, userRef }){
+export async function startUpdateTodo({ id, title, description, status, category, importance, userRef }) {
   try {
-    const updateTodo = await fetch(`${CONSTANTS.ENDPOINT}/updateTask/${userRef}`, {
+    const updateTodo = await fetch(`${CONSTANTS.ENDPOINT_LOCAL}/updateTask/${userRef}`, {
       method: 'PATCH',
       headers: {
         'content-type': 'application/json',
@@ -35,9 +35,9 @@ export async function startUpdateTodo({id, title, description, status, category,
   }
 }
 
-export async function startNewTodo(todo, userRef){
+export async function startNewTodo(todo, userRef) {
   try {
-    const reponseJson = await fetch(`${CONSTANTS.ENDPOINT}/newTask/${userRef}`, {
+    const reponseJson = await fetch(`${CONSTANTS.ENDPOINT_LOCAL}/newTask/${userRef}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -52,11 +52,11 @@ export async function startNewTodo(todo, userRef){
 }
 
 
-export async function startArchivedTodo(id){
+export async function startArchivedTodo(id) {
   try {
-    const responseJson = await fetch(`${CONSTANTS.ENDPOINT}/arcivedTask/${id}`, {
+    const responseJson = await fetch(`${CONSTANTS.ENDPOINT_LOCAL}/arcivedTask/${id}`, {
       method: 'PATCH',
-      headers: { 
+      headers: {
         'Content-Type': 'application/json',
         'authorization': `Bearer ${window.localStorage.getItem('tokenUser')}`,
       }
@@ -67,9 +67,9 @@ export async function startArchivedTodo(id){
   }
 }
 
-export async function startDeleteTodo(id){
+export async function startDeleteTodo(id) {
   try {
-    const responseJson = await fetch(`${CONSTANTS.ENDPOINT}/deleteTask/${id}`,{
+    const responseJson = await fetch(`${CONSTANTS.ENDPOINT_LOCAL}/deleteTask/${id}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',

@@ -80,4 +80,6 @@ export default {
   confirmDeleteAccount: "¿Segur/a que quieres eliminar tu cuenta?",
   actions: "Acciones",
   rolIncorrect: "No tienes los permisos para eliminar esta cuenta",
+  emptyTodosArchived: "No tienes todos archivados",
+  emptyTodos: "No tienes tareas creadas, comienza a agregar ahora."
 }

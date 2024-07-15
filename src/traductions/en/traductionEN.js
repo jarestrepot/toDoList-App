@@ -80,4 +80,6 @@ export default {
   confirmDeleteAccount: "Are you sure you want to delete your account?",
   actions: "Actions",
   rolIncorrect: "You do not have the permissions to delete this account",
+  emptyTodosArchived: "You don`t have todos archived",
+  emptyTodos: "You don't have todos created, start adding now"
 }

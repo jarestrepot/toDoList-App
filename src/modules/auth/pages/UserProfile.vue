@@ -137,7 +137,6 @@
       <span class="dark:text-slate-300">{{ $t('addInformationYouSelft') }}</span>
     </div>
     <div class="container max-w-2xl md:w-3/4 shadow-md rounded-md overflow-hidden">
-
       <div class="bg-gray-100 p-4 border-t-2 bg-opacity-5 border-persian-green-400 rounded-t w-full">
         <div class="mx-auto md:w-full md:mx-0 flex flex-col md:flex-row justify-center items-center">
           <div class="inline-flex items-center space-x-4 w-full text-center">
@@ -158,7 +157,6 @@
         <div class="bg-white space-y-6 dark:bg-slate-800">
           <div class="md:inline-flex space-y-4 md:space-y-0 w-full p-4 text-gray-500 items-center">
             <h2 class="md:w-1/3 max-w-sm mx-auto dark:text-slate-200">{{ $t('account') }}</h2>
-
             <div class="md:w-2/3 max-w-sm mx-auto">
               <label class="text-sm text-gray-400 dark:text-slate-300">{{ $t('email') }}</label>
               <div class="w-full inline-flex rounded-md overflow-hidden">
@@ -181,12 +179,9 @@
           </div>
 
           <hr class="dark:border-slate-500"/>
-
           <div class="md:inline-flex  space-y-4 md:space-y-0  w-full p-4 text-gray-500 items-center">
             <h2 class="md:w-1/3 mx-auto max-w-sm dark:text-slate-200">{{ $t('personalInfo') }}</h2>
-
             <div class="md:w-2/3 mx-auto max-w-sm space-y-5">
-
               <div>
                 <label class="text-sm text-gray-400 dark:text-slate-300">{{ $t('name') }}</label>
                 <div class="w-full inline-flex rounded-md overflow-hidden">

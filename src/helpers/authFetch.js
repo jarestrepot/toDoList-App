@@ -1,7 +1,7 @@
 import CONSTANTS from "./constants";
-export async function startLogin(email, password){
+export async function startLogin(email, password) {
   try {
-    const postLoginUser = await fetch(`${CONSTANTS.ENDPOINT}/login`, {
+    const postLoginUser = await fetch(`${CONSTANTS.ENDPOINT_LOCAL}/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -17,9 +17,9 @@ export async function startLogin(email, password){
   }
 }
 
-export async function startRegister({ name, lastName, email, password, location = null }){
+export async function startRegister({ name, lastName, email, password, location = null }) {
   try {
-    const registerUser = await fetch(`${CONSTANTS.ENDPOINT}/register`, {
+    const registerUser = await fetch(`${CONSTANTS.ENDPOINT_LOCAL}/register`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -40,21 +40,21 @@ export async function startRegister({ name, lastName, email, password, location 
     const { Error } = await registerUser.json();
     return Error;
   } catch (Error) {
-    return {Error: Error};
+    return { Error: Error };
   }
 }
 
 
-export async function startDeleteUser(userRef){
+export async function startDeleteUser(userRef) {
   try {
-    const deleteUser = await fetch(`${CONSTANTS.ENDPOINT}/delete/${userRef}`,{
+    const deleteUser = await fetch(`${CONSTANTS.ENDPOINT_LOCAL}/delete/${userRef}`, {
       method: 'DELETE',
       headers: {
-        'Content-Type': 'application/json', 
+        'Content-Type': 'application/json',
         'authorization': `Bearer ${window.localStorage.getItem('tokenUser')}`
       }
     });
-    if(deleteUser.status === 200){
+    if (deleteUser.status === 200) {
       return true;
     }
     return await deleteUser.json();
@@ -64,9 +64,9 @@ export async function startDeleteUser(userRef){
 }
 
 
-export async function startEditUser({ name, lastName, email, password, newPassword, userId, location = null }){
+export async function startEditUser({ name, lastName, email, password, newPassword, userId, location = null }) {
   try {
-    const updateUser = await fetch(`${CONSTANTS.ENDPOINT}/modify/${userId}`, {
+    const updateUser = await fetch(`${CONSTANTS.ENDPOINT_LOCAL}/modify/${userId}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
@@ -83,14 +83,14 @@ export async function startEditUser({ name, lastName, email, password, newPasswo
     });
     return await updateUser.json()
   } catch (error) {
-    return { Error: error}
+    return { Error: error }
   }
 }
 
-export async function startVerifyPassword(userRef, password ){
+export async function startVerifyPassword(userRef, password) {
   try {
-    const veriFyPassword = await fetch(`${CONSTANTS.ENDPOINT}/checkedPassword/${userRef}`, { 
-      method : 'POST',
+    const veriFyPassword = await fetch(`${CONSTANTS.ENDPOINT_LOCAL}/checkedPassword/${userRef}`, {
+      method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'authorization': `Bearer ${window.localStorage.getItem('tokenUser')}`
